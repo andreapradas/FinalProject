@@ -5,6 +5,6 @@ int s;
 
 int b;
 int a;
-int andreA;
+int andrea;
 
 }
