@@ -5,5 +5,4 @@ int s;
 int b;
 int a;
 int andrea;
-
 }
