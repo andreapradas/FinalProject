@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Nurse {
 	private Integer nurseID;
 	private String nurseName;
-	public Boolean nurseAvailability;
+	private Boolean nurseAvailability;
 	
 	public Nurse() {
 		super();
