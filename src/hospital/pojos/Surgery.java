@@ -1,5 +1,5 @@
 package hospital.pojos;
 
-public class Surgeries {
+public class Surgery {
 
 }
