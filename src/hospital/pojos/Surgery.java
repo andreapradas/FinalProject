@@ -91,6 +91,7 @@ return false;
 if (getClass() != obj.getClass())
 return false;
 Surgery other = (Surgery) obj;
+
 return Objects.equals(surgeryId, other.surgeryId);
 }
 //ToString
