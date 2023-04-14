@@ -1,5 +1,5 @@
 package hospital.ifaces;
 
-public class OperatingRoomManager {
+public interface OperatingRoomManager {
 
 }
