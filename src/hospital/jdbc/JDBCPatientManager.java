@@ -31,6 +31,5 @@ public class JDBCPatientManager implements PatientManager{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-
-	
+	}
 }

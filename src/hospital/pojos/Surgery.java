@@ -31,16 +31,13 @@ public class Surgery implements Serializable{
 		this.duration = duration;
 		this.day = day;
 		this.startHour = startHour;
+		this.endHour = startHour.plusMinutes(duration);
 		//this.endHour = generarEndHour(startHour, duration);
 		this.done = true;
 		this.patientId = patientId;
 		this.surgeonId = surgeonId;
 		this.roomId = roomId;
 	}
-	
-	/*private LocalTime generarEndHour(LocalTime startHour, Integer duration)
-	{
-	}*/
 	
 	//Getters y Setters
 	

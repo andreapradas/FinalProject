@@ -9,3 +9,4 @@ public interface PatientManager {
 
 	void addPatient(Patient p);
 	
+}
