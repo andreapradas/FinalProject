@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import hospital.ifaces.SurgeonManager;
 import hospital.pojos.Patient;
 
-public class JDBCSurgeon implements SurgeonManager{
+public class JDBCSurgeonManager implements SurgeonManager{
 	
 	private JDBCManager manager;
 	

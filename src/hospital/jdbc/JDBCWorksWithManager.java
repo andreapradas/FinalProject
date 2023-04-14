@@ -1,6 +1,6 @@
 package hospital.jdbc;
 
-public class JDBCWorksWith {
+public class JDBCWorksWithManager {
 	
 	private JDBCManager manager;
 	
