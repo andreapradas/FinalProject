@@ -1,5 +1,14 @@
 package hospital.ifaces;
 
-public interface NurseVacationManager {
+import java.util.List;
 
+import hospital.pojos.NurseVacation;
+
+public interface NurseVacationManager {
+	
+	public void addNurseVacation(NurseVacation nV);
+	
+	public List<NurseVacation> getListOfNurseVacation();
+	
+	public void assign(int nurseVacationID, int nurseID); 
 }
