@@ -1,17 +1,13 @@
 package hospital.jdbc;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import hospital.ifaces.NurseManager;
 import hospital.pojos.Nurse;
-import zooDemoJDBC.ArrayList;
-import zooDemoJDBC.Exception;
-import zooDemoJDBC.Integer;
-import zooDemoJDBC.ResultSet;
-import zooDemoJDBC.Statement;
-import zooDemoJDBC.String;
-import zooDemoPOJO.Vet;
 
 
 public class JDBCNurseManager implements NurseManager {

@@ -11,7 +11,7 @@ public class Patient implements Serializable{
 	private int phoneNumber;
 	private String name;
 	
-	public Patient(int patientId, int phoneNumber, String name) throws phoneException {
+	public Patient(int patientId, String name, int phoneNumber) throws phoneException {
 		this.patientId= patientId;
 		this.name= name;
 		if(Integer.toString(phoneNumber).length()!= 9){

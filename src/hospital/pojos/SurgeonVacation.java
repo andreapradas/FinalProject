@@ -43,5 +43,27 @@ public class SurgeonVacation implements Serializable{
 		return "Surgeon vacation [name= " + surgeonId + ", start date= " + starts + ", end date= " + ends + "]";
 	}
 	
+	public LocalDate getStartDate() {
+		return starts;
+	}
 	
+	public void setStartDate(LocalDate start) {
+		this.starts= start;
+	}
+	
+	public LocalDate getEndDate() {
+		return ends;
+	}
+	
+	public void setEndDate(LocalDate end) {
+		this.ends= end;
+	}
+	
+	public int getVacationId() {
+		return vacationId;
+	}
+		
+	public int getSurgeonOnVacationId() {
+		return surgeonId;
+	}
 }
