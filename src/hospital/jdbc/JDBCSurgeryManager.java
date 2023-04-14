@@ -2,7 +2,7 @@ package hospital.jdbc;
 
 import hospital.ifaces.SurgeryManager;
 
-public class JDBCSurgery implements SurgeryManager{
+public class JDBCSurgeryManager implements SurgeryManager{
 	
 	private JDBCManager manager;
 	
