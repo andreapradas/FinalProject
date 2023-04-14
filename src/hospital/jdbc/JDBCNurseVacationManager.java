@@ -1,6 +1,8 @@
 package hospital.jdbc;
 
-public class JDBCNurseVacation implements NurseVacationManager {
+import hospital.ifaces.NurseVacationManager;
+
+public class JDBCNurseVacationManager implements NurseVacationManager {
 
 	private JDBCManager manager;
 	

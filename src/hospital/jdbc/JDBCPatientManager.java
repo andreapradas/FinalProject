@@ -20,7 +20,6 @@ public class JDBCPatientManager implements PatientManager{
 	
 	@Override
 	public void addPatient(Patient p) {
-		// TODO Auto-generated method stub
 		try{
 			String sql = "INSERT INTO Patient (patientName, phoneNumber) VALUES (?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
@@ -32,4 +31,6 @@ public class JDBCPatientManager implements PatientManager{
 			e.printStackTrace();
 		}
 	}
+	
+	
 }
