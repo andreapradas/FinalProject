@@ -1,6 +1,8 @@
 package hospital.jdbc;
 
-public class JDBCNurse implements NurseManager {
+import hospital.ifaces.NurseManager;
+
+public class JDBCNurseManager implements NurseManager {
 	
 	private JDBCManager manager;
 	
