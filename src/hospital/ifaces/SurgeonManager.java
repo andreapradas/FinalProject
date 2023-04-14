@@ -1,5 +1,11 @@
 package hospital.ifaces;
 
-public class SurgeonManager {
+import java.util.List;
 
+import hospital.pojos.Patient;
+
+public interface SurgeonManager {
+
+
+	
 }

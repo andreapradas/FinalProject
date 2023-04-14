@@ -1,8 +1,11 @@
 package hospital.jdbc;
 
-import hospital.jdbc.JDBCManager;
+import java.sql.PreparedStatement;
 
-public class JDBCSurgeon {
+import hospital.ifaces.SurgeonManager;
+import hospital.pojos.Patient;
+
+public class JDBCSurgeon implements SurgeonManager{
 	
 	private JDBCManager manager;
 	
@@ -10,5 +13,10 @@ public class JDBCSurgeon {
 	{
 		this.manager = m;
 	}
+
+	
+	}
+	
+	
 
 }
