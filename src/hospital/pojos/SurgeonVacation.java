@@ -1,7 +1,7 @@
 package hospital.pojos;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 public class SurgeonVacation implements Serializable{
@@ -9,8 +9,8 @@ public class SurgeonVacation implements Serializable{
 	private static final long serialVersionUID = -6939843271309580766L;
 
 	private int vacationId;
-	private LocalDate starts;
-	private LocalDate ends;
+	private Date starts;
+	private Date ends;
 	private int surgeonId;
 	
 	public SurgeonVacation(int vacationId, LocalDate starts, int surgeonId) {
