@@ -31,13 +31,13 @@ public class Surgery implements Serializable{
 	public Surgery(Integer surgeryId, String surgeryType, Integer duration, Date day, Time startHour, 
 			Integer patientId, Integer surgeonId, Integer roomId) {
 		super();
-		this.surgeryId = surgeryId;
+		this.surgeryId = surgeryId; 
 		this.surgeryType = surgeryType;
 		this.duration = duration;
 		this.day = day;
 		this.startHour = startHour;
-		//this.endHour = startHour.//Sumar la duracion a la hora
-		this.done = false; //Cambiar cuando se realice a true 
+		//this.endHour = ;//Sumar la duracion a la hora
+		this.done = false; //Cambiar cuando se realice a true ??
 		//Foreign keys
 		this.patientId = patientId;
 		this.surgeonId = surgeonId;

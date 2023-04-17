@@ -92,12 +92,12 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setString(2, s.getSurgeryType());
 			prep.setInt(3, s.getDuration());
 			prep.setDate(4, s.getDay());
-			prep.setTime(4, s.getStartHour());
-			prep.setTime(5, s.getEndHour());
-			prep.setBoolean(3, s.getDone());
-			prep.setInt(3, s.getPatientId());
-			prep.setInt(3, s.getSurgeonId());
-			prep.setInt(3, s.getRoomId());
+			prep.setTime(5, s.getStartHour());
+			prep.setTime(6, s.getEndHour());
+			prep.setBoolean(7, s.getDone());
+			prep.setInt(8, s.getPatientId());
+			prep.setInt(9, s.getSurgeonId());
+			prep.setInt(10, s.getRoomId());
 			prep.executeUpdate();			
 					
 		}catch(Exception e) {
