@@ -22,7 +22,11 @@ public class Surgery implements Serializable{
 	private int surgeonId; //Many to one relationship
 	private int roomId; //Many to one relationship
 	
-	//Constructor
+	//Constructors
+	
+	public Surgery() {
+		super();
+	}
 	
 	public Surgery(Integer surgeryId, String surgeryType, Integer duration, Date day, Time startHour, 
 			Integer patientId, Integer surgeonId, Integer roomId) {
@@ -41,7 +45,7 @@ public class Surgery implements Serializable{
 	}
 	
 	//Getters and Setters
-	
+
 	public Integer getSurgeryId() {
 		return surgeryId;
 	}

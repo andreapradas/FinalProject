@@ -15,7 +15,12 @@ public class OperatingRoom implements Serializable{
 	private List<Boolean> availableRooms; //Huecos del horario, crear funcion que te ponga tantos huecos como
 	//hab disponibles
 	
-	//Constructor
+	//Constructors
+	
+	public OperatingRoom() {
+		super();
+	}
+	
 	public OperatingRoom(int roomId, int roomNumber, int roomFloor, Boolean active) {
 		super();
 		this.roomId = roomId;
