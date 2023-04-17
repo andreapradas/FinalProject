@@ -11,6 +11,8 @@ public class WorksWithManager {
 	
 	public List<WorksWith> getListOfWorksWith();
 	
-	public void assign(int nurseID, int surgeonID); //Assign a nurse to a surgeon
+	//delete
+	//modify
+	//getbyid
 }
 

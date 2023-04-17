@@ -9,8 +9,14 @@ public interface SurgeryManager {
 	public void addSurgery(Surgery s);
 	
 	//Get the list of surgeries
-	public List<Surgery> getListOfSurgery();
+	public List<Surgery> getListOfSurgeries();
+
+	//Get a surgery by the id
+	public Surgery getSurgeryById(int id);
+	
+	//Create a surgery
+	public void createSurgery(Surgery s);
 	
 	//Assign a surgery to a surgeon
-	public void assign (int surgeonID, int surgeryID);
+	//public void assign (int surgeonID, int surgeryID);
 }

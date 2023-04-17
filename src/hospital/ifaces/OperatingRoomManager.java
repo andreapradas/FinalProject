@@ -12,4 +12,10 @@ public interface OperatingRoomManager {
 	//Get the list of operating rooms
 	public List<OperatingRoom> getListOfOperatingRoom();
 	
+	//Get by id
+	public OperatingRoom getRoomById(int roomId);
+	
+	//Update
+	public void updateActivity(int roomId, Boolean active);
+	
 }

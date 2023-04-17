@@ -1,8 +1,8 @@
 package hospital.pojos;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.Objects;
 
 
@@ -10,20 +10,25 @@ public class Surgery implements Serializable{
 	private static final long serialVersionUID = 7073066432309393382L;
 	
 	//Attributes
-	private Integer surgeryId;
+	private int surgeryId;
 	private String surgeryType;
-	private Integer duration;
-	private LocalDate day;
-	private LocalTime startHour;
-	private LocalTime endHour;
+	private int duration;
+	private Date day;
+	private Time startHour;
+	private Time endHour;
 	private Boolean done;
-	private Integer patientId;
-	private Integer surgeonId;
-	private Integer roomId;
+	//Foreign keys
+	private int patientId; //Many to one relationship
+	private int surgeonId; //Many to one relationship
+	private int roomId; //Many to one relationship
 	
-	//Constructor
+	//Constructors
 	
-	public Surgery(Integer surgeryId, String surgeryType, Integer duration, LocalDate day, LocalTime startHour, 
+	public Surgery() {
+		super();
+	}
+	
+	public Surgery(Integer surgeryId, String surgeryType, Integer duration, Date day, Time startHour, 
 			Integer patientId, Integer surgeonId, Integer roomId) {
 		super();
 		this.surgeryId = surgeryId;
@@ -31,16 +36,16 @@ public class Surgery implements Serializable{
 		this.duration = duration;
 		this.day = day;
 		this.startHour = startHour;
-		this.endHour = startHour.plusMinutes(duration);
-		//this.endHour = generarEndHour(startHour, duration);
-		this.done = true;
+		//this.endHour = startHour.//Sumar la duracion a la hora
+		this.done = false; //Cambiar cuando se realice a true 
+		//Foreign keys
 		this.patientId = patientId;
 		this.surgeonId = surgeonId;
 		this.roomId = roomId;
 	}
 	
-	//Getters y Setters
-	
+	//Getters and Setters
+
 	public Integer getSurgeryId() {
 		return surgeryId;
 	}
@@ -59,22 +64,22 @@ public class Surgery implements Serializable{
 	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
-	public LocalDate getDay() {
+	public Date getDay() {
 		return day;
 	}
-	public void setDay(LocalDate day) {
+	public void setDay(Date day) {
 		this.day = day;
 	}
-	public LocalTime getStartHour() {
+	public Time getStartHour() {
 		return startHour;
 	}
-	public void setStartHour(LocalTime startHour) {
+	public void setStartHour(Time startHour) {
 		this.startHour = startHour;
 	}
-	public LocalTime getEndHour() {
+	public Time getEndHour() {
 		return endHour;
 	}
-	public void setEndHour(LocalTime endHour) {
+	public void setEndHour(Time endHour) {
 		this.endHour = endHour;
 	}
 	public Boolean getDone() {
@@ -83,8 +88,31 @@ public class Surgery implements Serializable{
 	public void setDone(Boolean done) {
 		this.done = done;
 	}
-	
-	//HashCode y equals
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+
+	public int getSurgeonId() {
+		return surgeonId;
+	}
+
+	public void setSurgeonId(int surgeonId) {
+		this.surgeonId = surgeonId;
+	}
+
+	public int getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+
+	//HashCode and equals
 	
 	@Override
 	public int hashCode() {
