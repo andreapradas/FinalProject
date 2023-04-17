@@ -2,6 +2,9 @@ package hospital.jdbc;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +33,10 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setTime(4, s.getStartHour());
 			prep.setTime(5, s.getEndHour());
 			prep.setBoolean(3, s.getDone());
-			/*prep.setInt(3, s.get());
-			prep.setInt(3, s.());
-			prep.setInt(3, s.());*/
+			
+			prep.setInt(3, s.getPatientId());
+			prep.setInt(3, s.getSurgeonId());
+			prep.setInt(3, s.getRoomId());
 			prep.executeUpdate();			
 					
 		}catch(Exception e) {
@@ -47,7 +51,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		try {
 			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM surgery";
-			java.sql.ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next())
 			{
@@ -55,9 +59,15 @@ public class JDBCSurgeryManager implements SurgeryManager{
 				String surgeryType = rs.getString("surgeryType");
 				Integer duration = rs.getInt("duration");
 				Date day = rs.getDate("day");
+				Time startHour = rs.getTime("startHour");
+				//Boolean done = rs.getBoolean("done");
+				Integer patientId = rs.getInt("patientId");
+				Integer surgeonId = rs.getInt("surgeonId");
+				Integer roomId = rs.getInt("roomId");
 				
-				Vet v = new Vet(id,name, speciality);
-				vets.add(v);
+				
+				Surgery s = new Surgery(surgeryId,surgeryType,duration,day, startHour, patientId, surgeonId, roomId);
+				surgeries.add(s);//Add the new surgery to the list
 			}
 			
 			rs.close();
@@ -69,6 +79,60 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		}
 		
 		return surgeries;
+	}
+	
+	
+	@Override 
+	public void createSurgery(Surgery s) {
+		try{
+			String sql = "INSERT INTO surgery (surgeryId, surgeryType, duration, day, startHour,"
+					+ "patientId, surgeonId, roomId ) VALUES (?,?,?,?,?,?,?,?)";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, s.getSurgeryId());
+			prep.setString(2, s.getSurgeryType());
+			prep.setInt(3, s.getDuration());
+			prep.setDate(4, s.getDay());
+			prep.setTime(4, s.getStartHour());
+			prep.setTime(5, s.getEndHour());
+			prep.setBoolean(3, s.getDone());
+			prep.setInt(3, s.getPatientId());
+			prep.setInt(3, s.getSurgeonId());
+			prep.setInt(3, s.getRoomId());
+			prep.executeUpdate();			
+					
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public Surgery getSurgeryById(int id) {
+		// TODO Auto-generated method stub
+		
+		Surgery s = null;
+		try {
+			Statement stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM surgery WHERE id=" + id;
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			Integer surgeryId = rs.getInt("surgeryId");
+			String surgeryType = rs.getString("surgeryType");
+			Integer duration = rs.getInt("duration");
+			Date day = rs.getDate("day");
+			Time startHour = rs.getTime("startHour");
+			//Boolean done = rs.getBoolean("done");
+			Integer patientId = rs.getInt("patientId");
+			Integer surgeonId = rs.getInt("surgeonId");
+			Integer roomId = rs.getInt("roomId");				
+			
+			rs.close();
+			stmt.close();
+			
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return s;
 	}
 
 	

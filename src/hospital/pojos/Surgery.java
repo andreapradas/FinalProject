@@ -17,9 +17,10 @@ public class Surgery implements Serializable{
 	private Time startHour;
 	private Time endHour;
 	private Boolean done;
-	private int patientId;
-	private int surgeonId;
-	private int roomId;
+	//Foreign keys
+	private int patientId; //Many to one relationship
+	private int surgeonId; //Many to one relationship
+	private int roomId; //Many to one relationship
 	
 	//Constructor
 	
@@ -33,6 +34,7 @@ public class Surgery implements Serializable{
 		this.startHour = startHour;
 		//this.endHour = startHour.//Sumar la duracion a la hora
 		this.done = false; //Cambiar cuando se realice a true 
+		//Foreign keys
 		this.patientId = patientId;
 		this.surgeonId = surgeonId;
 		this.roomId = roomId;
@@ -82,7 +84,30 @@ public class Surgery implements Serializable{
 	public void setDone(Boolean done) {
 		this.done = done;
 	}
-	
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+
+	public int getSurgeonId() {
+		return surgeonId;
+	}
+
+	public void setSurgeonId(int surgeonId) {
+		this.surgeonId = surgeonId;
+	}
+
+	public int getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+
 	//HashCode and equals
 	
 	@Override

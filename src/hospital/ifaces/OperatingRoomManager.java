@@ -12,4 +12,5 @@ public interface OperatingRoomManager {
 	//Get the list of operating rooms
 	public List<OperatingRoom> getListOfOperatingRoom();
 	
+	//
 }

@@ -1,9 +1,13 @@
 package hospital.jdbc;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import hospital.pojos.OperatingRoom;
+
 
 public class JDBCOperatingRoomManager {
 
@@ -17,9 +21,9 @@ public class JDBCOperatingRoomManager {
 	public void addOperatingRoom(OperatingRoom r) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO operatingRoom (roomID, roomNumber, floor) VALUES (?,?,?,?,?)";
+			String sql = "INSERT INTO operatingRoom (roomID, roomNumber, floor) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, r.getRoomID());
+			prep.setInt(1, r.getRoomId());
 			prep.setInt(2, r.getRoomNumber());
 			prep.setInt(3, r.getRoomFloor());
 			prep.executeUpdate();			
@@ -31,7 +35,74 @@ public class JDBCOperatingRoomManager {
 	
 	//@Override
 	public List<OperatingRoom> getListOfOperatingRoom(){
-		return null;
+		List<OperatingRoom> rooms = new ArrayList<OperatingRoom>();
+		
+		try {
+			Statement stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM operatingRoom";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				Integer roomId = rs.getInt("roomId");
+				Integer roomNumber = rs.getInt("roomNumber");
+				Integer roomFloor = rs.getInt("roomFloor");
+				Boolean active = rs.getBoolean("active");
+				
+				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
+				rooms.add(o); //Add the room to the list
+			}
+			 
+			rs.close();
+			stmt.close();	
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return rooms;
+	}
+	
+	//@Override
+	public void updateActivity(int roomId, Boolean active) {
+		try {
+			
+			String sql = "UPDATE operatingRoom SET active=? WHERE roomId=?;";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setBoolean(1, active);
+			prep.setInt(2, roomId);
+			//Hace falta cambiar la lista de habitaciones al cambiar el active??
+			prep.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//@Override
+	public OperatingRoom getRoomById(int roomId) {
+		// TODO Auto-generated method stub
+		
+		OperatingRoom o = null;
+		try {
+			Statement stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM operatingRoom WHERE roomId=" + roomId;
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			Integer roomNumber = rs.getInt("roomNumber");
+			Integer roomFloor = rs.getInt("roomFloor");
+			Boolean active = rs.getBoolean("active");
+				o = new OperatingRoom(roomId, roomNumber, roomFloor, active);				
+			
+			rs.close();
+			stmt.close();
+			
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return o;
 	}
 	
 	

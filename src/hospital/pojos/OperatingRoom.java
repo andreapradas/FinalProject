@@ -8,7 +8,7 @@ public class OperatingRoom implements Serializable{
 
 	private static final long serialVersionUID = 8375381789297162943L;
 	//Attributes 
-	private int roomID;
+	private int roomId;
 	private int roomNumber;
 	private int roomFloor;
 	private Boolean active; //El chiefSurgeon lo gestiona, para gestionar las que esten disponibles
@@ -16,23 +16,23 @@ public class OperatingRoom implements Serializable{
 	//hab disponibles
 	
 	//Constructor
-	public OperatingRoom(int roomID, int roomNumber, int roomFloor, Boolean active) {
+	public OperatingRoom(int roomId, int roomNumber, int roomFloor, Boolean active) {
 		super();
-		this.roomID = roomID;
+		this.roomId = roomId;
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
 		this.active = active;
-		//this.availableRooms ;
+		this.availableRooms.add(active); //Add the rooms wheter they are active or not
 	}
 	
 	//Getters and Setters
 
-	public int getRoomID() {
-		return roomID;
+	public int getRoomId() {
+		return roomId;
 	}
 
-	public void setRoomID(int roomID) {
-		this.roomID = roomID;
+	public void setRoomID(int roomId) {
+		this.roomId = roomId;
 	}
 
 	public int getRoomNumber() {
@@ -50,7 +50,7 @@ public class OperatingRoom implements Serializable{
 	public void setRoomFloor(int roomFloor) {
 		this.roomFloor = roomFloor;
 	}
-	
+
 	public Boolean getActive() {
 		return active;
 	}
@@ -59,13 +59,21 @@ public class OperatingRoom implements Serializable{
 		this.active = active;
 	}
 
-	//HashCode and Equals
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(roomID);
+	public List<Boolean> getAvailableRooms() {
+		return availableRooms;
 	}
 
+	public void setAvailableRooms(List<Boolean> availableRooms) {
+		this.availableRooms = availableRooms;
+	}
+	
+	//HashCode and Equals
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(roomId);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -75,14 +83,14 @@ public class OperatingRoom implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		OperatingRoom other = (OperatingRoom) obj;
-		return roomID == other.roomID;
+		return roomId == other.roomId;
 	}
 	
 	//ToString
 
 	@Override
 	public String toString() {
-		return "OperatingRoom [roomID=" + roomID + ", roomNumber=" + roomNumber + ", roomFloor=" + roomFloor + "]";
+		return "OperatingRoom [roomId=" + roomId + ", roomNumber=" + roomNumber + ", roomFloor=" + roomFloor + "]";
 	}
 
 	
