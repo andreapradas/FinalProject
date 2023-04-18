@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
+import hospital.jdbc.JDBCSurgeonManager;
+
 public class SurgeonVacation implements Serializable{
 
 	private static final long serialVersionUID = -6939843271309580766L;
@@ -13,10 +15,10 @@ public class SurgeonVacation implements Serializable{
 	private Date ends;
 	private int surgeonId;
 	
-	public SurgeonVacation(int vacationId, LocalDate starts, int surgeonId) {
+	public SurgeonVacation(int vacationId, Date starts, Date ends ,int surgeonId) {
 		this.vacationId= vacationId;
 		this.starts= starts;
-		this.ends= starts.plusDays(15);
+		this.ends= ends;
 		this.surgeonId= surgeonId;
 	}
 	
@@ -39,23 +41,22 @@ public class SurgeonVacation implements Serializable{
 
 	@Override
 	public String toString() {
-		//select surgeon name where Surgeon.surgeonid= SurgeonVacation.surgeonId
-		return "Surgeon vacation [name= " + surgeonId + ", start date= " + starts + ", end date= " + ends + "]";
+		return "Surgeon vacation [start date= " + starts + ", end date= " + ends + "]";
 	}
 	
-	public LocalDate getStartDate() {
+	public Date getStartDate() {
 		return starts;
 	}
 	
-	public void setStartDate(LocalDate start) {
+	public void setStartDate(Date start) {
 		this.starts= start;
 	}
 	
-	public LocalDate getEndDate() {
+	public Date getEndDate() {
 		return ends;
 	}
 	
-	public void setEndDate(LocalDate end) {
+	public void setEndDate(Date end) {
 		this.ends= end;
 	}
 	

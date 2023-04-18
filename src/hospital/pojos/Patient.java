@@ -11,8 +11,22 @@ public class Patient implements Serializable{
 	private int phoneNumber;
 	private String name;
 	
-	public Patient(int patientId, String name, int phoneNumber) throws phoneException {
-		this.patientId= patientId;
+	public Patient() {
+		super();
+	}
+	
+	public Patient(String name, int phoneNumber) throws phoneException {
+		super();
+		this.name= name;
+		if(Integer.toString(phoneNumber).length()!= 9){
+			throw new phoneException();			
+		}
+		this.phoneNumber= phoneNumber;
+	}
+	
+	public Patient(int id, String name, int phoneNumber) throws phoneException {
+		super();
+		this.patientId= id;
 		this.name= name;
 		if(Integer.toString(phoneNumber).length()!= 9){
 			throw new phoneException();			

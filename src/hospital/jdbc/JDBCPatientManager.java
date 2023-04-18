@@ -46,7 +46,7 @@ public class JDBCPatientManager implements PatientManager{
 					String name = rs.getString("patientName");
 					Integer phoneNumber = rs.getInt("phoneNumber");
 					
-					Patient pat = new Patient(id,name, phoneNumber);
+					Patient pat = new Patient(id, name, phoneNumber);
 					patients.add(pat);
 				}
 				
