@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hospital.ifaces.WorksWithManager;
-import hospital.pojos.Nurse;
 import hospital.pojos.WorksWith;
 
 public class JDBCWorksWithManager implements WorksWithManager {
