@@ -1,20 +1,20 @@
 package hospital.pojos;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 public class NurseVacation {
 	private Integer vacationID;
 	private Integer nurseID;
-	private LocalDate starts;
-	private LocalDate ends;
+	private Date starts;
+	private Date ends;
 	
 	
 	public NurseVacation() {
 		super();
 	}
 	
-	public NurseVacation(Integer vacationID, Integer nurseID, LocalDate starts, LocalDate ends) {
+	public NurseVacation(Integer vacationID, Integer nurseID, Date starts, Date ends) {
 		super();
 		this.vacationID = vacationID;
 		this.nurseID = nurseID;
@@ -44,19 +44,19 @@ public class NurseVacation {
 		this.nurseID = nurseID;
 	}
 	
-	public LocalDate getStarts() {
+	public Date getStarts() {
 		return starts;
 	}
 
-	public void setStarts(LocalDate starts) {
+	public void setStarts(Date starts) {
 		this.starts = starts;
 	}
 	
-	public LocalDate getEnds() {
+	public Date getEnds() {
 		return ends;
 	}
 
-	public void setEnds(LocalDate ends) {
+	public void setEnds(Date ends) {
 		this.ends = ends;
 	}
 	

@@ -1,20 +1,20 @@
 package hospital.pojos;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 public class WorksWith {
 	private Integer teamID;
 	private Integer surgeonID;
 	private Integer nurseID;
-	private LocalDate date;
+	private Date date;
 	
 	
 	public WorksWith() {
 		super();
 	}
 	
-	public WorksWith(Integer teamID, Integer surgeonID, Integer nurseID, LocalDate date) {
+	public WorksWith(Integer teamID, Integer surgeonID, Integer nurseID, Date date) {
 		super();
 		this.teamID = teamID;
 		this.surgeonID = surgeonID;
@@ -52,11 +52,11 @@ public class WorksWith {
 		this.nurseID = nurseID;
 	}
 	
-	public LocalDate getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	

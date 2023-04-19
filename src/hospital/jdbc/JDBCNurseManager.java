@@ -20,14 +20,14 @@ public class JDBCNurseManager implements NurseManager {
 	}
 
 	@Override
-	public void addNurse(Nurse nurse) {
+	public void addNurse(Nurse n) {
 		// TODO Auto-generated method stub
 		try{
 			String sql = "INSERT INTO Nurse (nurseID, nurseName, nurseAvailability) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, nurse.getNurseID());
-			prep.setString(2, nurse.getNurseName());
-			prep.setBoolean(3, nurse.getNurseAvailability());
+			prep.setInt(1, n.getNurseID());
+			prep.setString(2, n.getNurseName());
+			prep.setBoolean(3, n.getNurseAvailability());
 			
 			prep.executeUpdate();			
 					
@@ -44,17 +44,17 @@ public class JDBCNurseManager implements NurseManager {
 		
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM vets";
+			String sql = "SELECT * FROM Nurse";
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next())
 			{
-				Integer id = rs.getInt("id");
-				String name = rs.getString("name");
-				String speciality = rs.getString("speciality");
+				Integer id = rs.getInt("nurseID");
+				String name = rs.getString("nurseName");
+				Boolean availability = rs.getBoolean("nurseAvailability");
 				
-				Vet v = new Vet(id,name, speciality);
-				vets.add(v);
+				Nurse n = new Nurse(id, name, availability);
+				ListOfNurses.add(n);
 			}
 			
 			rs.close();
@@ -65,13 +65,65 @@ public class JDBCNurseManager implements NurseManager {
 			e.printStackTrace();
 		}
 		
-		return vets;
+		return ListOfNurses;
 	}
 
 	@Override
 	public void assign(int nurseID, int surgeonID) {
 		// TODO Auto-generated method stub
+		try{
+			String sql = "INSERT INTO WorksWith (nurseID,surgeonID) VALUES (?,?)";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, nurseID);
+			prep.setInt(2, surgeonID);		
+			
+			prep.executeUpdate();			
+					
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
+	}
+
+	@Override
+	public void deleteNurseByID(int nurseID) {
+		// TODO Auto-generated method stub
+		try {
+			
+			String sql = "DELETE FROM ListOfNurses WHERE id=?;";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1,nurseID);
+			
+			prep.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Nurse getNurseByID(int nurseID) {
+		// TODO Auto-generated method stub
+		Nurse n = null;
+		try {
+			Statement stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM ListOfNurses WHERE id=" + nurseID;
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			Integer id = rs.getInt("nurseID");
+			String name = rs.getString("nurseName");
+			Boolean availability = rs.getBoolean("nurseAvailability");
+			n = new Nurse(id, name, availability);				
+			
+			rs.close();
+			stmt.close();
+			
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return n;
+	
 	}
 	
 }

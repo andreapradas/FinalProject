@@ -11,4 +11,10 @@ public interface NurseVacationManager {
 	public List<NurseVacation> getListOfNurseVacation();
 	
 	public void assign(int nurseVacationID, int nurseID); 
+	
+	public void getNurseVacationByID (int iD);
+	
+	public void deleteNurseVacationByID (int ID);
+	
+	//modify
 }

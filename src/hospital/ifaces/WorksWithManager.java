@@ -4,15 +4,16 @@ import java.util.List;
 
 import hospital.pojos.WorksWith;
 
-
-public class WorksWithManager {
+public interface WorksWithManager {
 	
 	public void addWorksWith(WorksWith wW);
 	
 	public List<WorksWith> getListOfWorksWith();
+
+	public WorksWith getWorksWithByID (int iD);
 	
-	//delete
+	public void deleteWorksWithByID (int ID);
+	
 	//modify
-	//getbyid
 }
 
