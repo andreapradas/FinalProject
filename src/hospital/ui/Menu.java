@@ -2,12 +2,15 @@ package hospital.ui;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import hospital.ifaces.*;
 import hospital.jdbc.*;
 import hospital.pojos.Patient;
+import hospital.pojos.Surgeon;
+import hospital.pojos.SurgeonVacation;
 
 public class Menu {
 
@@ -31,6 +34,8 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Add new patient");
 				System.out.println("2. Get list of patients");
+				System.out.println("3. Add new surgeon");
+				System.out.println("4. Add new surgeon vacation");
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -41,6 +46,12 @@ public class Menu {
 					break;
 				case 2:
 					getPatients();
+					break;
+				case 3:
+					createSurgeon();
+					break;
+				case 4:
+					createSurgeonVacation();
 					break;
 				case 0: 
 					jdbcManager.disconnect();
@@ -81,5 +92,72 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void createSurgeon() throws Exception
+	{
+		System.out.println("Type the name of the surgeon:");
+		String name =  reader.readLine();
+		Boolean chief;
+		while(true) {
+			System.out.println("Is it a chief surgeon? (Y/N)");
+			String response =  reader.readLine();
+			if(response== "Y" || response== "y") {
+				chief= true;
+				break;
+			} else if(response== "N" || response== "n") {
+				chief= false;
+			}
+			System.out.println("Please, answer with the correct pattern");
+		}
+		
+		Surgeon s= new Surgeon(name, chief);
+		surgeonManager.addSurgeon(s);		
+	}
+
+
+	@SuppressWarnings("deprecation")
+	public static void createSurgeonVacation() throws Exception
+	{
+		System.out.println("Type the id of the surgeon:");
+		Integer surgId =  Integer.parseInt(reader.readLine());
+		Date start = null;
+		Integer year;
+		while(true) {
+			System.out.println("Type the year:");
+			year =  Integer.parseInt(reader.readLine());
+			if(year.toString().length()== 4) {
+				break;
+			}
+			System.out.println("Not valid year");
+		}	
+		Integer option;
+		do {
+			System.out.println("These are the vacation periods, please choose one of them:");
+			System.out.println("1) 1 june to 15 june");
+			System.out.println("2) 16 june to 30 june");
+			System.out.println("3) 1 july to 15 july");
+			System.out.println("4) 16 july to 30 july");
+			System.out.println("5) 1 august to 15 august");
+			System.out.println("6) 16 august to 30 august");
+			option= Integer.parseInt(reader.readLine());
+			switch(option) {
+			case 1:
+				start= new Date(year, 5, 1);
+			case 2:
+				start= new Date(year, 5, 16);
+			case 3:
+				start= new Date(year, 6, 1);
+			case 4:
+				start= new Date(year, 6, 16);
+			case 5:
+				start= new Date(year, 7, 1);
+			case 6:
+				start= new Date(year, 7, 16);
+			}
+		} while (option>= 1 && option<= 6);
+		Date end= new Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
+		SurgeonVacation sVac= new SurgeonVacation(start, end, surgId);
+		surgeonVacationManager.addVacation(sVac);		
 	}
 }

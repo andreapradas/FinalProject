@@ -11,6 +11,17 @@ public class Surgeon implements Serializable{
 	private boolean chief;
 	private boolean avaliable;
 	
+	public Surgeon() {
+		super();
+	}
+	
+	public Surgeon(String name, boolean chief){
+		super();
+		this.name= name;
+		this.chief= chief;
+		this.avaliable= true;
+	}
+	
 	public Surgeon(int surgeonId, String name, boolean chief){
 		this.surgeonId= surgeonId;
 		this.name= name;
