@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class JDBCManager {
 		
-	private Connection c ;
+	private Connection c= null;
 
 	public JDBCManager() {
 		

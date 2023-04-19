@@ -13,8 +13,12 @@ public class Role implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1112548538426283192L;
+	@Id
+	@GeneratedValue(generator= "roles")
+	@TableGenerator(names= "roles", table = "sqlite_sequences", pkColumnName = "name", valueColumnName= "seq", pkColumnVale= "roles")
 	private Integer id;
 	private String name;
+	@OneToMany (fetch = FetchType.LAZY, mappedBy= "role")
 	private List<User> users;
 	
 	public Role() {
@@ -22,9 +26,8 @@ public class Role implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Role(Integer id, String name) {
+	public Role(String name) {
 		super();
-		this.id = id;
 		this.name = name;
 	}
 	

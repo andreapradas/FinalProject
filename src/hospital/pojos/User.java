@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
+@Entity 
+@Table(name= "users")
+
 public class User implements Serializable{
 	
 	/**
@@ -14,17 +17,25 @@ public class User implements Serializable{
 	private String email;
 	private byte[] password;
 	private  Role role;
+	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public User(Integer id, String email, byte[] password, Role role) {
 		super();
+		@Id
+		@GeneratedValue(generator= "users")
+		@TableGenerator(names= "users", table = "sqlite_sequences", pkColumnName = "name", valueColumnName= "seq", pkColumnVale= "users")
 		this.id = id;
 		this.email = email;
+		@Lob
 		this.password = password;
+		@ManyToOne
+		@JoinColumn(name= "role_id")
 		this.role = role;
 	}
+	
 	public Integer getId() {
 		return id;
 	}

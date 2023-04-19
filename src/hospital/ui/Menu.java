@@ -11,6 +11,7 @@ import hospital.jdbc.*;
 import hospital.pojos.Patient;
 import hospital.pojos.Surgeon;
 import hospital.pojos.SurgeonVacation;
+import hospitalJPA.JPAUserManager;
 
 public class Menu {
 
@@ -18,6 +19,7 @@ public class Menu {
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
 	private static PatientManager patientManager;
+	private static UserManager userManager;
 	
 	
 	public static void main(String[] args) {
@@ -27,7 +29,7 @@ public class Menu {
 	surgeonManager = new JDBCSurgeonManager(jdbcManager);
 	surgeonVacationManager = new JDBCSurgeonVacationManager(jdbcManager);
 	patientManager = new JDBCPatientManager(jdbcManager);
-	
+	userManager = new JPAUserManager();
 	
 		try {
 			do {
