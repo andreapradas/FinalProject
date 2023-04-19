@@ -6,10 +6,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import hospital.ifaces.OperatingRoomManager;
 import hospital.pojos.OperatingRoom;
 
 
-public class JDBCOperatingRoomManager {
+public class JDBCOperatingRoomManager implements OperatingRoomManager {
 
 	private JDBCManager manager;
 	public JDBCOperatingRoomManager(JDBCManager m)
@@ -17,7 +18,7 @@ public class JDBCOperatingRoomManager {
 		this.manager = m;
 	}
 	
-	//@Override
+	@Override
 	public void addOperatingRoom(OperatingRoom r) {
 		// TODO Auto-generated method stub
 		try{
@@ -33,7 +34,7 @@ public class JDBCOperatingRoomManager {
 		}
 	}
 	
-	//@Override
+	@Override
 	public List<OperatingRoom> getListOfOperatingRoom(){
 		List<OperatingRoom> rooms = new ArrayList<OperatingRoom>();
 		
@@ -64,7 +65,7 @@ public class JDBCOperatingRoomManager {
 		return rooms;
 	}
 	
-	//@Override
+	@Override
 	public void updateActivity(int roomId, Boolean active) {
 		try {
 			
@@ -80,7 +81,7 @@ public class JDBCOperatingRoomManager {
 		}
 	}
 	
-	//@Override
+	@Override
 	public OperatingRoom getRoomById(int roomId) {
 		// TODO Auto-generated method stub
 		
