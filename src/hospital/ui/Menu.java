@@ -1,6 +1,7 @@
 package hospital.ui;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class Menu {
 				System.out.println("2. Get list of patients");
 				System.out.println("3. Add new surgeon");
 				System.out.println("4. Add new surgeon vacation");
+				System.out.println("5. Get surgeons on vacation (during a given period)");
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -52,6 +54,9 @@ public class Menu {
 					break;
 				case 4:
 					createSurgeonVacation();
+					break;
+				case 5:
+					getSurgeonsOnVacation();
 					break;
 				case 0: 
 					jdbcManager.disconnect();
@@ -160,4 +165,47 @@ public class Menu {
 		SurgeonVacation sVac= new SurgeonVacation(start, end, surgId);
 		surgeonVacationManager.addVacation(sVac);		
 	}
+	
+	@SuppressWarnings("deprecation")
+	public static void getSurgeonsOnVacation() throws Exception {
+		System.out.println("Show all surgeons on vacation during any of these days");
+		System.out.println("Type the start date:");
+		Integer startYear;
+		Integer startMonth;
+		Integer startDay;
+		do {
+			System.out.println("Type the year:");
+			startYear= Integer.parseInt(reader.readLine());
+		} while (startYear.toString().length()!= 4);
+		do {
+			System.out.println("Type the month [1-12]:");
+			startMonth= Integer.parseInt(reader.readLine());
+		} while (startMonth<1 || startMonth>12);
+		do {
+			System.out.println("Type the day:");
+			startDay= Integer.parseInt(reader.readLine());
+		} while (startDay<1 || startMonth>31);
+		
+		System.out.println("Type the end date:");
+		Integer endYear;
+		Integer endMonth;
+		Integer endDay;
+		do {
+			System.out.println("Type the year:");
+			endYear= Integer.parseInt(reader.readLine());
+		} while (endYear.toString().length()!= 4);
+		do {
+			System.out.println("Type the month [1-12]:");
+			endMonth= Integer.parseInt(reader.readLine());
+		} while (endMonth<1 || endMonth>12);
+		do {
+			System.out.println("Type the day:");
+			endDay= Integer.parseInt(reader.readLine());
+		} while (endDay<1 || endMonth>31);
+		Date start= new Date(startYear, startMonth, startDay);
+		Date end= new Date(endYear, endMonth, endDay);
+		surgeonVacationManager.getSurgeonsOnVacation(start, end);
+	
+	}
+	
 }
