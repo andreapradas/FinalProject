@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import hospital.jdbc.JDBCSurgeonManager;
-
 public class SurgeonVacation implements Serializable{
 
 	private static final long serialVersionUID = -6939843271309580766L;
@@ -14,6 +12,17 @@ public class SurgeonVacation implements Serializable{
 	private Date starts;
 	private Date ends;
 	private int surgeonId;
+	
+	public SurgeonVacation() {
+		super();
+	}
+	
+	public SurgeonVacation(Date starts, Date ends ,int surgeonId) {
+		super();
+		this.starts= starts;
+		this.ends= ends;
+		this.surgeonId= surgeonId;
+	}
 	
 	public SurgeonVacation(int vacationId, Date starts, Date ends ,int surgeonId) {
 		this.vacationId= vacationId;
