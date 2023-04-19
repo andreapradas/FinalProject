@@ -12,7 +12,7 @@ public class Surgery implements Serializable{
 	//Attributes
 	private int surgeryId;
 	private String surgeryType;
-	private int duration;
+	//private int duration;
 	private Date day;
 	private Time startHour;
 	private Time endHour;
@@ -28,15 +28,15 @@ public class Surgery implements Serializable{
 		super();
 	}
 	
-	public Surgery(Integer surgeryId, String surgeryType, Integer duration, Date day, Time startHour, 
+	public Surgery(Integer surgeryId, String surgeryType, Date day, Time startHour, Time endHour,  
 			Integer patientId, Integer surgeonId, Integer roomId) {
 		super();
 		this.surgeryId = surgeryId; 
 		this.surgeryType = surgeryType;
-		this.duration = duration;
+		//this.duration = duration;
 		this.day = day;
 		this.startHour = startHour;
-		//this.endHour = ;//Sumar la duracion a la hora
+		this.endHour = endHour;
 		this.done = false; //Cambiar cuando se realice a true ??
 		//Foreign keys
 		this.patientId = patientId;
@@ -57,12 +57,6 @@ public class Surgery implements Serializable{
 	}
 	public void setSurgeryType(String surgeryType) {
 		this.surgeryType = surgeryType;
-	}
-	public Integer getDuration() {
-		return duration;
-	}
-	public void setDuration(Integer duration) {
-		this.duration = duration;
 	}
 	public Date getDay() {
 		return day;
@@ -135,7 +129,7 @@ public class Surgery implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Surgery [surgeryId=" + surgeryId + ", surgeryType=" + surgeryType + ", duration=" + duration + ", day="
+		return "Surgery [surgeryId=" + surgeryId + ", surgeryType=" + surgeryType + ", day="
 		+ day + ", patientId=" + patientId + ", surgeonId=" + surgeonId + ", roomId=" + roomId + "]";
 	}
 
