@@ -1,7 +1,6 @@
 package hospital.ui;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.util.ArrayList;

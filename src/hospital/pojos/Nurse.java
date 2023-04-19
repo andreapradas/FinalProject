@@ -1,9 +1,14 @@
 package hospital.pojos;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
-public class Nurse {
+public class Nurse implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer nurseID;
 	private String nurseName;
 	private Boolean nurseAvailability;
