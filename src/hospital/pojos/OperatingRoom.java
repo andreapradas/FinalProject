@@ -21,13 +21,13 @@ public class OperatingRoom implements Serializable{
 		super();
 	}
 	
-	public OperatingRoom(int roomId, int roomNumber, int roomFloor, Boolean active) {
+	public OperatingRoom(int roomId, int roomNumber, int roomFloor, Boolean active, List<Boolean> hoursAvailable) {
 		super();
 		this.roomId = roomId;
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
 		this.active = active;
-		this.hoursAvailable.add(active); //Add the rooms wheter they are active or not
+		this.hoursAvailable = hoursAvailable; 
 	}
 	
 	//Getters and Setters
