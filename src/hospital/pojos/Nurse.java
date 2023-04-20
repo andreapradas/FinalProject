@@ -12,6 +12,7 @@ public class Nurse implements Serializable{
 	private Integer nurseID;
 	private String nurseName;
 	private Boolean nurseAvailability;
+	private String email;
 	
 	public Nurse() {
 		super();
@@ -24,6 +25,29 @@ public class Nurse implements Serializable{
 		this.nurseAvailability = nurseAvailability;	
 	}
 	
+	public Nurse(Integer nurseID, String nurseName, String email, Boolean nurseAvailability) {
+		super();
+		this.nurseID = nurseID;
+		this.nurseName = nurseName;
+		this.nurseAvailability = nurseAvailability;	
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setNurseID(Integer nurseID) {
+		this.nurseID = nurseID;
+	}
+
+	public void setNurseName(String nurseName) {
+		this.nurseName = nurseName;
+	}
+
 	@Override
 	public String toString() {
 		return 

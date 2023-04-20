@@ -23,7 +23,7 @@ public class JDBCPatientManager implements PatientManager{
 		try{
 			String sql = "INSERT INTO Patient (patientName, phoneNumber) VALUES (?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setString(1, p.getName());
+			prep.setString(1, p.getPatientName());
 			prep.setInt(2, p.getPhoneNumber());
 			prep.executeUpdate();			
 					

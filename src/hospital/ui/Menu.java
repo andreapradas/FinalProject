@@ -19,7 +19,7 @@ public class Menu {
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
 	private static PatientManager patientManager;
-	private static UserManager userManager;
+//	private static UserManager userManager;
 	
 	
 	public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class Menu {
 	surgeonManager = new JDBCSurgeonManager(jdbcManager);
 	surgeonVacationManager = new JDBCSurgeonVacationManager(jdbcManager);
 	patientManager = new JDBCPatientManager(jdbcManager);
-	userManager = new JPAUserManager();
+	//userManager = new JPAUserManager();
 	
 		try {
 			do {

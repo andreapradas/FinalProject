@@ -7,6 +7,7 @@ public class Surgeon implements Serializable{
 	private static final long serialVersionUID = 5459002349058385563L;
 	
 	private int surgeonId;
+	private String email;
 	private String name;
 	private boolean chief;
 	private boolean avaliable;
@@ -15,23 +16,30 @@ public class Surgeon implements Serializable{
 		super();
 	}
 	
-	public Surgeon(String name, boolean chief){
+	public Surgeon(String name, String email, boolean chief){
 		super();
 		this.name= name;
+		this.email= email;
 		this.chief= chief;
 		this.avaliable= true;
 	}
 	
-	public Surgeon(int surgeonId, String name, boolean chief){
+	public void setSurgeonId(int surgeonId) {
+		this.surgeonId = surgeonId;
+	}
+
+	public Surgeon(int surgeonId, String name, boolean chief,String email){
 		this.surgeonId= surgeonId;
 		this.name= name;
+		this.email= email;
 		this.chief= chief;
 		this.avaliable= true;
 	}
-	
+		
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.surgeonId);
+		return Objects.hash(email, surgeonId);
 	}
 
 	@Override
@@ -43,7 +51,7 @@ public class Surgeon implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Surgeon other = (Surgeon) obj;
-		return Objects.equals(this.surgeonId, other.surgeonId);
+		return Objects.equals(email, other.email) && surgeonId == other.surgeonId;
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class Patient implements Serializable{
 	
 	private int patientId;
 	private int phoneNumber;
-	private String name;
+	private String patientName;
 	
 	public Patient() {
 		super();
@@ -17,7 +17,7 @@ public class Patient implements Serializable{
 	
 	public Patient(String name, int phoneNumber) throws phoneException {
 		super();
-		this.name= name;
+		this.patientName= name;
 		if(Integer.toString(phoneNumber).length()!= 9){
 			throw new phoneException();			
 		}
@@ -27,7 +27,7 @@ public class Patient implements Serializable{
 	public Patient(int id, String name, int phoneNumber) throws phoneException {
 		super();
 		this.patientId= id;
-		this.name= name;
+		this.patientName= name;
 		if(Integer.toString(phoneNumber).length()!= 9){
 			throw new phoneException();			
 		}
@@ -53,15 +53,15 @@ public class Patient implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Patient [id= " + patientId + ", name= " + name + ", phone number= " + phoneNumber + "]";
+		return "Patient [id= " + patientId + ", name= " + patientName + ", phone number= " + phoneNumber + "]";
 	}
 	
-	public String getName() {
-		return name;
+	public String getPatientName() {
+		return patientName;
 	}
 	
-	public void setName(String name) {
-		this.name= name;
+	public void setPatientName(String name) {
+		this.patientName= name;
 	}
 	
 	public int getPhoneNumber() {
@@ -74,4 +74,13 @@ public class Patient implements Serializable{
 		}
 		this.phoneNumber= number;
 	}
+
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+	
 }
