@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>db/projectSurgeries.db</name>
+			<type>1</type>
+			<location>C:/Users/sabel/Documents/DB.Browser.for.SQLite-3.12.2-win32/DB Browser for SQLite/projectSurgeries.db</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -1,9 +1,14 @@
 package hospital.pojos;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-public class NurseVacation {
+public class NurseVacation implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3514210278458069620L;
 	private Integer vacationID;
 	private Integer nurseID;
 	private Date starts;

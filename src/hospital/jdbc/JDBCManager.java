@@ -15,7 +15,7 @@ public class JDBCManager {
 		{			
 			// Open the DB connection
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite: ./db/projectSurgeries.db");
+			c = DriverManager.getConnection("jdbc:sqlite:.\\db\\projectSurgeries.db");
 			System.out.println("Database connection opened.");
 				
 			//create tables
@@ -40,27 +40,28 @@ public class JDBCManager {
 				"surgeon_name	TEXT NOT NULL," +
 				"chief BOOLEAN," +
 				"surgeonAvailability BOOLEAN," +
+				"surgeon_email	TEXT NOT NULL UNIQUE," +
 			");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE Patient (" +
-				"patientId	INTEGE PRIMARY KEY AUTOINCREMENT," +
+				"patientId	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"patientName TEXT NOT NULL," + 
 				"phoneNumber INTEGER NOT NULL UNIQUE," +
 			");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE Nurse (" +
-				"nurseId INTEGER, PRIMARY KEY AUTOINCREMENT," + 
+				"nurseId INTEGER PRIMARY KEY AUTOINCREMENT," + 
 				"nurse_name TEXT NOT NULL," + 
 				"nurseAvailability BOOLEAN," +
+				"nurse_email	TEXT NOT NULL UNIQUE," +
 				");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE Surgery (" +
-				"surgeryId	INTEGER, PRIMARY KEY AUTOINCREMENT," + 
+				"surgeryId	INTEGER PRIMARY KEY AUTOINCREMENT," + 
 				"surgeryType TEXT NOT NULL," +
-				"duration_Hours	INTEGER NOT NULL CHECK(1 <= duration_Hours <= 3)," +
 				"day DATE DEFAULT NULL," +
 				"startHour TIME DEFAULT NULL," +
 				"endHour	TIME DEFAULT NULL," +
@@ -87,6 +88,7 @@ public class JDBCManager {
 				"roomId	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"roomNumber	INTEGER NOT NULL UNIQUE," +
 				"roomFloor	INTEGER NOT NULL," +
+				"active BOOLEAN" +
 			");";
 			stmt.executeUpdate(sql);
 			
@@ -118,7 +120,6 @@ public class JDBCManager {
 		}
 		
 	public Connection getConnection() {
-		
 		return c;
 	}
 	

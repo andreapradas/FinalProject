@@ -76,4 +76,33 @@ public class SurgeonVacation implements Serializable{
 	public int getSurgeonOnVacationId() {
 		return surgeonId;
 	}
+
+	public Date getStarts() {
+		return starts;
+	}
+
+	public void setStarts(Date starts) {
+		this.starts = starts;
+	}
+
+	public Date getEnds() {
+		return ends;
+	}
+
+	public void setEnds(Date ends) {
+		this.ends = ends;
+	}
+
+	public int getSurgeonId() {
+		return surgeonId;
+	}
+
+	public void setSurgeonId(int surgeonId) {
+		this.surgeonId = surgeonId;
+	}
+
+	public void setVacationId(int vacationId) {
+		this.vacationId = vacationId;
+	}
+	
 }
