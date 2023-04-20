@@ -12,7 +12,7 @@ public class OperatingRoom implements Serializable{
 	private int roomNumber;
 	private int roomFloor;
 	private Boolean active; //El chiefSurgeon lo gestiona, para gestionar las que esten disponibles
-	private List<Boolean> availableRooms; //Huecos del horario, crear funcion que te ponga tantos huecos como
+	private List<Boolean> hoursAvailable; //Huecos del horario, crear funcion que te ponga tantos huecos como
 	//hab disponibles
 	
 	//Constructors
@@ -27,7 +27,7 @@ public class OperatingRoom implements Serializable{
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
 		this.active = active;
-		this.availableRooms.add(active); //Add the rooms wheter they are active or not
+		this.hoursAvailable.add(active); //Add the rooms wheter they are active or not
 	}
 	
 	//Getters and Setters
@@ -63,14 +63,14 @@ public class OperatingRoom implements Serializable{
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-
-	public List<Boolean> getAvailableRooms() {
-		return availableRooms;
+	public List<Boolean> getHoursAvailable() {
+		return hoursAvailable;
 	}
 
-	public void setAvailableRooms(List<Boolean> availableRooms) {
-		this.availableRooms = availableRooms;
+	public void setHoursAvailable(List<Boolean> hoursAvailable) {
+		this.hoursAvailable = hoursAvailable;
 	}
+
 	
 	//HashCode and Equals
 
