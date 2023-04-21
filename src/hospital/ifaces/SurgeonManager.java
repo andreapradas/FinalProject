@@ -1,9 +1,12 @@
 package hospital.ifaces;
 
+import java.util.List;
+
 import hospital.pojos.Surgeon;
 
 public interface SurgeonManager {
 	String getNameById(int id);
 	void addSurgeon(Surgeon surg);
+	List<Surgeon> getListOfSurgeons();
 	
 }

@@ -18,7 +18,34 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		this.manager = m;
 	}
 		
-	//public  getReservedVacation;
+	public List<SurgeonVacation> getAllVacations () {
+		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
+		try {
+			Statement stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM surgeonVacation";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				Integer vacId = rs.getInt("vacationId");
+				java.sql.Date starts = rs.getDate("starts");
+				java.sql.Date ends = rs.getDate("ends");
+				Integer surgId = rs.getInt("surgeonID");
+			
+				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
+				surgeonVacations.add(vac);
+			}
+			rs.close();
+			stmt.close();	
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return surgeonVacations;	
+	}
+	
 	public List<SurgeonVacation> getSurgeonReservedVacation (int id) {
 		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
 		try {
@@ -31,8 +58,8 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			while(rs.next())
 			{
 				Integer vacId = rs.getInt("vacationId");
-				Date starts = rs.getDate("starts");
-				Date ends = rs.getDate("ends");
+				java.sql.Date starts = rs.getDate("starts");
+				java.sql.Date ends = rs.getDate("ends");
 				Integer surgId = rs.getInt("surgeonID");
 			
 				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
@@ -63,26 +90,30 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}
 	}
 	
-	public List<SurgeonVacation> getSurgeonsOnVacation(Date start, Date end){
+	public List<SurgeonVacation> getSurgeonsOnVacation(java.sql.Date start, java.sql.Date end){
 		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
 		try {
-			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM Surgeon INNER JOIN surgeonVacation"
 					+ "ON Surgeon.surgeonID = surgeonVacation.surgeonID "
-					+ "WHERE((starts>= start AND starts<= end) OR (ends>= starts AND ends<= end))";
-			ResultSet rs = stmt.executeQuery(sql);
+					+ "WHERE((starts>= ? AND starts<= ?) OR (ends>= ? AND ends<= ?))";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);;
+			prep.setDate(1, start);
+			prep.setDate(2, end);
+			prep.setDate(3, start);
+			prep.setDate(4, end);
+			ResultSet rs = prep.executeQuery();
 			
 			while(rs.next())
 			{
 				Integer vacId = rs.getInt("vacationId");
-				Date starts = rs.getDate("starts");
-				Date ends = rs.getDate("ends");
+				java.sql.Date starts = rs.getDate("starts");
+				java.sql.Date ends = rs.getDate("ends");
 				Integer surgId = rs.getInt("surgeonID");
 				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
 				surgeonVacations.add(vac);
 			}
 			rs.close();
-			stmt.close();	
+			prep.close();	
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -90,7 +121,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		return surgeonVacations;
 	}
 	
-	public void modifySurgeonVacation(int vacationId, Date start, Date end) {
+	public void modifySurgeonVacation(int vacationId, java.sql.Date start, java.sql.Date end) {
 		try {
 			String sql = "UPDATE surgeonVacation SET starts=?, ends=? WHERE vacationId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
@@ -103,7 +134,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}
 	}
 	
-	public int getSurgeonVacationId(int surgeonId, Date start, Date end) {
+	public int getSurgeonVacationId(int surgeonId, java.sql.Date start, java.sql.Date end) {
 		Integer vacId= null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
