@@ -50,7 +50,8 @@ public class SurgeonVacation implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Surgeon vacation [start date= " + starts + ", end date= " + ends + "]";
+		return "Surgeon vacation [start date= " + starts + ", end date= " + ends + "] (vacId: "+ vacationId
+				+ " surgId: " + surgeonId +")";
 	}
 	
 	public Date getStartDate() {

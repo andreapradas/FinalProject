@@ -39,7 +39,7 @@ public class Menu {
 				System.out.println("2. Get list of patients");
 				System.out.println("3. Add new surgeon");
 				System.out.println("4. Add new surgeon vacation");
-				System.out.println("5. Get surgeons on vacation (during a given period)");
+				System.out.println("5. Get surgeons on vacation any day of the given period");
 				System.out.println("6. Get all vacations");
 				System.out.println("7. Delete vacation");
 				System.out.println("8. Get list of surgeons");
@@ -185,6 +185,10 @@ public class Menu {
 	{
 		System.out.println("Type the id of the surgeon:");
 		Integer surgId =  Integer.parseInt(reader.readLine());
+		System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
+		if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
+			throw new Exception();
+		}		
 		java.sql.Date start = null;
 		Integer year;
 		while(true) {
@@ -270,9 +274,30 @@ public class Menu {
 			System.out.println("Type the day:");
 			endDay= Integer.parseInt(reader.readLine());
 		} while (endDay<1 || endMonth>31);
-		java.sql.Date start= new java.sql.Date(startYear-1900, startMonth, startDay);
-		java.sql.Date end= new java.sql.Date(endYear-1900, endMonth, endDay);
-		surgeonVacationManager.getSurgeonsOnVacation(start, end);
+		java.sql.Date start= new java.sql.Date(startYear-1900, startMonth-1, startDay);
+		java.sql.Date end= new java.sql.Date(endYear-1900, endMonth-1, endDay);
+		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+		try {
+		if(start.compareTo(end)>0) {
+			throw new Exception ();
+		}
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("End date cannot be after start date");
+			e.printStackTrace();
+		}
+		try {
+			surgeons = surgeonVacationManager.getSurgeonsOnVacation(start, end);;
+			int i;
+			for(i=0; i< surgeons.size(); i++)
+			{
+				System.out.println(surgeons.get(i).toString());
+			}			
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	
 	}
 	

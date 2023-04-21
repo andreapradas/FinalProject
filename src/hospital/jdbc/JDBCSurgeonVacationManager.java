@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hospital.ifaces.SurgeonVacationManager;
+import hospital.pojos.Surgeon;
 import hospital.pojos.SurgeonVacation;
 
 public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
@@ -90,13 +91,13 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}
 	}
 	
-	public List<SurgeonVacation> getSurgeonsOnVacation(java.sql.Date start, java.sql.Date end){
-		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
+	public List<Surgeon> getSurgeonsOnVacation(java.sql.Date start, java.sql.Date end){
+		List<Surgeon> surgeons= new ArrayList<Surgeon>();
 		try {
-			String sql = "SELECT * FROM Surgeon INNER JOIN surgeonVacation"
-					+ "ON Surgeon.surgeonID = surgeonVacation.surgeonID "
-					+ "WHERE((starts>= ? AND starts<= ?) OR (ends>= ? AND ends<= ?))";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);;
+			String sql = "SELECT Surgeon.surgeonID, Surgeon.surgeon_name FROM surgeonVacation INNER JOIN Surgeon "
+					+ "ON Surgeon.surgeonID=surgeonVacation.surgeonID "
+					+ "WHERE (starts >=? AND starts <=?) OR (ends >=? AND ends <=?)";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, start);
 			prep.setDate(2, end);
 			prep.setDate(3, start);
@@ -105,12 +106,10 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			
 			while(rs.next())
 			{
-				Integer vacId = rs.getInt("vacationId");
-				java.sql.Date starts = rs.getDate("starts");
-				java.sql.Date ends = rs.getDate("ends");
+				String name = rs.getString("surgeon_name");
 				Integer surgId = rs.getInt("surgeonID");
-				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
-				surgeonVacations.add(vac);
+				Surgeon s= new Surgeon(name, surgId);
+				surgeons.add(s);
 			}
 			rs.close();
 			prep.close();	
@@ -118,7 +117,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return surgeonVacations;
+		return surgeons;
 	}
 	
 	public void modifySurgeonVacation(int vacationId, java.sql.Date start, java.sql.Date end) {
@@ -162,5 +161,24 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public int countSurgeonVacations(int id) {
+		// TODO Auto-generated method stub
+		int countVac = 0;
+		try {
+			String sql = "SELECT COUNT(vacationId) AS count FROM surgeonVacation WHERE surgeonID= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery(sql);
+			countVac= rs.getInt("count");
+			rs.close();
+			prep.close();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return countVac;
 	}
 }

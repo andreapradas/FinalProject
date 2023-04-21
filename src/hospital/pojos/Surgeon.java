@@ -24,6 +24,12 @@ public class Surgeon implements Serializable{
 		this.avaliable= true;
 	}
 	
+	public Surgeon(String name, Integer id){
+		super();
+		this.name= name;
+		this.surgeonId= id;
+	}
+	
 	public void setSurgeonId(int surgeonId) {
 		this.surgeonId = surgeonId;
 	}
