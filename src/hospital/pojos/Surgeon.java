@@ -24,11 +24,17 @@ public class Surgeon implements Serializable{
 		this.avaliable= true;
 	}
 	
+	public Surgeon(String name, Integer id){
+		super();
+		this.name= name;
+		this.surgeonId= id;
+	}
+	
 	public void setSurgeonId(int surgeonId) {
 		this.surgeonId = surgeonId;
 	}
 
-	public Surgeon(int surgeonId, String name, boolean chief,String email){
+	public Surgeon(int surgeonId, String name, String email, boolean chief){
 		this.surgeonId= surgeonId;
 		this.name= name;
 		this.email= email;
@@ -36,6 +42,14 @@ public class Surgeon implements Serializable{
 		this.avaliable= true;
 	}
 		
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	@Override
 	public int hashCode() {

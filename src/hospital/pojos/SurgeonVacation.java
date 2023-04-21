@@ -9,15 +9,15 @@ public class SurgeonVacation implements Serializable{
 	private static final long serialVersionUID = -6939843271309580766L;
 
 	private int vacationId;
-	private Date starts;
-	private Date ends;
+	private java.sql.Date starts;
+	private java.sql.Date ends;
 	private int surgeonId;
 	
 	public SurgeonVacation() {
 		super();
 	}
 	
-	public SurgeonVacation(Date starts, Date ends ,int surgeonId) {
+	public SurgeonVacation(java.sql.Date starts, java.sql.Date ends ,int surgeonId) {
 		super();
 		this.starts= starts;
 		this.ends= ends;
@@ -50,7 +50,8 @@ public class SurgeonVacation implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Surgeon vacation [start date= " + starts + ", end date= " + ends + "]";
+		return "Surgeon vacation [start date= " + starts + ", end date= " + ends + "] (vacId: "+ vacationId
+				+ " surgId: " + surgeonId +")";
 	}
 	
 	public Date getStartDate() {
@@ -65,7 +66,7 @@ public class SurgeonVacation implements Serializable{
 		return ends;
 	}
 	
-	public void setEndDate(Date end) {
+	public void setEndDate(java.sql.Date end) {
 		this.ends= end;
 	}
 	
@@ -81,7 +82,7 @@ public class SurgeonVacation implements Serializable{
 		return starts;
 	}
 
-	public void setStarts(Date starts) {
+	public void setStarts(java.sql.Date starts) {
 		this.starts = starts;
 	}
 

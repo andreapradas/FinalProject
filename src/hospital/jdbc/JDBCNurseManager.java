@@ -23,7 +23,7 @@ public class JDBCNurseManager implements NurseManager {
 	public void addNurse(Nurse n) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO Nurse (nurseID, nurseName, nurseAvailability) VALUES (?,?,?)";
+			String sql = "INSERT INTO Nurse (nurseId, nurseName, nurseAvailability) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, n.getNurseID());
 			prep.setString(2, n.getNurseName());

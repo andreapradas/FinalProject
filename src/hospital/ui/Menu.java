@@ -1,6 +1,7 @@
 package hospital.ui;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -38,7 +39,10 @@ public class Menu {
 				System.out.println("2. Get list of patients");
 				System.out.println("3. Add new surgeon");
 				System.out.println("4. Add new surgeon vacation");
-				System.out.println("5. Get surgeons on vacation (during a given period)");
+				System.out.println("5. Get surgeons on vacation any day of the given period");
+				System.out.println("6. Get all vacations");
+				System.out.println("7. Delete vacation");
+				System.out.println("8. Get list of surgeons");
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -59,6 +63,15 @@ public class Menu {
 				case 5:
 					getSurgeonsOnVacation();
 					break;
+				case 6:
+					getAllVacations();
+					break;
+				case 7:
+					deleteVacations();
+					break;
+				case 8:
+					getAllSurgeons();
+					break;
 				case 0: 
 					jdbcManager.disconnect();
 					System.exit(0);
@@ -72,7 +85,32 @@ public class Menu {
 		}
 	}
 	
-	
+	private static void deleteVacations() throws NumberFormatException, Exception {
+		// TODO Auto-generated method stub
+		System.out.println("Type the vacation id");
+		Integer vacId =  Integer.parseInt(reader.readLine());
+		surgeonVacationManager.deleteSurgeonVacationById(vacId);
+	}
+
+	public static void getAllVacations() throws Exception
+	{
+		List<SurgeonVacation> sVacations = new ArrayList<SurgeonVacation>();
+		try {
+			sVacations = surgeonVacationManager.getAllVacations();
+			int i;
+			for(i=0; i< sVacations.size(); i++)
+			{
+				
+				System.out.print(sVacations.get(i).toString());
+				System.out.println(" Surgeon id: "+ sVacations.get(i).getSurgeonId());
+			}			
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
 	public static void createPatient() throws Exception
 	{
 		System.out.println("Type the name of the patient:");
@@ -100,6 +138,22 @@ public class Menu {
 		}
 	}
 	
+	public static void getAllSurgeons() throws Exception
+	{
+		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+		try {
+			surgeons = surgeonManager.getListOfSurgeons();
+			int i;
+			for(i=0; i< surgeons.size(); i++)
+			{
+				System.out.println(surgeons.get(i).toString());
+			}			
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void createSurgeon() throws Exception
 	{
 		System.out.println("Type the name of the surgeon:");
@@ -108,16 +162,20 @@ public class Menu {
 		while(true) {
 			System.out.println("Is it a chief surgeon? (Y/N)");
 			String response =  reader.readLine();
-			if(response== "Y" || response== "y") {
+			if(response.equals("Y") || response.equals("y")) {
+				System.out.println(response);
 				chief= true;
 				break;
-			} else if(response== "N" || response== "n") {
+			} else if(response.equals("N") || response.equals("n")) {
 				chief= false;
+				break;
 			}
 			System.out.println("Please, answer with the correct pattern");
 		}
+		System.out.println("Type the email of the surgeon:");
+		String email =  reader.readLine();
 		
-		Surgeon s= new Surgeon(name, chief);
+		Surgeon s= new Surgeon(name, email,chief);
 		surgeonManager.addSurgeon(s);		
 	}
 
@@ -127,11 +185,15 @@ public class Menu {
 	{
 		System.out.println("Type the id of the surgeon:");
 		Integer surgId =  Integer.parseInt(reader.readLine());
-		Date start = null;
+		System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
+		if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
+			throw new Exception();
+		}		
+		java.sql.Date start = null;
 		Integer year;
 		while(true) {
 			System.out.println("Type the year:");
-			year =  Integer.parseInt(reader.readLine());
+			year = Integer.parseInt(reader.readLine());
 			if(year.toString().length()== 4) {
 				break;
 			}
@@ -147,23 +209,32 @@ public class Menu {
 			System.out.println("5) 1 august to 15 august");
 			System.out.println("6) 16 august to 30 august");
 			option= Integer.parseInt(reader.readLine());
+			year= year-1900;
+			System.out.println(option);
 			switch(option) {
 			case 1:
-				start= new Date(year, 5, 1);
+				start= new java.sql.Date(year, 5, 1);
+				break;
 			case 2:
-				start= new Date(year, 5, 16);
+				start= new java.sql.Date(year, 5, 16);
+				break;
 			case 3:
-				start= new Date(year, 6, 1);
+				start= new java.sql.Date(year, 6, 1);
+				break;
 			case 4:
-				start= new Date(year, 6, 16);
+				start= new java.sql.Date(year, 6, 16);
+				break;
 			case 5:
-				start= new Date(year, 7, 1);
+				start= new java.sql.Date(year, 7, 1);
+				break;
 			case 6:
-				start= new Date(year, 7, 16);
+				start= new java.sql.Date(year, 7, 16);
+				break;
 			}
-		} while (option>= 1 && option<= 6);
-		Date end= new Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
+		} while (option< 1 || option> 6);
+		java.sql.Date end= new java.sql.Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
 		SurgeonVacation sVac= new SurgeonVacation(start, end, surgId);
+		System.out.print(sVac.toString());
 		surgeonVacationManager.addVacation(sVac);		
 	}
 	
@@ -203,9 +274,30 @@ public class Menu {
 			System.out.println("Type the day:");
 			endDay= Integer.parseInt(reader.readLine());
 		} while (endDay<1 || endMonth>31);
-		Date start= new Date(startYear, startMonth, startDay);
-		Date end= new Date(endYear, endMonth, endDay);
-		surgeonVacationManager.getSurgeonsOnVacation(start, end);
+		java.sql.Date start= new java.sql.Date(startYear-1900, startMonth-1, startDay);
+		java.sql.Date end= new java.sql.Date(endYear-1900, endMonth-1, endDay);
+		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+		try {
+		if(start.compareTo(end)>0) {
+			throw new Exception ();
+		}
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("End date cannot be after start date");
+			e.printStackTrace();
+		}
+		try {
+			surgeons = surgeonVacationManager.getSurgeonsOnVacation(start, end);;
+			int i;
+			for(i=0; i< surgeons.size(); i++)
+			{
+				System.out.println(surgeons.get(i).toString());
+			}			
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	
 	}
 	

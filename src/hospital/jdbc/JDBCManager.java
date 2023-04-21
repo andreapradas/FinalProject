@@ -89,6 +89,7 @@ public class JDBCManager {
 				"roomNumber	INTEGER NOT NULL UNIQUE," +
 				"roomFloor	INTEGER NOT NULL," +
 				"active BOOLEAN" +
+				"hoursAvaliable LIST" +
 			");";
 			stmt.executeUpdate(sql);
 			
