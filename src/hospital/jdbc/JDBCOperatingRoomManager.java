@@ -95,7 +95,8 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			Integer roomNumber = rs.getInt("roomNumber");
 			Integer roomFloor = rs.getInt("roomFloor");
 			Boolean active = rs.getBoolean("active");
-				o = new OperatingRoom(roomId, roomNumber, roomFloor, active);				
+			List<Boolean> hoursAvailable = null;
+			o = new OperatingRoom(roomId, roomNumber, roomFloor, active, hoursAvailable);				
 			
 			rs.close();
 			stmt.close();
