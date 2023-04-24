@@ -117,7 +117,6 @@ public class Menu {
 		String name =  reader.readLine();
 		System.out.println("Type the phone number");
 		Integer phone =  Integer.parseInt(reader.readLine());
-		
 		Patient p = new Patient(name, phone);
 		patientManager.addPatient(p);		
 	}
