@@ -14,6 +14,6 @@ public interface NurseManager {
 	
 	public Nurse getNurseByID (int iD);
 	
-	public void deleteNurseByID (int ID); //delete
+	public void deleteNurseByID (int ID);
 
 }
