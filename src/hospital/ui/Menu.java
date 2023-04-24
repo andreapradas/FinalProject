@@ -12,6 +12,7 @@ import hospital.jdbc.*;
 import hospital.pojos.Patient;
 import hospital.pojos.Surgeon;
 import hospital.pojos.SurgeonVacation;
+import hospital.pojos.User;
 import hospitalJPA.JPAUserManager;
 
 public class Menu {
@@ -20,18 +21,46 @@ public class Menu {
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
 	private static PatientManager patientManager;
-//	private static UserManager userManager;
+	private static UserManager userManager;
+	private static JDBCManager jdbcManager;
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-	JDBCManager jdbcManager = new JDBCManager();
+	jdbcManager = new JDBCManager();
 	surgeonManager = new JDBCSurgeonManager(jdbcManager);
 	surgeonVacationManager = new JDBCSurgeonVacationManager(jdbcManager);
 	patientManager = new JDBCPatientManager(jdbcManager);
-	//userManager = new JPAUserManager();
+	userManager = new JPAUserManager();
 	
+		try {
+			do {
+				System.out.println("Choose an option");
+				System.out.println("1. Log in Surgeon");
+				System.out.println("0. exit");
+	
+				int choice = Integer.parseInt(reader.readLine());
+				switch(choice)
+				{
+				case 1:
+					createPatient();
+					break;
+				case 0: 
+					jdbcManager.disconnect();
+					userManager.disconnect();
+					System.exit(0);
+				default:
+					break;
+				}
+			}while(true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void SurgeonMenu() throws Exception{
 		try {
 			do {
 				System.out.println("Choose an option");
@@ -78,6 +107,7 @@ public class Menu {
 					break;
 				case 0: 
 					jdbcManager.disconnect();
+					userManager.disconnect();
 					System.exit(0);
 				default:
 					break;
@@ -86,6 +116,18 @@ public class Menu {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	private static void loginSurgeon() throws Exception{
+		System.out.println("Email: ");
+		String email= reader.readLine();
+		System.out.println("Password: ");
+		String password= reader.readLine();
+		User u= userManager.checkPassword(email, password);
+		if(u!=null & u.getRole().getName().equals("Surgeon")) {
+			System.out.println("Login Successful!");
+			SurgeonMenu();
 		}
 	}
 	
