@@ -39,8 +39,9 @@ public class JDBCManager {
 				"surgeonID	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"surgeon_name	TEXT NOT NULL," +
 				"chief BOOLEAN," +
-				"surgeonAvailability BOOLEAN," +
 				"surgeon_email	TEXT NOT NULL UNIQUE," +
+				"onVacation	BOOLEAN," +
+				"hourAvailability LIST," +
 			");";
 			stmt.executeUpdate(sql);
 			

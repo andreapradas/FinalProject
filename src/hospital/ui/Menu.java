@@ -43,6 +43,7 @@ public class Menu {
 				System.out.println("6. Get all vacations");
 				System.out.println("7. Delete vacation");
 				System.out.println("8. Get list of surgeons");
+				System.out.println("9. Change chief surgeon");
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -72,6 +73,9 @@ public class Menu {
 				case 8:
 					getAllSurgeons();
 					break;
+				case 9:
+					changeChiefSurg();
+					break;
 				case 0: 
 					jdbcManager.disconnect();
 					System.exit(0);
@@ -85,6 +89,15 @@ public class Menu {
 		}
 	}
 	
+	private static void changeChiefSurg() {
+	// TODO Auto-generated method stub
+		System.out.println("The chief is going to be changed and the previous is not going to be deleted as chief");
+		System.out.println("Type the new chief id");
+		Integer chiefId =  Integer.parseInt(reader.readLine());
+		surgeonManager.deleteSurgeonVacationById(vacId);
+	
+	}
+
 	private static void deleteVacations() throws NumberFormatException, Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Type the vacation id");
@@ -117,7 +130,6 @@ public class Menu {
 		String name =  reader.readLine();
 		System.out.println("Type the phone number");
 		Integer phone =  Integer.parseInt(reader.readLine());
-		
 		Patient p = new Patient(name, phone);
 		patientManager.addPatient(p);		
 	}
@@ -156,26 +168,31 @@ public class Menu {
 	
 	public static void createSurgeon() throws Exception
 	{
+		Surgeon s;
 		System.out.println("Type the name of the surgeon:");
 		String name =  reader.readLine();
 		Boolean chief;
-		while(true) {
-			System.out.println("Is it a chief surgeon? (Y/N)");
-			String response =  reader.readLine();
-			if(response.equals("Y") || response.equals("y")) {
-				System.out.println(response);
-				chief= true;
-				break;
-			} else if(response.equals("N") || response.equals("n")) {
-				chief= false;
-				break;
+		if (surgeonManager.getChiefSurgeon()== null) {
+			while(true) {
+				System.out.println("Is it a chief surgeon? (Y/N)");
+				String response =  reader.readLine();
+				if(response.equals("Y") || response.equals("y")) {
+					System.out.println(response);
+					chief= true;
+					break;
+				} else if(response.equals("N") || response.equals("n")) {
+					chief= false;
+					break;
+				}
+				System.out.println("Please, answer with the correct pattern");
 			}
-			System.out.println("Please, answer with the correct pattern");
+		}
+		else {
+			chief= false;
 		}
 		System.out.println("Type the email of the surgeon:");
 		String email =  reader.readLine();
-		
-		Surgeon s= new Surgeon(name, email,chief);
+		s= new Surgeon(name, email,chief);
 		surgeonManager.addSurgeon(s);		
 	}
 
@@ -185,7 +202,7 @@ public class Menu {
 	{
 		System.out.println("Type the id of the surgeon:");
 		Integer surgId =  Integer.parseInt(reader.readLine());
-		System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
+		//System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
 		if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
 			throw new Exception();
 		}		
