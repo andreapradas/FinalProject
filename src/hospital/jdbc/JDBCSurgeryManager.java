@@ -111,13 +111,13 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		Surgery s = getSurgeryById(surgeryId);
 		switch(parameterChange) {
 		case 1: //Cambiar el surgeryId
-			s.setSurgeryId(askSurgeryId());
+			//s.setSurgeryId(askSurgeryId());
 			break;
 		case 2: //surgeryType
-			s.setSurgeryType(askSurgeryType());
+			//s.setSurgeryType(askSurgeryType());
 			break;
 		case 3://surgeryDate
-			s.setSurgeryDate(askSurgeryDate());
+			//s.setSurgeryDate(askSurgeryDate());
 			break;
 		case 4://startHour y endHour
 			s.getStartHour();
