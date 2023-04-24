@@ -12,7 +12,6 @@ public class Surgery implements Serializable{
 	//Attributes
 	private int surgeryId;
 	private String surgeryType;
-	//private int duration;
 	private Date surgeryDate;
 	private Time startHour;
 	private Time endHour;
