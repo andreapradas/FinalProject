@@ -195,6 +195,50 @@ public class Menu {
 		s= new Surgeon(name, email,chief);
 		surgeonManager.addSurgeon(s);		
 	}
+	
+	
+	public Integer askSurgeryId() {
+		System.out.println("Type the new surgeryId: ");
+		try {
+			Integer surgeryId = Integer.parseInt(reader.readLine());
+			return surgeryId;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String askSurgeryType() {
+		System.out.println("Type the new surgeryType: ");
+		try {
+			String surgeryType = reader.readLine();
+			return surgeryType;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Date askSurgeryDate() {
+		System.out.println("Type the new date for the surgery: ");
+		try {
+			System.out.println("Day: ");
+			Integer day = Integer.parseInt(reader.readLine());
+			System.out.println("Month: ");
+			Integer month = Integer.parseInt(reader.readLine());
+			System.out.println("Year: ");
+			Integer year = Integer.parseInt(reader.readLine());
+			Date surgeryDate = new Date(year, month, day);
+			
+			return surgeryDate;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 
 
 	@SuppressWarnings("deprecation")
@@ -314,8 +358,6 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	
 	}
 	
 }
