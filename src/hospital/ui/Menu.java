@@ -13,6 +13,7 @@ import hospital.pojos.Nurse;
 import hospital.pojos.Patient;
 import hospital.pojos.Surgeon;
 import hospital.pojos.SurgeonVacation;
+import hospital.pojos.User;
 import hospitalJPA.JPAUserManager;
 
 public class Menu {
@@ -21,22 +22,50 @@ public class Menu {
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
 	private static PatientManager patientManager;
+	private static UserManager userManager;
+	private static JDBCManager jdbcManager;
 	private static NurseManager nurseManager;
 	private static WorksWithManager worksWithManager;
-//	private static UserManager userManager;
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-	JDBCManager jdbcManager = new JDBCManager();
+	jdbcManager = new JDBCManager();
 	surgeonManager = new JDBCSurgeonManager(jdbcManager);
 	surgeonVacationManager = new JDBCSurgeonVacationManager(jdbcManager);
 	patientManager = new JDBCPatientManager(jdbcManager);
+	userManager = new JPAUserManager();
 	nurseManager = new JDBCNurseManager(jdbcManager);
 	worksWithManager = new JDBCWorksWithManager(jdbcManager);
-	//userManager = new JPAUserManager();
 	
+		try {
+			do {
+				System.out.println("Choose an option");
+				System.out.println("1. Log in Surgeon");
+				System.out.println("0. exit");
+	
+				int choice = Integer.parseInt(reader.readLine());
+				switch(choice)
+				{
+				case 1:
+					createPatient();
+					break;
+				case 0: 
+					jdbcManager.disconnect();
+					userManager.disconnect();
+					System.exit(0);
+				default:
+					break;
+				}
+			}while(true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void SurgeonMenu() throws Exception{
 		try {
 			do {
 				System.out.println("Choose an option");
@@ -47,17 +76,13 @@ public class Menu {
 				System.out.println("5. Get surgeons on vacation any day of the given period");
 				System.out.println("6. Get all vacations");
 				System.out.println("7. Delete vacation");
-				System.out.println("8. Get list of surgeons");
-<<<<<<< HEAD
-				
+				System.out.println("8. Get list of surgeons");				
 				System.out.println("9. Add new nurse");
 				System.out.println("10. Get list of nurses");
 				System.out.println("11. Assign nurse to surgeon");
 				//System.out.println("12. Get nurse by ID");
 				System.out.println("13. Delete nurse by ID");
-=======
 				System.out.println("9. Change chief surgeon");
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -88,7 +113,6 @@ public class Menu {
 					getAllSurgeons();
 					break;
 				case 9:
-<<<<<<< HEAD
 					createNurse();
 				case 10:
 					getAllNurses();
@@ -96,12 +120,11 @@ public class Menu {
 					assignNurseSurgeon();
 				case 12:
 					deleteNurse();
-=======
 					changeChiefSurg();
 					break;
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 				case 0: 
 					jdbcManager.disconnect();
+					userManager.disconnect();
 					System.exit(0);
 				default:
 					break;
@@ -113,15 +136,17 @@ public class Menu {
 		}
 	}
 	
-<<<<<<< HEAD
-	
-	
-	
-	
-	
-	
-	
-	
+	private static void loginSurgeon() throws Exception{
+		System.out.println("Email: ");
+		String email= reader.readLine();
+		System.out.println("Password: ");
+		String password= reader.readLine();
+		User u= userManager.checkPassword(email, password);
+		if(u!=null & u.getRole().getName().equals("Surgeon")) {
+			System.out.println("Login Successful!");
+			SurgeonMenu();
+		}
+	}
 	
 	
 	
@@ -174,16 +199,15 @@ public class Menu {
 		nurseManager.addNurse(n);
 	}
 
-=======
+
 	private static void changeChiefSurg() {
 	// TODO Auto-generated method stub
 		System.out.println("The chief is going to be changed and the previous is not going to be deleted as chief");
 		System.out.println("Type the new chief id");
-		Integer chiefId =  Integer.parseInt(reader.readLine());
-		surgeonManager.deleteSurgeonVacationById(vacId);
-	
+		//Integer chiefId =  Integer.parseInt(reader.readLine());
+		
+		//surgeonManager.deleteSurgeonVacationById(chiefId);
 	}
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 
 	private static void deleteVacations() throws NumberFormatException, Exception {
 		// TODO Auto-generated method stub
@@ -445,10 +469,6 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		
-=======
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 	}
 	
 }
