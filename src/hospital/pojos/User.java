@@ -4,6 +4,15 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
 @Entity 
 @Table(name= "users")
 
@@ -13,9 +22,15 @@ public class User implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -2004663877998019879L;
+	@Id
+	@GeneratedValue(generator= "users")
+	@TableGenerator(name= "users", table = "sqlite_sequences", pkColumnName = "name", valueColumnName= "seq", pkColumnValue= "users")
 	private Integer id;
 	private String email;
+	@Lob
 	private byte[] password;
+	@ManyToOne
+	@JoinColumn(name= "role_id")
 	private  Role role;
 	
 	public User() {
@@ -24,15 +39,9 @@ public class User implements Serializable{
 	}
 	public User(Integer id, String email, byte[] password, Role role) {
 		super();
-		@Id
-		@GeneratedValue(generator= "users")
-		@TableGenerator(names= "users", table = "sqlite_sequences", pkColumnName = "name", valueColumnName= "seq", pkColumnVale= "users")
 		this.id = id;
 		this.email = email;
-		@Lob
 		this.password = password;
-		@ManyToOne
-		@JoinColumn(name= "role_id")
 		this.role = role;
 	}
 	
