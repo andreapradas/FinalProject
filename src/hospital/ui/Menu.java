@@ -1,9 +1,9 @@
 package hospital.ui;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +21,14 @@ public class Menu {
 	private static BufferedReader reader = new BufferedReader (new InputStreamReader(System.in));
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
+
+   //private static UserManager userManager;
+
 	private static PatientManager patientManager;
 	private static UserManager userManager;
 	private static JDBCManager jdbcManager;
 	private static NurseManager nurseManager;
 	private static WorksWithManager worksWithManager;
-	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -308,6 +310,8 @@ public class Menu {
 	}
 	
 	
+//Métodos para pedir los nuevos parámetros a modificar en una SURGERY 
+	
 	public Integer askSurgeryId() {
 		System.out.println("Type the new surgeryId: ");
 		try {
@@ -350,6 +354,31 @@ public class Menu {
 	}
 	
 	
+	@SuppressWarnings("deprecation")
+	public Time askStartHour() {
+		System.out.println("Type the new startHour: ");
+		try{
+			Integer hour = Integer.parseInt(reader.readLine());
+			Time startHour = new Time(hour, 0, 0);
+			return startHour;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Time askEndHour() {
+		System.out.println("Type the new endHour: ");
+		try{
+			Integer hour = Integer.parseInt(reader.readLine());
+			Time endHour = new Time(hour, 0, 0);
+			return endHour;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 
 	@SuppressWarnings("deprecation")
