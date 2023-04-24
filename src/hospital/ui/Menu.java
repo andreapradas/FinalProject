@@ -20,7 +20,7 @@ public class Menu {
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
 	private static PatientManager patientManager;
-//	private static UserManager userManager;
+//private static UserManager userManager;
 	
 	
 	public static void main(String[] args) {
