@@ -48,12 +48,16 @@ public class Menu {
 				System.out.println("6. Get all vacations");
 				System.out.println("7. Delete vacation");
 				System.out.println("8. Get list of surgeons");
+<<<<<<< HEAD
 				
 				System.out.println("9. Add new nurse");
 				System.out.println("10. Get list of nurses");
 				System.out.println("11. Assign nurse to surgeon");
 				//System.out.println("12. Get nurse by ID");
 				System.out.println("13. Delete nurse by ID");
+=======
+				System.out.println("9. Change chief surgeon");
+>>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -84,6 +88,7 @@ public class Menu {
 					getAllSurgeons();
 					break;
 				case 9:
+<<<<<<< HEAD
 					createNurse();
 				case 10:
 					getAllNurses();
@@ -91,6 +96,10 @@ public class Menu {
 					assignNurseSurgeon();
 				case 12:
 					deleteNurse();
+=======
+					changeChiefSurg();
+					break;
+>>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 				case 0: 
 					jdbcManager.disconnect();
 					System.exit(0);
@@ -104,6 +113,7 @@ public class Menu {
 		}
 	}
 	
+<<<<<<< HEAD
 	
 	
 	
@@ -164,6 +174,16 @@ public class Menu {
 		nurseManager.addNurse(n);
 	}
 
+=======
+	private static void changeChiefSurg() {
+	// TODO Auto-generated method stub
+		System.out.println("The chief is going to be changed and the previous is not going to be deleted as chief");
+		System.out.println("Type the new chief id");
+		Integer chiefId =  Integer.parseInt(reader.readLine());
+		surgeonManager.deleteSurgeonVacationById(vacId);
+	
+	}
+>>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 
 	private static void deleteVacations() throws NumberFormatException, Exception {
 		// TODO Auto-generated method stub
@@ -197,7 +217,6 @@ public class Menu {
 		String name =  reader.readLine();
 		System.out.println("Type the phone number");
 		Integer phone =  Integer.parseInt(reader.readLine());
-		
 		Patient p = new Patient(name, phone);
 		patientManager.addPatient(p);		
 	}
@@ -236,28 +255,77 @@ public class Menu {
 	
 	public static void createSurgeon() throws Exception
 	{
+		Surgeon s;
 		System.out.println("Type the name of the surgeon:");
 		String name =  reader.readLine();
 		Boolean chief;
-		while(true) {
-			System.out.println("Is it a chief surgeon? (Y/N)");
-			String response =  reader.readLine();
-			if(response.equals("Y") || response.equals("y")) {
-				System.out.println(response);
-				chief= true;
-				break;
-			} else if(response.equals("N") || response.equals("n")) {
-				chief= false;
-				break;
+		if (surgeonManager.getChiefSurgeon()== null) {
+			while(true) {
+				System.out.println("Is it a chief surgeon? (Y/N)");
+				String response =  reader.readLine();
+				if(response.equals("Y") || response.equals("y")) {
+					System.out.println(response);
+					chief= true;
+					break;
+				} else if(response.equals("N") || response.equals("n")) {
+					chief= false;
+					break;
+				}
+				System.out.println("Please, answer with the correct pattern");
 			}
-			System.out.println("Please, answer with the correct pattern");
+		}
+		else {
+			chief= false;
 		}
 		System.out.println("Type the email of the surgeon:");
 		String email =  reader.readLine();
-		
-		Surgeon s= new Surgeon(name, email,chief);
+		s= new Surgeon(name, email,chief);
 		surgeonManager.addSurgeon(s);		
 	}
+	
+	
+	public Integer askSurgeryId() {
+		System.out.println("Type the new surgeryId: ");
+		try {
+			Integer surgeryId = Integer.parseInt(reader.readLine());
+			return surgeryId;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String askSurgeryType() {
+		System.out.println("Type the new surgeryType: ");
+		try {
+			String surgeryType = reader.readLine();
+			return surgeryType;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Date askSurgeryDate() {
+		System.out.println("Type the new date for the surgery: ");
+		try {
+			System.out.println("Day: ");
+			Integer day = Integer.parseInt(reader.readLine());
+			System.out.println("Month: ");
+			Integer month = Integer.parseInt(reader.readLine());
+			System.out.println("Year: ");
+			Integer year = Integer.parseInt(reader.readLine());
+			Date surgeryDate = new Date(year, month, day);
+			
+			return surgeryDate;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 
 
 	@SuppressWarnings("deprecation")
@@ -265,7 +333,7 @@ public class Menu {
 	{
 		System.out.println("Type the id of the surgeon:");
 		Integer surgId =  Integer.parseInt(reader.readLine());
-		System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
+		//System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
 		if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
 			throw new Exception();
 		}		
@@ -377,7 +445,10 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
 		
+=======
+>>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 	}
 	
 }

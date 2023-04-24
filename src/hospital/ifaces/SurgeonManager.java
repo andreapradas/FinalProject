@@ -8,5 +8,7 @@ public interface SurgeonManager {
 	String getNameById(int id);
 	void addSurgeon(Surgeon surg);
 	List<Surgeon> getListOfSurgeons();
-	
+	Surgeon getChiefSurgeon();
+	void changeChief(int id);
+	void deleteChief();
 }

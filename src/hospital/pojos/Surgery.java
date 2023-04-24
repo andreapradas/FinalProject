@@ -12,8 +12,7 @@ public class Surgery implements Serializable{
 	//Attributes
 	private int surgeryId;
 	private String surgeryType;
-	//private int duration;
-	private Date day;
+	private Date surgeryDate;
 	private Time startHour;
 	private Time endHour;
 	private Boolean done;
@@ -34,7 +33,7 @@ public class Surgery implements Serializable{
 		this.surgeryId = surgeryId; 
 		this.surgeryType = surgeryType;
 		//this.duration = duration;
-		this.day = day;
+		this.surgeryDate = day;
 		this.startHour = startHour;
 		this.endHour = endHour;
 		this.done = false; //Cambiar cuando se realice a true ??
@@ -58,11 +57,11 @@ public class Surgery implements Serializable{
 	public void setSurgeryType(String surgeryType) {
 		this.surgeryType = surgeryType;
 	}
-	public Date getDay() {
-		return day;
+	public Date getSurgeryDate() {
+		return surgeryDate;
 	}
-	public void setDay(Date day) {
-		this.day = day;
+	public void setSurgeryDate(Date day) {
+		this.surgeryDate = day;
 	}
 	public Time getStartHour() {
 		return startHour;
@@ -130,7 +129,7 @@ public class Surgery implements Serializable{
 	@Override
 	public String toString() {
 		return "Surgery [surgeryId=" + surgeryId + ", surgeryType=" + surgeryType + ", day="
-		+ day + ", patientId=" + patientId + ", surgeonId=" + surgeonId + ", roomId=" + roomId + "]";
+		+ surgeryDate + ", patientId=" + patientId + ", surgeonId=" + surgeonId + ", roomId=" + roomId + "]";
 	}
 
 }

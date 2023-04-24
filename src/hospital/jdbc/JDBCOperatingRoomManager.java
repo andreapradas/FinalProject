@@ -49,8 +49,9 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 				Integer roomNumber = rs.getInt("roomNumber");
 				Integer roomFloor = rs.getInt("roomFloor");
 				Boolean active = rs.getBoolean("active");
+				List<Boolean> hoursAvailable = null;//FALTA 
 				
-				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
+				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active, hoursAvailable);
 				rooms.add(o); //Add the room to the list
 			}
 			 
@@ -94,7 +95,8 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			Integer roomNumber = rs.getInt("roomNumber");
 			Integer roomFloor = rs.getInt("roomFloor");
 			Boolean active = rs.getBoolean("active");
-				o = new OperatingRoom(roomId, roomNumber, roomFloor, active);				
+			List<Boolean> hoursAvailable = null;
+			o = new OperatingRoom(roomId, roomNumber, roomFloor, active, hoursAvailable);				
 			
 			rs.close();
 			stmt.close();
