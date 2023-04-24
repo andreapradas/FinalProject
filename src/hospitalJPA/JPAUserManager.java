@@ -4,6 +4,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import hospital.ifaces.UserManager;
 import hospital.pojos.Role;
 import hospital.pojos.User;
@@ -18,7 +24,7 @@ public class JPAUserManager implements UserManager{
 
 	public void connect() {
 		// TODO Auto-generated method stub
-		em.Persistence.createEntityManagerFactory("hospital-surgeries").createEntityManager();
+		em = Persistence.createEntityManagerFactory("hospital-surgeries").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_key= ON").executeUpdate();
 		em.getTransaction().commit();
@@ -42,7 +48,7 @@ public class JPAUserManager implements UserManager{
 		// TODO Auto-generated method stub
 		em.getTransaction().begin();
 		em.persist(u);
-		em.getTransaction.commit();
+		em.getTransaction().commit();
 	}
 
 	@Override
@@ -50,7 +56,7 @@ public class JPAUserManager implements UserManager{
 		// TODO Auto-generated method stub
 		em.getTransaction().begin();
 		em.persist(r);
-		em.getTransaction.commit();
+		em.getTransaction().commit();
 	}
 
 	@Override
@@ -83,7 +89,7 @@ public class JPAUserManager implements UserManager{
 			e.printStackTrace();
 		}
 		try {
-			u= (User) q.getSingleResult;
+			u= (User) q.getSingleResult();
 		}catch(NoResultException e){}
 		
 		return u;

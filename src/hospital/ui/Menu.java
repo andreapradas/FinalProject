@@ -21,9 +21,7 @@ public class Menu {
 	private static BufferedReader reader = new BufferedReader (new InputStreamReader(System.in));
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
-
-   //private static UserManager userManager;
-
+	
 	private static PatientManager patientManager;
 	private static UserManager userManager;
 	private static JDBCManager jdbcManager;
@@ -46,12 +44,11 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Log in Surgeon");
 				System.out.println("0. exit");
-	
 				int choice = Integer.parseInt(reader.readLine());
 				switch(choice)
 				{
 				case 1:
-					createPatient();
+					loginSurgeon();
 					break;
 				case 0: 
 					jdbcManager.disconnect();
