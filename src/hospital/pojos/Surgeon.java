@@ -1,27 +1,53 @@
 package hospital.pojos;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class Surgeon implements Serializable{
 	private static final long serialVersionUID = 5459002349058385563L;
 	
-	private int surgeonId;
+	private Integer surgeonId;
 	private String email;
 	private String name;
-	private boolean chief;
-	private boolean avaliable;
+	private Boolean chief;
+	private Boolean onVacation;
+	private List<Boolean> hourAvailability;
 	
 	public Surgeon() {
 		super();
 	}
 	
+	public Boolean getOnVacation() {
+		return onVacation;
+	}
+
+	public void setOnVacation(Boolean onVacation) {
+		this.onVacation = onVacation;
+	}
+
+	public List<Boolean> getHourAvailability() {
+		return hourAvailability;
+	}
+
+	public void setHourAvailability(List<Boolean> hourAvailability) {
+		this.hourAvailability = hourAvailability;
+	}
+
+	public void setSurgeonId(Integer surgeonId) {
+		this.surgeonId = surgeonId;
+	}
+
+	public void setChief(Boolean chief) {
+		this.chief = chief;
+	}
+
 	public Surgeon(String name, String email, boolean chief){
 		super();
 		this.name= name;
 		this.email= email;
 		this.chief= chief;
-		this.avaliable= true;
+		this.onVacation= false; //normalmente no esta de vacaciones
 	}
 	
 	public Surgeon(String name, Integer id){
@@ -39,7 +65,7 @@ public class Surgeon implements Serializable{
 		this.name= name;
 		this.email= email;
 		this.chief= chief;
-		this.avaliable= true;
+		this.onVacation= false;
 	}
 		
 
@@ -70,7 +96,8 @@ public class Surgeon implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Surgeon [id= " + surgeonId + ", name= " + name +"]";
+		return "Surgeon [id= " + surgeonId + ", name= " + name + ", email= " + email +
+				", chief= " + chief + "]";
 	}
 	
 	public String getName() {
@@ -90,7 +117,7 @@ public class Surgeon implements Serializable{
 	}
 	
 	public boolean getAvaliable() {
-		return avaliable;
+		return onVacation;
 	}
 	
 	public void setChief(boolean chief) {
@@ -98,6 +125,6 @@ public class Surgeon implements Serializable{
 	}
 	
 	public void setAvaliable(boolean avaliable) {
-		this.avaliable= avaliable;
+		this.onVacation= avaliable;
 	}
 }

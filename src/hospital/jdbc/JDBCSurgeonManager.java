@@ -2,6 +2,7 @@ package hospital.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,16 +69,60 @@ public class JDBCSurgeonManager implements SurgeonManager{
 				Surgeon s = new Surgeon(id, name, email, chief);
 				ListOfSurgeons.add(s);
 			}
-			
 			rs.close();
 			stmt.close();	
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return ListOfSurgeons;
+	}
+
+	@Override
+	public Surgeon getChiefSurgeon() {
+		// TODO Auto-generated method stub
+		Statement stmt;
+		Surgeon s = null;
+		try {
+			stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM Surgeon WHERE chief = true";
+			ResultSet rs = stmt.executeQuery(sql);
+			Integer id = rs.getInt("surgeonID");
+			String name = rs.getString("surgeon_name");
+			String email = rs.getString("surgeon_email");
+			Boolean chief = rs.getBoolean("chief");			
+			s = new Surgeon(id, name, email, chief);
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return s;
+	}
+
+	@Override
+	public void changeChief(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteChief() {
+		// TODO Auto-generated method stub
+		Surgeon s= getChiefSurgeon();
+		PreparedStatement prep;
+		try {
+			String sql = "UPDATE Surgeon SET chief=false WHERE surgeonID=?";
+			prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, s.getSurgeonId());
+			ResultSet rs = prep.executeQuery(sql);
+			rs.close();
+			prep.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 
