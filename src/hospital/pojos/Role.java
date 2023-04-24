@@ -23,7 +23,8 @@ public class Role implements Serializable{
 	private static final long serialVersionUID = 1112548538426283192L;
 	@Id
 	@GeneratedValue(generator= "roles")
-	@TableGenerator(name= "roles", table = "sqlite_sequences", pkColumnName = "name", valueColumnName= "seq", pkColumnValue= "roles")
+	@TableGenerator(name="roles", table="sqlite_sequence",
+    pkColumnName="name", valueColumnName="seq", pkColumnValue="roles")
 	private Integer id;
 	private String name;
 	@OneToMany (fetch = FetchType.LAZY, mappedBy= "role")

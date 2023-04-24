@@ -24,7 +24,8 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -2004663877998019879L;
 	@Id
 	@GeneratedValue(generator= "users")
-	@TableGenerator(name= "users", table = "sqlite_sequences", pkColumnName = "name", valueColumnName= "seq", pkColumnValue= "users")
+	@TableGenerator(name="users", table="sqlite_sequence",
+    pkColumnName="name", valueColumnName="seq", pkColumnValue="users")
 	private Integer id;
 	private String email;
 	@Lob

@@ -15,7 +15,7 @@ public class JDBCManager {
 		{			
 			// Open the DB connection
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:.\\db\\projectSurgeries.db");
+			c = DriverManager.getConnection("jdbc:sqlite:./db/projectSurgeries.db");
 			System.out.println("Database connection opened.");
 				
 			//create tables
