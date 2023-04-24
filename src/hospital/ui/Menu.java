@@ -9,6 +9,7 @@ import java.util.List;
 
 import hospital.ifaces.*;
 import hospital.jdbc.*;
+import hospital.pojos.Nurse;
 import hospital.pojos.Patient;
 import hospital.pojos.Surgeon;
 import hospital.pojos.SurgeonVacation;
@@ -20,6 +21,8 @@ public class Menu {
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
 	private static PatientManager patientManager;
+	private static NurseManager nurseManager;
+	private static WorksWithManager worksWithManager;
 //	private static UserManager userManager;
 	
 	
@@ -30,6 +33,8 @@ public class Menu {
 	surgeonManager = new JDBCSurgeonManager(jdbcManager);
 	surgeonVacationManager = new JDBCSurgeonVacationManager(jdbcManager);
 	patientManager = new JDBCPatientManager(jdbcManager);
+	nurseManager = new JDBCNurseManager(jdbcManager);
+	worksWithManager = new JDBCWorksWithManager(jdbcManager);
 	//userManager = new JPAUserManager();
 	
 		try {
@@ -43,6 +48,12 @@ public class Menu {
 				System.out.println("6. Get all vacations");
 				System.out.println("7. Delete vacation");
 				System.out.println("8. Get list of surgeons");
+				
+				System.out.println("9. Add new nurse");
+				System.out.println("10. Get list of nurses");
+				System.out.println("11. Assign nurse to surgeon");
+				//System.out.println("12. Get nurse by ID");
+				System.out.println("13. Delete nurse by ID");
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -72,6 +83,14 @@ public class Menu {
 				case 8:
 					getAllSurgeons();
 					break;
+				case 9:
+					createNurse();
+				case 10:
+					getAllNurses();
+				case 11:
+					assignNurseSurgeon();
+				case 12:
+					deleteNurse();
 				case 0: 
 					jdbcManager.disconnect();
 					System.exit(0);
@@ -85,6 +104,67 @@ public class Menu {
 		}
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	private static void deleteNurse() throws Exception {
+	// TODO Auto-generated method stub
+		System.out.println("Type the nurse id");
+		Integer nurseID =  Integer.parseInt(reader.readLine());
+		nurseManager.deleteNurseByID(nurseID);
+}
+
+
+	private static void assignNurseSurgeon() throws Exception {
+	// TODO Auto-generated method stub
+		System.out.println("Please enter the nurse ID to assign:");
+		Integer nurseID = Integer.parseInt(reader.readLine());
+		System.out.println("Please enter the surgeon ID to assign:");
+		Integer surgeonID = Integer.parseInt(reader.readLine());
+		
+		nurseManager.assign(nurseID, surgeonID);
+}
+
+
+	private static void getAllNurses() throws Exception {
+	// TODO Auto-generated method stub
+		List<Nurse> nurses = new ArrayList<Nurse>();
+		try {
+			nurses = nurseManager.getListOfNurses();
+			int i;
+			for(i=0; i< nurses.size(); i++)
+			{
+				System.out.println(nurses.get(i).toString());
+			}			
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+}
+
+
+	private static void createNurse() throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("Type the name of the nurse:");
+		String name =  reader.readLine();
+		System.out.println("Type the email of the nurse:");
+		String email =  reader.readLine();
+		
+		Nurse n= new Nurse(name, email);
+		nurseManager.addNurse(n);
+	}
+
+
 	private static void deleteVacations() throws NumberFormatException, Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Type the vacation id");
@@ -298,7 +378,6 @@ public class Menu {
 			e.printStackTrace();
 		}
 		
-	
 	}
 	
 }

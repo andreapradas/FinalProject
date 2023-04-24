@@ -23,11 +23,11 @@ public class JDBCNurseManager implements NurseManager {
 	public void addNurse(Nurse n) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO Nurse (nurseId, nurseName, nurseAvailability) VALUES (?,?,?)";
+			String sql = "INSERT INTO Nurse (nurse_name, nurseAvailability, nurse_email) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, n.getNurseID());
-			prep.setString(2, n.getNurseName());
-			prep.setBoolean(3, n.getNurseAvailability());
+			prep.setString(1, n.getNurseName());
+			prep.setBoolean(2, n.getNurseAvailability());
+			prep.setString(3, n.getEmail());
 			
 			prep.executeUpdate();			
 					
@@ -50,10 +50,11 @@ public class JDBCNurseManager implements NurseManager {
 			while(rs.next())
 			{
 				Integer id = rs.getInt("nurseID");
-				String name = rs.getString("nurseName");
+				String name = rs.getString("nurse_name");
 				Boolean availability = rs.getBoolean("nurseAvailability");
+				String email = rs.getString("nurse_email");
 				
-				Nurse n = new Nurse(id, name, availability);
+				Nurse n = new Nurse(id, name, availability, email);
 				ListOfNurses.add(n);
 			}
 			
@@ -111,9 +112,10 @@ public class JDBCNurseManager implements NurseManager {
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			Integer id = rs.getInt("nurseID");
-			String name = rs.getString("nurseName");
+			String name = rs.getString("nurse_name");
 			Boolean availability = rs.getBoolean("nurseAvailability");
-			n = new Nurse(id, name, availability);				
+			String email = rs.getString("name_email");
+			n = new Nurse(id, name, availability, email);				
 			
 			rs.close();
 			stmt.close();
