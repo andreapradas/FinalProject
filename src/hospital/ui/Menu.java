@@ -22,14 +22,10 @@ public class Menu {
 	private static SurgeonManager surgeonManager;
 	private static SurgeonVacationManager surgeonVacationManager;
 	private static PatientManager patientManager;
-<<<<<<< HEAD
 	private static UserManager userManager;
 	private static JDBCManager jdbcManager;
-=======
 	private static NurseManager nurseManager;
 	private static WorksWithManager worksWithManager;
-//	private static UserManager userManager;
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 	
 	
 	public static void main(String[] args) {
@@ -39,13 +35,9 @@ public class Menu {
 	surgeonManager = new JDBCSurgeonManager(jdbcManager);
 	surgeonVacationManager = new JDBCSurgeonVacationManager(jdbcManager);
 	patientManager = new JDBCPatientManager(jdbcManager);
-<<<<<<< HEAD
 	userManager = new JPAUserManager();
-=======
 	nurseManager = new JDBCNurseManager(jdbcManager);
 	worksWithManager = new JDBCWorksWithManager(jdbcManager);
-	//userManager = new JPAUserManager();
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 	
 		try {
 			do {
@@ -84,17 +76,13 @@ public class Menu {
 				System.out.println("5. Get surgeons on vacation any day of the given period");
 				System.out.println("6. Get all vacations");
 				System.out.println("7. Delete vacation");
-				System.out.println("8. Get list of surgeons");
-<<<<<<< HEAD
-				
+				System.out.println("8. Get list of surgeons");				
 				System.out.println("9. Add new nurse");
 				System.out.println("10. Get list of nurses");
 				System.out.println("11. Assign nurse to surgeon");
 				//System.out.println("12. Get nurse by ID");
 				System.out.println("13. Delete nurse by ID");
-=======
 				System.out.println("9. Change chief surgeon");
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -125,7 +113,6 @@ public class Menu {
 					getAllSurgeons();
 					break;
 				case 9:
-<<<<<<< HEAD
 					createNurse();
 				case 10:
 					getAllNurses();
@@ -133,10 +120,8 @@ public class Menu {
 					assignNurseSurgeon();
 				case 12:
 					deleteNurse();
-=======
 					changeChiefSurg();
 					break;
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 				case 0: 
 					jdbcManager.disconnect();
 					userManager.disconnect();
@@ -151,7 +136,6 @@ public class Menu {
 		}
 	}
 	
-<<<<<<< HEAD
 	private static void loginSurgeon() throws Exception{
 		System.out.println("Email: ");
 		String email= reader.readLine();
@@ -163,17 +147,6 @@ public class Menu {
 			SurgeonMenu();
 		}
 	}
-	
-=======
-<<<<<<< HEAD
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -226,17 +199,15 @@ public class Menu {
 		nurseManager.addNurse(n);
 	}
 
-=======
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
+
 	private static void changeChiefSurg() {
 	// TODO Auto-generated method stub
 		System.out.println("The chief is going to be changed and the previous is not going to be deleted as chief");
 		System.out.println("Type the new chief id");
-		Integer chiefId =  Integer.parseInt(reader.readLine());
-		surgeonManager.deleteSurgeonVacationById(vacId);
-	
+		//Integer chiefId =  Integer.parseInt(reader.readLine());
+		
+		//surgeonManager.deleteSurgeonVacationById(chiefId);
 	}
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 
 	private static void deleteVacations() throws NumberFormatException, Exception {
 		// TODO Auto-generated method stub
@@ -498,10 +469,6 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		
-=======
->>>>>>> branch 'master' of https://github.com/andreapradas/FinalProject.git
 	}
 	
 }
