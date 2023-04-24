@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import hospital.ui.Menu;
 
 import hospital.ifaces.SurgeryManager;
 import hospital.pojos.Surgery;
@@ -23,13 +24,13 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	
 	public void addSurgery(Surgery s) {
 		try{
-			String sql = "INSERT INTO surgery (surgeryId, surgeryType, day, startHour, "
+			String sql = "INSERT INTO surgery (surgeryId, surgeryType, surgeryDate, startHour, "
 					+ "endHour, done, patientId, surgeonId, roomId) VALUES (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, s.getSurgeryId());
 			prep.setString(2, s.getSurgeryType());
 			//prep.setInt(3, s.getDuration());
-			prep.setDate(3, s.getDay());
+			prep.setDate(3, s.getSurgeryDate());
 			prep.setTime(4, s.getStartHour());
 			prep.setTime(5, s.getEndHour());
 			prep.setBoolean(6, s.getDone());
@@ -58,16 +59,15 @@ public class JDBCSurgeryManager implements SurgeryManager{
 				Integer surgeryId = rs.getInt("surgeryId");
 				String surgeryType = rs.getString("surgeryType");
 				//Integer duration = rs.getInt("duration");
-				Date day = rs.getDate("day");
+				Date surgeryDate = rs.getDate("surgeryDate");
 				Time startHour = rs.getTime("startHour");
 				Time endHour = rs.getTime("endHour");
-				//Boolean done = rs.getBoolean("done");
 				Integer patientId = rs.getInt("patientId");
 				Integer surgeonId = rs.getInt("surgeonId");
 				Integer roomId = rs.getInt("roomId");
 				
 				
-				Surgery s = new Surgery(surgeryId,surgeryType,day, startHour, endHour, patientId, surgeonId, roomId);
+				Surgery s = new Surgery(surgeryId,surgeryType,surgeryDate, startHour, endHour, patientId, surgeonId, roomId);
 				surgeries.add(s);//Add the new surgery to the list
 			}
 			
@@ -86,13 +86,13 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	@Override 
 	public void createSurgery(Surgery s) {
 		try{
-			String sql = "INSERT INTO surgery (surgeryId, surgeryType, day, startHour, endHour,"
+			String sql = "INSERT INTO surgery (surgeryId, surgeryType, surgeryDate, startHour, endHour,"
 					+ "patientId, surgeonId, roomId ) VALUES (?,?,?,?,?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, s.getSurgeryId());
 			prep.setString(2, s.getSurgeryType());
 			//prep.setInt(3, s.getDuration());
-			prep.setDate(4, s.getDay());
+			prep.setDate(4, s.getSurgeryDate());
 			prep.setTime(5, s.getStartHour());
 			prep.setTime(6, s.getEndHour());
 			prep.setBoolean(7, s.getDone());
@@ -107,16 +107,36 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	}
 	
 	@Override
-	public Surgery getSurgeryById(int id) {
+	public void modifySurgery(int surgeryId, int parameterChange) {
+		Surgery s = getSurgeryById(surgeryId);
+		switch(parameterChange) {
+		case 1: //Cambiar el surgeryId
+			s.setSurgeryId(askSurgeryId());
+			break;
+		case 2: //surgeryType
+			s.setSurgeryType(askSurgeryType());
+			break;
+		case 3://surgeryDate
+			s.setSurgeryDate(askSurgeryDate());
+			break;
+		case 4://startHour y endHour
+			s.getStartHour();
+			s.getEndHour();
+			break;
+		}
+	}
+	
+	@Override
+	public Surgery getSurgeryById(int surgeryId) {
 		// TODO Auto-generated method stub
 		
 		Surgery s = null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM surgery WHERE id=" + id;
+			String sql = "SELECT * FROM surgery WHERE id=" + surgeryId;
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			Integer surgeryId = rs.getInt("surgeryId");
+			//Integer surgeryId = rs.getInt("surgeryId");
 			String surgeryType = rs.getString("surgeryType");
 			//Integer duration = rs.getInt("duration");
 			Date day = rs.getDate("day");
@@ -125,7 +145,9 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			//Boolean done = rs.getBoolean("done");
 			Integer patientId = rs.getInt("patientId");
 			Integer surgeonId = rs.getInt("surgeonId");
-			Integer roomId = rs.getInt("roomId");				
+			Integer roomId = rs.getInt("roomId");
+			
+			s = new Surgery(surgeryId, surgeryType, day, startHour, endHour, patientId, surgeonId, roomId);
 			
 			rs.close();
 			stmt.close();
