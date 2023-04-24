@@ -18,11 +18,19 @@ public class Nurse implements Serializable{
 		super();
 	}
 	
-	public Nurse(Integer nurseID, String nurseName, Boolean nurseAvailability) {
+	public Nurse(Integer nurseID, String nurseName, Boolean nurseAvailability, String email) {
 		super();
 		this.nurseID = nurseID;
 		this.nurseName = nurseName;
 		this.nurseAvailability = nurseAvailability;	
+		this.email = email;
+	}
+	
+	public Nurse(String name, String email){
+		super();
+		this.nurseName= name;
+		this.email= email;
+		this.nurseAvailability= true;
 	}
 	
 	public Nurse(Integer nurseID, String nurseName, String email, Boolean nurseAvailability) {
