@@ -381,7 +381,6 @@ public class Menu {
 		}
 	}
 	
-	
 	@SuppressWarnings("deprecation")
 	public Time askStartHour() {
 		System.out.println("Type the new startHour: ");
