@@ -171,7 +171,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			String sql = "SELECT COUNT(vacationId) AS count FROM surgeonVacation WHERE surgeonID= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);
-			ResultSet rs = prep.executeQuery(sql);
+			ResultSet rs = prep.executeQuery();
 			countVac= rs.getInt("count");
 			rs.close();
 			prep.close();

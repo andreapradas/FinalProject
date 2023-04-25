@@ -41,8 +41,7 @@ public class JDBCManager {
 				"chief BOOLEAN," +
 				"surgeon_email	TEXT NOT NULL UNIQUE," +
 				"onVacation	BOOLEAN," +
-				"hourAvailability LIST" +
-			");";
+				");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE Patient (" +
@@ -57,7 +56,6 @@ public class JDBCManager {
 				"nurse_name TEXT NOT NULL," + 
 				"nurse_email	TEXT NOT NULL UNIQUE," +
 				"onVacation	BOOLEAN," +
-				"hourAvailability LIST" +
 				");";
 			stmt.executeUpdate(sql);
 			
@@ -91,7 +89,6 @@ public class JDBCManager {
 				"roomNumber	INTEGER NOT NULL UNIQUE," +
 				"roomFloor	INTEGER NOT NULL," +
 				"active BOOLEAN," +
-				"hoursAvaliable LIST" +
 			");";
 			stmt.executeUpdate(sql);
 			
