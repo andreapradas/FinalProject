@@ -25,6 +25,7 @@ public class Menu {
 	private static SurgeonVacationManager surgeonVacationManager;
 	
 	private static PatientManager patientManager;
+	private static SurgeryManager surgeryManager;
 	private static UserManager userManager;
 	private static JDBCManager jdbcManager;
 	private static NurseManager nurseManager;
@@ -40,6 +41,7 @@ public class Menu {
 	userManager = new JPAUserManager();
 	nurseManager = new JDBCNurseManager(jdbcManager);
 	worksWithManager = new JDBCWorksWithManager(jdbcManager);
+	surgeryManager = new JDBCSurgeryManager(jdbcManager);
 	
 		try {
 			do {
@@ -161,16 +163,15 @@ public class Menu {
 		Role role = null;
 		switch (option) {
 			case 1:
-				role= new Role("Surgeon");
+				role= userManager.getRole("surgeon");
 			case 2: 
-				role= new Role("Nurse");
+				role= userManager.getRole("nurse");
 		}
 		userManager.newRole(role);
 		System.out.println("Type your email: ");
 		String email= reader.readLine();
 		System.out.println("Type the password: ");
 		String password= reader.readLine();
-		Integer id;
 		MessageDigest md= MessageDigest.getInstance("MD5");
 		md.update(password.getBytes());
 		byte[] digest= md.digest();
