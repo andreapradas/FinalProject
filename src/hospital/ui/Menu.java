@@ -57,7 +57,7 @@ public class Menu {
 					signIn();
 					break;
 				case 2:
-					loginSurgeon();
+					logIn();
 					break;
 				case 3:
 					getUsers();
@@ -79,13 +79,7 @@ public class Menu {
 	private static void getUsers() {
 		// TODO Auto-generated method stub
 		List<User> users= userManager.getUsers();
-		int i;
-		for(i=0; i< users.size(); i++)
-		{
-			
-			System.out.print(users.get(i).toString());
-			System.out.println(users.get(i));
-		}
+		System.out.println(users);
 		
 	}
 
@@ -160,14 +154,18 @@ public class Menu {
 		}
 	}
 	
-	private static void loginSurgeon() throws Exception{
+	private static void logIn() throws Exception{
 		System.out.println("Email: ");
 		String email= reader.readLine();
 		System.out.println("Password: ");
 		String password= reader.readLine();
 		User u= userManager.checkPassword(email, password);
-		System.out.println(u);
-		if(u!=null & u.getRole().getName().equals("surgeon")) {
+		if(u!=null && u.getRole().getName().equals("surgeon")) {
+			System.out.println("Surgeon Login Successful!");
+			SurgeonMenu();
+		} else if(u!=null && u.getRole().getName().equals("nurse")) {
+			System.out.println("Nurse Login Successful!");
+		} else if(u!=null && u.getRole().getName().equals("chiefSurgeon")) {
 			System.out.println("Login Successful!");
 			SurgeonMenu();
 		}
@@ -182,10 +180,11 @@ public class Menu {
 		switch (option) {
 			case 1:
 				role= userManager.getRole("surgeon");
+				break;
 			case 2: 
 				role= userManager.getRole("nurse");
+				break;
 		}
-		userManager.newRole(role);
 		System.out.println("Type your email: ");
 		String email= reader.readLine();
 		System.out.println("Type the password: ");
@@ -194,7 +193,9 @@ public class Menu {
 		md.update(password.getBytes());
 		byte[] hash= md.digest();
 		User u= new User(email, hash, role);
+		System.out.println(u);
 		userManager.newUser(u);
+		
 	}
 	
 

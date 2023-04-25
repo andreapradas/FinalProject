@@ -26,6 +26,11 @@ public class Role implements Serializable{
 	@TableGenerator(name="roles", table="sqlite_sequence",
     pkColumnName="name", valueColumnName="seq", pkColumnValue="roles")
 	private Integer id;
+	
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + ", users=" + users + "]";
+	}
 	private String name;
 	@OneToMany (fetch = FetchType.LAZY, mappedBy= "role")
 	private List<User> users;
