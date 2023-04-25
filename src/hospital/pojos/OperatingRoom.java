@@ -13,7 +13,6 @@ public class OperatingRoom implements Serializable{
 	private int roomFloor;
 	private Boolean active; //El chiefSurgeon lo gestiona, para gestionar las que esten disponibles
 	private List<Boolean> hoursAvailable; //Huecos del horario, crear funcion que te ponga tantos huecos como
-	//hab disponibles
 	
 	//Constructors
 	
