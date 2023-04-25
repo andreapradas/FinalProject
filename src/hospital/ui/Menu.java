@@ -338,7 +338,7 @@ public class Menu {
 	
 //Métodos para pedir los nuevos parámetros a modificar en una SURGERY 
 	
-	public Integer askSurgeryId() {
+	private Integer askSurgeryId() {
 		System.out.println("Type the new surgeryId: ");
 		try {
 			Integer surgeryId = Integer.parseInt(reader.readLine());
@@ -349,7 +349,7 @@ public class Menu {
 		}
 	}
 	
-	public String askSurgeryType() {
+	private String askSurgeryType() {
 		System.out.println("Type the new surgeryType: ");
 		try {
 			String surgeryType = reader.readLine();
@@ -359,6 +359,7 @@ public class Menu {
 			return null;
 		}
 	}
+	
 	
 	@SuppressWarnings("deprecation")
 	public Date askSurgeryDate() {
@@ -405,7 +406,38 @@ public class Menu {
 			return null;
 		}
 	}
-
+	
+	
+//Metodos para modificar la hab. y la cirugia 
+	
+	private static void modifySurgery() {
+		try {
+			System.out.println("Type the surgeryId you want to change: ");
+			int surgeryId = Integer.parseInt(reader.readLine());
+			System.out.println("Type the atribute you want to change(surgeryType, surgeryDate, startHour): ");
+			String atribute = reader.readLine();
+			System.out.println("Introduce the new value: ");
+			if(atribute.equalsIgnoreCase("surgeryType")) {
+				System.out.println("Type the new surgeryType: ");
+				//String surgeryTypeNew = reader.readLine();
+			}else if(atribute.equalsIgnoreCase("surgeryDate")) {
+				System.out.println("Type the new surgeryDate: ");
+				System.out.println("Day: ");
+				//Integer newDay = Integer.parseInt(reader.readLine());
+				System.out.println("Month: ");
+				//Integer newMonth = Integer.parseInt(reader.readLine());
+				System.out.println("Year: ");
+				//Integer newYear = Integer.parseInt(reader.readLine());
+				//Date newDate = new Date(newYear, newMonth, newDay);
+			}else {
+				System.out.println("Type the new startHour: ");
+				//Integer newHour = Integer.parseInt(reader.readLine());
+			}
+			String newAtribute = reader.readLine();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@SuppressWarnings("deprecation")
 	public static void createSurgeonVacation() throws Exception
