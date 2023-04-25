@@ -41,7 +41,7 @@ public class JDBCManager {
 				"chief BOOLEAN," +
 				"surgeon_email	TEXT NOT NULL UNIQUE," +
 				"onVacation	BOOLEAN," +
-				"hourAvailability LIST," +
+				"hourAvailability LIST" +
 			");";
 			stmt.executeUpdate(sql);
 			
@@ -55,8 +55,9 @@ public class JDBCManager {
 			sql = "CREATE TABLE Nurse (" +
 				"nurseId INTEGER PRIMARY KEY AUTOINCREMENT," + 
 				"nurse_name TEXT NOT NULL," + 
-				"nurseAvailability BOOLEAN," +
 				"nurse_email	TEXT NOT NULL UNIQUE," +
+				"onVacation	BOOLEAN," +
+				"hourAvailability LIST" +
 				");";
 			stmt.executeUpdate(sql);
 			
@@ -89,7 +90,7 @@ public class JDBCManager {
 				"roomId	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"roomNumber	INTEGER NOT NULL UNIQUE," +
 				"roomFloor	INTEGER NOT NULL," +
-				"active BOOLEAN" +
+				"active BOOLEAN," +
 				"hoursAvaliable LIST" +
 			");";
 			stmt.executeUpdate(sql);

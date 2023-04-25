@@ -81,7 +81,7 @@ public class JPAUserManager implements UserManager{
 		Query q= em.createNativeQuery("SELECT * FROM users WHERE email=? AND password=?", User.class);
 		q.setParameter(1, email);
 		try {
-			MessageDigest md= MessageDigest.getInstance("MDS");
+			MessageDigest md= MessageDigest.getInstance("MD5");
 			md.update(password.getBytes());
 			byte[] digest= md.digest();
 			q.setParameter(2, digest);

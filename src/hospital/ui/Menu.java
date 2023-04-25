@@ -2,6 +2,7 @@ package hospital.ui;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.security.MessageDigest;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import hospital.ifaces.*;
 import hospital.jdbc.*;
 import hospital.pojos.Nurse;
 import hospital.pojos.Patient;
+import hospital.pojos.Role;
 import hospital.pojos.Surgeon;
 import hospital.pojos.SurgeonVacation;
 import hospital.pojos.User;
@@ -42,12 +44,16 @@ public class Menu {
 		try {
 			do {
 				System.out.println("Choose an option");
-				System.out.println("1. Log in Surgeon");
+				System.out.println("1. Sign in");
+				System.out.println("2. Log in Surgeon");
 				System.out.println("0. exit");
 				int choice = Integer.parseInt(reader.readLine());
 				switch(choice)
 				{
 				case 1:
+					signIn();
+					break;
+				case 2:
 					loginSurgeon();
 					break;
 				case 0: 
@@ -147,7 +153,30 @@ public class Menu {
 		}
 	}
 	
-	
+	private static void signIn() throws Exception{
+		System.out.println("Choose your role: ");
+		System.out.println("1. Surgeon");
+		System.out.println("2. Nurse");
+		Integer option= Integer.parseInt(reader.readLine());
+		Role role = null;
+		switch (option) {
+			case 1:
+				role= new Role("Surgeon");
+			case 2: 
+				role= new Role("Nurse");
+		}
+		userManager.newRole(role);
+		System.out.println("Type your email: ");
+		String email= reader.readLine();
+		System.out.println("Type the password: ");
+		String password= reader.readLine();
+		Integer id;
+		MessageDigest md= MessageDigest.getInstance("MD5");
+		md.update(password.getBytes());
+		byte[] digest= md.digest();
+		User u= new User(email, digest, role);
+		userManager.newUser(u);
+	}
 	
 
 	private static void deleteNurse() throws Exception {
