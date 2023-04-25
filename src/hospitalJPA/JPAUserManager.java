@@ -83,6 +83,14 @@ public class JPAUserManager implements UserManager{
 		List<Role> roles = (List<Role>) q.getResultList();
 		return roles;
 	}
+	
+	@Override
+	public List<User> getUsers() {
+		// TODO Auto-generated method stub
+		Query q = em.createNativeQuery("SELECT * FROM users", User.class);
+		List<User> users = (List<User>) q.getResultList();
+		return users;
+	}
 
 	@Override
 	public User checkPassword(String email, String password) {
@@ -93,8 +101,8 @@ public class JPAUserManager implements UserManager{
 		try {
 			MessageDigest md= MessageDigest.getInstance("MD5");
 			md.update(password.getBytes());
-			byte[] digest= md.digest();
-			q.setParameter(2, digest);
+			byte[] hash= md.digest();
+			q.setParameter(2, hash);
 		}catch(NoSuchAlgorithmException e){
 			e.printStackTrace();
 		}

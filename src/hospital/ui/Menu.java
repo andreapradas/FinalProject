@@ -48,6 +48,7 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Sign in");
 				System.out.println("2. Log in Surgeon");
+				System.out.println("3. List of users");
 				System.out.println("0. exit");
 				int choice = Integer.parseInt(reader.readLine());
 				switch(choice)
@@ -57,6 +58,9 @@ public class Menu {
 					break;
 				case 2:
 					loginSurgeon();
+					break;
+				case 3:
+					getUsers();
 					break;
 				case 0: 
 					jdbcManager.disconnect();
@@ -72,6 +76,19 @@ public class Menu {
 		}
 	}
 	
+	private static void getUsers() {
+		// TODO Auto-generated method stub
+		List<User> users= userManager.getUsers();
+		int i;
+		for(i=0; i< users.size(); i++)
+		{
+			
+			System.out.print(users.get(i).toString());
+			System.out.println(users.get(i));
+		}
+		
+	}
+
 	private static void SurgeonMenu() throws Exception{
 		try {
 			do {
@@ -149,7 +166,8 @@ public class Menu {
 		System.out.println("Password: ");
 		String password= reader.readLine();
 		User u= userManager.checkPassword(email, password);
-		if(u!=null & u.getRole().getName().equals("Surgeon")) {
+		System.out.println(u);
+		if(u!=null & u.getRole().getName().equals("surgeon")) {
 			System.out.println("Login Successful!");
 			SurgeonMenu();
 		}
@@ -174,8 +192,8 @@ public class Menu {
 		String password= reader.readLine();
 		MessageDigest md= MessageDigest.getInstance("MD5");
 		md.update(password.getBytes());
-		byte[] digest= md.digest();
-		User u= new User(email, digest, role);
+		byte[] hash= md.digest();
+		User u= new User(email, hash, role);
 		userManager.newUser(u);
 	}
 	
