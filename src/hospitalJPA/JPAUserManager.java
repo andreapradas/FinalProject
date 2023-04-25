@@ -28,8 +28,10 @@ public class JPAUserManager implements UserManager{
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_key= ON").executeUpdate();
 		em.getTransaction().commit();
-		
+		System.out.println(this.getRoles().toString());
 		if(this.getRoles().isEmpty()) {
+			//Query q = em.createNativeQuery("ALTER TABLE roles AUTO_INCREMENT=0");
+			//q.executeUpdate();
 			Role surgeon= new Role("surgeon");
 			Role nurse= new Role("nurse");
 			Role chiefSurgeon= new Role("chiefSurgeon");
@@ -76,6 +78,16 @@ public class JPAUserManager implements UserManager{
 		Role role= (Role) q.getSingleResult();
 		return role;
 	}
+	
+//	@Override
+//	public User getChief() {
+//		// TODO Auto-generated method stub
+//		Query q = em.createNativeQuery("SELECT users.* FROM users NAME JOIN roles"
+//				+ " WHERE NAME= ?", Role.class);
+//		q.setParameter(1, "chiefSurgeon");
+//		User role= (User) q.getSingleResult();
+//		return role;
+//	}
 	
 
 	@Override

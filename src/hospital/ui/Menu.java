@@ -47,7 +47,7 @@ public class Menu {
 			do {
 				System.out.println("Choose an option");
 				System.out.println("1. Sign in");
-				System.out.println("2. Log in Surgeon");
+				System.out.println("2. Log in");
 				System.out.println("3. List of users");
 				System.out.println("0. exit");
 				int choice = Integer.parseInt(reader.readLine());
@@ -100,6 +100,7 @@ public class Menu {
 				System.out.println("11. Assign nurse to surgeon");
 				//System.out.println("12. Get nurse by ID");
 				System.out.println("13. Delete nurse by ID");
+				System.out.println("14. Log out");
 				System.out.println("9. Change chief surgeon");
 				System.out.println("0. exit");
 	
@@ -140,6 +141,11 @@ public class Menu {
 					deleteNurse();
 					changeChiefSurg();
 					break;
+				case 13: 
+					break;
+				case 14:
+					main(null);
+					break;
 				case 0: 
 					jdbcManager.disconnect();
 					userManager.disconnect();
@@ -166,7 +172,7 @@ public class Menu {
 		} else if(u!=null && u.getRole().getName().equals("nurse")) {
 			System.out.println("Nurse Login Successful!");
 		} else if(u!=null && u.getRole().getName().equals("chiefSurgeon")) {
-			System.out.println("Login Successful!");
+			System.out.println("ChiefSurgeon Login Successful!");
 			SurgeonMenu();
 		}
 	}
@@ -175,15 +181,26 @@ public class Menu {
 		System.out.println("Choose your role: ");
 		System.out.println("1. Surgeon");
 		System.out.println("2. Nurse");
+		System.out.println("3. Chief surgeon");
 		Integer option= Integer.parseInt(reader.readLine());
 		Role role = null;
 		switch (option) {
 			case 1:
 				role= userManager.getRole("surgeon");
+				System.out.println(userManager.getRole("chiefSurgeon").getUsers()); //{IndirectList: not instantiated}
 				break;
 			case 2: 
 				role= userManager.getRole("nurse");
+				System.out.println(userManager.getRole("chiefSurgeon").getUsers());
 				break;
+			case 3:
+				System.out.println(userManager.getRole("chiefSurgeon").getUsers());
+				if(userManager.getRole("chiefSurgeon").getUsers()!=null) { 
+					System.out.println("There is already one chief, no more chief avaliables");
+				}
+				else 
+					role= userManager.getRole("chiefSurgeon");
+					break;
 		}
 		System.out.println("Type your email: ");
 		String email= reader.readLine();
@@ -193,6 +210,7 @@ public class Menu {
 		md.update(password.getBytes());
 		byte[] hash= md.digest();
 		User u= new User(email, hash, role);
+		u.getRole().addUser(u);
 		System.out.println(u);
 		userManager.newUser(u);
 		
