@@ -361,9 +361,8 @@ public class Menu {
 		}
 	}
 	
-	
 	@SuppressWarnings("deprecation")
-	public Date askSurgeryDate() {
+	private Date askSurgeryDate() {
 		System.out.println("Type the new date for the surgery: ");
 		try {
 			System.out.println("Day: ");
@@ -382,25 +381,12 @@ public class Menu {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public Time askStartHour() {
+	private Time askStartHour() {
 		System.out.println("Type the new startHour: ");
 		try{
 			Integer hour = Integer.parseInt(reader.readLine());
 			Time startHour = new Time(hour, 0, 0);
 			return startHour;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	@SuppressWarnings("deprecation")
-	public Time askEndHour() {
-		System.out.println("Type the new endHour: ");
-		try{
-			Integer hour = Integer.parseInt(reader.readLine());
-			Time endHour = new Time(hour, 0, 0);
-			return endHour;
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -415,12 +401,12 @@ public class Menu {
 			System.out.println("Type the surgeryId you want to change: ");
 			int surgeryId = Integer.parseInt(reader.readLine());
 			System.out.println("Type the atribute you want to change(surgeryType, surgeryDate, startHour): ");
-			String atribute = reader.readLine();
+			String parameterChange = reader.readLine();
 			System.out.println("Introduce the new value: ");
-			if(atribute.equalsIgnoreCase("surgeryType")) {
+			if(parameterChange.equalsIgnoreCase("surgeryType")) {
 				System.out.println("Type the new surgeryType: ");
 				//String surgeryTypeNew = reader.readLine();
-			}else if(atribute.equalsIgnoreCase("surgeryDate")) {
+			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
 				System.out.println("Type the new surgeryDate: ");
 				System.out.println("Day: ");
 				//Integer newDay = Integer.parseInt(reader.readLine());
@@ -434,6 +420,7 @@ public class Menu {
 				//Integer newHour = Integer.parseInt(reader.readLine());
 			}
 			String newAtribute = reader.readLine();
+			surgeryManager.modifySurgery(surgeryId, parameterChange, newAtribute);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

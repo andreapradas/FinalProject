@@ -18,7 +18,7 @@ public interface SurgeryManager {
 	public void createSurgery(Surgery s);
 	
 	//Modify a surgery
-	public void modifySurgery(int surgeryId, int parameterChange);
+	public void modifySurgery(int surgeryId, String parameterChange, String newParameter);
 	
 	//Assign a surgery to a surgeon
 	//public void assign (int surgeonID, int surgeryID);
