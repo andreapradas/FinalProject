@@ -122,7 +122,8 @@ public class JPAUserManager implements UserManager{
 		}
 		try {
 			u= (User) q.getSingleResult();
-		}catch(NoResultException e){}
+		}catch(NoResultException e){
+		}
 		
 		return u;
 	}

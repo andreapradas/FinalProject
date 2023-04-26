@@ -174,6 +174,8 @@ public class Menu {
 		} else if(u!=null && u.getRole().getName().equals("chiefSurgeon")) {
 			System.out.println("ChiefSurgeon Login Successful!");
 			SurgeonMenu();
+		} else {
+			System.out.println("Incorrect user or password\n");
 		}
 	}
 	
