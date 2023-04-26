@@ -39,11 +39,13 @@ public class Role implements Serializable{
 	public Role() {
 		super();
 		// TODO Auto-generated constructor stub
+		users= new ArrayList<User>();
 	}
 	
 	public Role(String name) {
 		super();
 		this.name = name;
+		users= new ArrayList<User>();
 	}
 	
 	public void addUser(User u) {

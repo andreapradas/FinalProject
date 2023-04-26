@@ -49,6 +49,7 @@ public class Menu {
 				System.out.println("1. Sign in");
 				System.out.println("2. Log in");
 				System.out.println("3. List of users");
+				System.out.println("4. Get list of surgeons");	
 				System.out.println("0. exit");
 				int choice = Integer.parseInt(reader.readLine());
 				switch(choice)
@@ -61,6 +62,9 @@ public class Menu {
 					break;
 				case 3:
 					getUsers();
+					break;
+				case 4:
+					getAllSurgeons();
 					break;
 				case 0: 
 					jdbcManager.disconnect();
@@ -113,9 +117,9 @@ public class Menu {
 				case 2:
 					getPatients();
 					break;
-				case 3:
-					createSurgeon();
-					break;
+//				case 3:
+//					createSurgeon();
+//					break;
 				case 4:
 					createSurgeonVacation();
 					break;
@@ -186,36 +190,48 @@ public class Menu {
 		System.out.println("3. Chief surgeon");
 		Integer option= Integer.parseInt(reader.readLine());
 		Role role = null;
+		Boolean chief = null;
+		List<User> users= new ArrayList<User>();
 		switch (option) {
 			case 1:
 				role= userManager.getRole("surgeon");
-				System.out.println(userManager.getRole("chiefSurgeon").getUsers()); //{IndirectList: not instantiated}
+				chief= false;
 				break;
 			case 2: 
 				role= userManager.getRole("nurse");
-				System.out.println(userManager.getRole("chiefSurgeon").getUsers());
 				break;
 			case 3:
-				System.out.println(userManager.getRole("chiefSurgeon").getUsers());
-				if(userManager.getRole("chiefSurgeon").getUsers()!=null) { 
+				if(userManager.getRole("chiefSurgeon").getUsers().size()!=0) { 
 					System.out.println("There is already one chief, no more chief avaliables");
+					throw new Exception();
 				}
-				else 
+				else {
 					role= userManager.getRole("chiefSurgeon");
-					break;
+				}
+				chief= true;
+				break;
 		}
 		System.out.println("Type your email: ");
 		String email= reader.readLine();
 		System.out.println("Type the password: ");
 		String password= reader.readLine();
+		System.out.println("Type the name of the surgeon:");
+		String name =  reader.readLine();
+		Surgeon s;
+		Nurse n;
 		MessageDigest md= MessageDigest.getInstance("MD5");
 		md.update(password.getBytes());
 		byte[] hash= md.digest();
 		User u= new User(email, hash, role);
 		u.getRole().addUser(u);
-		System.out.println(u);
+		if(role.getName().equals("surgeon") || role.getName().equals("chiefSurgeon")){
+			s= new Surgeon(name, email,chief);
+			surgeonManager.addSurgeon(s);
+		}else if(role.getName().equals("nurse")){
+			n= new Nurse(name, email);
+			nurseManager.addNurse(n);
+		}
 		userManager.newUser(u);
-		
 	}
 	
 
@@ -345,35 +361,35 @@ public class Menu {
 		}
 	}
 	
-	public static void createSurgeon() throws Exception
-	{
-		Surgeon s;
-		System.out.println("Type the name of the surgeon:");
-		String name =  reader.readLine();
-		Boolean chief;
-		if (surgeonManager.getChiefSurgeon()== null) {
-			while(true) {
-				System.out.println("Is it a chief surgeon? (Y/N)");
-				String response =  reader.readLine();
-				if(response.equals("Y") || response.equals("y")) {
-					System.out.println(response);
-					chief= true;
-					break;
-				} else if(response.equals("N") || response.equals("n")) {
-					chief= false;
-					break;
-				}
-				System.out.println("Please, answer with the correct pattern");
-			}
-		}
-		else {
-			chief= false;
-		}
-		System.out.println("Type the email of the surgeon:");
-		String email =  reader.readLine();
-		s= new Surgeon(name, email,chief);
-		surgeonManager.addSurgeon(s);		
-	}
+//	public static void createSurgeon(String email, Boolean chief) throws Exception
+//	{
+//		Surgeon s;
+//		System.out.println("Type the name of the surgeon:");
+//		String name =  reader.readLine();
+//		//Boolean chief;
+////		if (surgeonManager.getChiefSurgeon()== null) {
+////			while(true) {
+////				System.out.println("Is it a chief surgeon? (Y/N)");
+////				String response =  reader.readLine();
+////				if(response.equals("Y") || response.equals("y")) {
+////					System.out.println(response);
+////					chief= true;
+////					break;
+////				} else if(response.equals("N") || response.equals("n")) {
+////					chief= false;
+////					break;
+////				}
+////				System.out.println("Please, answer with the correct pattern");
+////			}
+////		}
+////		else {
+////			chief= false;
+////		}
+////		System.out.println("Type the email of the surgeon:");
+////		String email =  reader.readLine();
+//		s= new Surgeon(name, email,chief);
+//		surgeonManager.addSurgeon(s);		
+//	}
 	
 	
 //Métodos para pedir los nuevos parámetros a modificar en una SURGERY 
