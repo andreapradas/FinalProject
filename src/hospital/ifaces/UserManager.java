@@ -18,5 +18,6 @@ public interface UserManager {
 	void changeChief(String email);
 	User getUserByEmail(String email);
 	User getChief();
+	List<User> getSpecificUsers(String userRole);
 
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import hospital.ifaces.*;
 import hospital.jdbc.*;
 import hospital.pojos.Nurse;
+import hospital.pojos.NurseVacation;
 import hospital.pojos.OperatingRoom;
 import hospital.pojos.Patient;
 import hospital.pojos.Role;
@@ -48,6 +49,9 @@ public class Menu {
 	surgeryManager = new JDBCSurgeryManager(jdbcManager);
 	
 		try {
+			userManager.getRole("surgeon").setUsers(userManager.getSpecificUsers("surgeon"));
+			userManager.getRole("nurse").setUsers(userManager.getSpecificUsers("nurse"));
+			userManager.getRole("chiefSurgeon").setUsers(userManager.getSpecificUsers("chiefSurgeon"));
 			do {
 				System.out.println("Choose an option");
 				System.out.println("1. Sign in");
@@ -60,6 +64,7 @@ public class Menu {
 				{
 				case 1:
 					signIn();
+					System.out.println(userManager.getRole("surgeon").getUsers());
 					break;
 				case 2:
 					logIn();
@@ -97,19 +102,20 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Add new patient");
 				System.out.println("2. Get list of patients");
-				System.out.println("3. Change chief surgeon");
-				System.out.println("4. Add new surgeon vacation");
-				System.out.println("5. Get surgeons on vacation any day of the given period");
-				System.out.println("6. Get all vacations");
-				System.out.println("7. Delete vacation");
-				System.out.println("8. Get list of surgeons");				
-//				System.out.println("9. Add new nurse");
-				System.out.println("10. Get list of nurses");
-				System.out.println("11. Assign nurse to surgeon");
-				//System.out.println("12. Get nurse by ID");
+				System.out.println("3. Add new vacation");
+				System.out.println("4. Get all vacations");
+				System.out.println("5. Delete vacation");
+				System.out.println("6. Get list of surgeons");
+				System.out.println("7. Get list of nurses");
 				System.out.println("13. Delete nurse by ID");
 				System.out.println("14. Log out");
 				System.out.println("0. exit");
+				//System.out.println("3. Change chief surgeon");
+				//System.out.println("5. Get surgeons on vacation any day of the given period");				
+//				System.out.println("9. Add new nurse");
+				//System.out.println("12. Get nurse by ID");
+//				System.out.println("11. Assign nurse to surgeon");
+				
 	
 				int choice = Integer.parseInt(reader.readLine());
 				switch(choice)
@@ -121,30 +127,21 @@ public class Menu {
 					getPatients();
 					break;
 				case 3:
-					changeChiefSurg();
+					createVacation("surgeon"); //estamos dentro del menu de surgeons 
+					//por lo que el que este aqui metido va a ser un surgeon y solo podra
+					//añadir sus vacaciones
 					break;
 				case 4:
-					createSurgeonVacation();
-					break;
-				case 5:
-					getSurgeonsOnVacation();
-					break;
-				case 6:
 					getAllVacations();
 					break;
-				case 7:
+				case 5:
 					deleteVacations();
 					break;
-				case 8:
+				case 6:
 					getAllSurgeons();
 					break;
-//				case 9:
-//					createNurse();
-				case 10:
+				case 7:
 					getAllNurses();
-					break;
-				case 11:
-					assignNurseSurgeon();
 					break;
 				case 12:
 					deleteNurse();
@@ -160,6 +157,18 @@ public class Menu {
 					System.exit(0);
 				default:
 					break;
+//				case 4:
+//					getSurgeonsOnVacation();
+//					break;
+//				case 9:
+//					createNurse();
+//				case 3:
+//					changeChiefSurg();
+//					break;
+//				case 11:
+//					assignNurseSurgeon();
+//					break;
+					
 				}
 			}while(true);
 		} catch (Exception e) {
@@ -188,45 +197,47 @@ public class Menu {
 	}
 	
 	private static void signIn() throws Exception{
-		System.out.println("Choose your role: ");
-		System.out.println("1. Surgeon");
-		System.out.println("2. Nurse");
-		System.out.println("3. Chief surgeon");
-		Integer option= Integer.parseInt(reader.readLine());
-		Role role = null;
-		Boolean chief = null;
-		List<User> users= new ArrayList<User>();
-		switch (option) {
-			case 1:
-				role= userManager.getRole("surgeon");
-				chief= false;
-				break;
-			case 2: 
-				role= userManager.getRole("nurse");
-				break;
-			case 3:
-				if(userManager.getRole("chiefSurgeon").getUsers().size()!=0) { 
-					System.out.println("There is already one chief, no more chief avaliables");
-					main(null);				}
-				else {
-					role= userManager.getRole("chiefSurgeon");
-				}
-				chief= true;
-				break;
-		}
-		System.out.println("Type your email: ");
-		String email= reader.readLine();
-		System.out.println("Type the password: ");
-		String password= reader.readLine();
-		System.out.println("Type your name:");
-		String name =  reader.readLine();
-		Surgeon s;
-		Nurse n;
-		MessageDigest md= MessageDigest.getInstance("MD5");
-		md.update(password.getBytes());
-		byte[] hash= md.digest();
-		User u= new User(email, hash, role);
-		u.getRole().addUser(u);
+		try {
+			System.out.println("Choose your role: ");
+			System.out.println("1. Surgeon");
+			System.out.println("2. Nurse");
+			System.out.println("3. Chief surgeon");
+			Integer option= Integer.parseInt(reader.readLine());
+			Role role = null;
+			Boolean chief = null;
+			List<User> users= new ArrayList<User>();
+			switch (option) {
+				case 1:
+					role= userManager.getRole("surgeon");
+					chief= false;
+					break;
+				case 2: 
+					role= userManager.getRole("nurse");
+					break;
+				case 3:
+					if(userManager.getRole("chiefSurgeon").getUsers().size()!=0) { 
+						System.out.println("There is already one chief, no more chief avaliables");
+						main(null);				}
+					else {
+						role= userManager.getRole("chiefSurgeon");
+					}
+					chief= true;
+					break;
+			}
+			System.out.println("Type your email: ");
+			String email= reader.readLine();
+			System.out.println("Type the password: ");
+			String password= reader.readLine();
+			System.out.println("Type your name:");
+			String name =  reader.readLine();
+			Surgeon s;
+			Nurse n;
+			MessageDigest md= MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte[] hash= md.digest();
+			User u= new User(email, hash, role);
+			u.getRole().addUser(u);
+		
 		if(role.getName().equals("surgeon") || role.getName().equals("chiefSurgeon")){
 			s= new Surgeon(name, email,chief);
 			surgeonManager.addSurgeon(s);
@@ -236,6 +247,12 @@ public class Menu {
 		}
 		System.out.println("User has been created correctly");
 		userManager.newUser(u);
+		System.out.println(u.getRole().getUsers());
+		}
+		catch (Exception e) {
+			System.out.println("It was not created");
+			main(null);
+		}
 	}
 	
 
@@ -298,13 +315,19 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		surgeonManager.changeChief(newChiefId);
-		String email= surgeonManager.getEmailById(newChiefId);
-		userManager.changeChief(email);
+		if(!userManager.getChief().getEmail().equals(surgeonManager.getEmailById(newChiefId))) {
+			surgeonManager.changeChief(newChiefId);
+			String email= surgeonManager.getEmailById(newChiefId);
+			userManager.changeChief(email);
+		} else {
+			System.out.println("That's the actual chief, no changes done");
+		}
 	}
 
 	private static void deleteVacations() throws NumberFormatException, Exception {
 		// TODO Auto-generated method stub
+		List<SurgeonVacation> surgVac= surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
+		System.out.println(surgVac);
 		System.out.println("Type the vacation id");
 		Integer vacId =  Integer.parseInt(reader.readLine());
 		surgeonVacationManager.deleteSurgeonVacationById(vacId);
@@ -317,9 +340,8 @@ public class Menu {
 			int i;
 			for(i=0; i< sVacations.size(); i++)
 			{
-				
 				System.out.print(sVacations.get(i).toString());
-				System.out.println(" Surgeon id: "+ sVacations.get(i).getSurgeonId());
+				System.out.println(" Surgeon name: "+ surgeonManager.getNameById(sVacations.get(i).getSurgeonId()));
 			}			
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -369,36 +391,6 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
-	
-//	public static void createSurgeon(String email, Boolean chief) throws Exception
-//	{
-//		Surgeon s;
-//		System.out.println("Type the name of the surgeon:");
-//		String name =  reader.readLine();
-//		//Boolean chief;
-////		if (surgeonManager.getChiefSurgeon()== null) {
-////			while(true) {
-////				System.out.println("Is it a chief surgeon? (Y/N)");
-////				String response =  reader.readLine();
-////				if(response.equals("Y") || response.equals("y")) {
-////					System.out.println(response);
-////					chief= true;
-////					break;
-////				} else if(response.equals("N") || response.equals("n")) {
-////					chief= false;
-////					break;
-////				}
-////				System.out.println("Please, answer with the correct pattern");
-////			}
-////		}
-////		else {
-////			chief= false;
-////		}
-////		System.out.println("Type the email of the surgeon:");
-////		String email =  reader.readLine();
-//		s= new Surgeon(name, email,chief);
-//		surgeonManager.addSurgeon(s);		
-//	}
 	
 	
 //Métodos para pedir los nuevos parámetros a modificar en una SURGERY 
@@ -528,13 +520,22 @@ public class Menu {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void createSurgeonVacation() throws Exception
+	public static void createVacation(String role) throws Exception
 	{
-		Integer surgId = surgeonManager.getIdByEmail(u.getEmail());
-		//System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
-		if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
-			throw new Exception();
-		}		
+		int surgId = 0;
+		int nurseId = 0;
+		if(role.equals("surgeon")) {
+			surgId = surgeonManager.getIdByEmail(u.getEmail());
+			if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
+				throw new Exception();
+			}	
+		} else if(role.equals("nurse")) {
+//			nurseId = nurseManager.getIdByEmail(u.getEmail());
+//			if(nurseVacationManager.countNurseVacations(nurseId)==2) {
+//				throw new Exception();
+//			}	
+		}
+			
 		java.sql.Date start = null;
 		Integer year;
 		while(true) {
@@ -579,9 +580,15 @@ public class Menu {
 			}
 		} while (option< 1 || option> 6);
 		java.sql.Date end= new java.sql.Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
-		SurgeonVacation sVac= new SurgeonVacation(start, end, surgId);
-		System.out.print(sVac.toString());
-		surgeonVacationManager.addVacation(sVac);		
+		if(role.equals("surgeon")) {
+			SurgeonVacation sVac= new SurgeonVacation(start, end, surgId);
+			System.out.print(sVac.toString());
+			surgeonVacationManager.addVacation(sVac);	
+		} else if(role.equals("nurse")) {
+//			NurseVacation nVac= new NurseVacation(start, end, nurseId);
+//			System.out.print(nVac.toString());
+		}
+			
 	}
 	
 	@SuppressWarnings("deprecation")

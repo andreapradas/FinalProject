@@ -29,7 +29,7 @@ public class JPAUserManager implements UserManager{
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_key= ON").executeUpdate();
 		em.getTransaction().commit();
-		System.out.println(this.getRoles().toString());
+		//System.out.println(this.getRoles().toString());
 		if(this.getRoles().isEmpty()) {
 			Role surgeon= new Role("surgeon");
 			Role nurse= new Role("nurse");
@@ -91,10 +91,15 @@ public class JPAUserManager implements UserManager{
 	
 	@Override
 	public User getChief() {
-		Query q = em.createNativeQuery("SELECT users.* FROM users INNER JOIN "
-				+ "roles ON roles.id= users.role_id WHERE roles.NAME= ?", User.class);
-		q.setParameter(1, "chiefSurgeon");
-		User u= (User) q.getSingleResult();
+		User u = null;
+		try {
+			Query q = em.createNativeQuery(
+					"SELECT users.* FROM users INNER JOIN " + "roles ON roles.id= users.role_id WHERE roles.NAME= ?",
+					User.class);
+			q.setParameter(1, "chiefSurgeon");
+			u = (User) q.getSingleResult();
+		} catch (Exception e) {
+		}
 		return u;
 	}
 	
@@ -106,7 +111,6 @@ public class JPAUserManager implements UserManager{
 			User u= getUserByEmail(email);
 			User u1= getChief();
 			u.setRole(getRole("chiefSurgeon"));
-			System.out.println(u1);
 			u1.setRole(getRole("surgeon"));
 			em.getTransaction().commit();
 			em.close();
@@ -128,6 +132,15 @@ public class JPAUserManager implements UserManager{
 	public List<User> getUsers() {
 		// TODO Auto-generated method stub
 		Query q = em.createNativeQuery("SELECT * FROM users", User.class);
+		List<User> users = (List<User>) q.getResultList();
+		return users;
+	}
+	
+	@Override
+	public List<User> getSpecificUsers(String userRol) {
+		// TODO Auto-generated method stub
+		Query q = em.createNativeQuery("SELECT * FROM users WHERE role_id=?", User.class);
+		q.setParameter(1, getRole(userRol).getId());
 		List<User> users = (List<User>) q.getResultList();
 		return users;
 	}

@@ -51,11 +51,12 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 	public List<SurgeonVacation> getSurgeonReservedVacation (int id) {
 		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
 		try {
-			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT surgeon_name, starts, ends  FROM Surgeon INNER JOIN"
-					+ "surgeonVacation ON Surgeon.surgeonID= surgeonVacation.surgeonID"
-					+ " WHERE Surgeion.surgeonID= id";
-			ResultSet rs = stmt.executeQuery(sql);
+			String sql = "SELECT Surgeon.surgeonID, starts, ends, vacationId  FROM Surgeon INNER JOIN "
+					+ "surgeonVacation ON (Surgeon.surgeonID= surgeonVacation.surgeonID)"
+					+ " WHERE Surgeon.surgeonID= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, id);	
+			ResultSet rs = prep.executeQuery();
 			
 			while(rs.next())
 			{
@@ -68,7 +69,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 				surgeonVacations.add(vac);
 			}
 			rs.close();
-			stmt.close();	
+			prep.close();	
 			
 		}
 		catch(Exception e) {
@@ -163,7 +164,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			String sql = "DELETE FROM surgeonVacation WHERE vacationId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, vacationId);
-			prep.executeUpdate();
+			prep.execute();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -26,7 +26,7 @@ public class User implements Serializable{
 	@GeneratedValue(generator= "users")
 	@TableGenerator(name="users", table="sqlite_sequence",
     pkColumnName="name", valueColumnName="seq", pkColumnValue="users")
-	private Integer id;
+	//private Integer id;
 	private String email;
 	@Lob
 	private byte[] password;
@@ -38,14 +38,7 @@ public class User implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(Integer id, String email, byte[] password, Role role) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.password = password;
-		this.role = role;
-	}
-	
+
 	public User(String email, byte[] password, Role role) {
 		super();
 		this.email = email;
@@ -53,12 +46,6 @@ public class User implements Serializable{
 		this.role = role;
 	}
 	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -82,7 +69,6 @@ public class User implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(password);
-		result = prime * result + Objects.hash(email, id, role);
 		return result;
 	}
 	@Override
@@ -94,13 +80,12 @@ public class User implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
-				&& Arrays.equals(password, other.password) && Objects.equals(role, other.role);
+		return Objects.equals(email, other.email) && Arrays.equals(password, other.password) && Objects.equals(role, other.role);
 	}	
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password.toString() + ", role=" + role.getName()
+		return "User [email=" + email + ", password=" + password.toString() + ", role=" + role.getName()
 				+ "]";
 	}
 }
