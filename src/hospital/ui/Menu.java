@@ -1,6 +1,7 @@
 package hospital.ui;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.sql.Date;
@@ -11,6 +12,7 @@ import java.util.List;
 import hospital.ifaces.*;
 import hospital.jdbc.*;
 import hospital.pojos.Nurse;
+import hospital.pojos.OperatingRoom;
 import hospital.pojos.Patient;
 import hospital.pojos.Role;
 import hospital.pojos.Surgeon;
@@ -26,6 +28,7 @@ public class Menu {
 	
 	private static PatientManager patientManager;
 	private static SurgeryManager surgeryManager;
+	private static OperatingRoomManager operatingRoomManager;
 	private static UserManager userManager;
 	private static JDBCManager jdbcManager;
 	private static NurseManager nurseManager;
@@ -94,7 +97,7 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Add new patient");
 				System.out.println("2. Get list of patients");
-				System.out.println("3. Add new surgeon");
+				System.out.println("3. Change chief surgeon");
 				System.out.println("4. Add new surgeon vacation");
 				System.out.println("5. Get surgeons on vacation any day of the given period");
 				System.out.println("6. Get all vacations");
@@ -106,7 +109,6 @@ public class Menu {
 				//System.out.println("12. Get nurse by ID");
 				System.out.println("13. Delete nurse by ID");
 				System.out.println("14. Log out");
-				System.out.println("9. Change chief surgeon");
 				System.out.println("0. exit");
 	
 				int choice = Integer.parseInt(reader.readLine());
@@ -118,9 +120,9 @@ public class Menu {
 				case 2:
 					getPatients();
 					break;
-//				case 3:
-//					createSurgeon();
-//					break;
+				case 3:
+					changeChiefSurg();
+					break;
 				case 4:
 					createSurgeonVacation();
 					break;
@@ -144,7 +146,6 @@ public class Menu {
 					assignNurseSurgeon();
 				case 12:
 					deleteNurse();
-					changeChiefSurg();
 					break;
 				case 13: 
 					break;
@@ -164,7 +165,7 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void logIn() throws Exception{
 		System.out.println("Email: ");
 		String email= reader.readLine();
@@ -287,11 +288,18 @@ public class Menu {
 
 	private static void changeChiefSurg() {
 	// TODO Auto-generated method stub
-		System.out.println("The chief is going to be changed and the previous is not going to be deleted as chief");
+		System.out.println("The chief is going to be changed and the previous is going to be deleted as chief");
 		System.out.println("Type the new chief id");
-		//Integer chiefId =  Integer.parseInt(reader.readLine());
-		
-		//surgeonManager.deleteSurgeonVacationById(chiefId);
+		Integer newChiefId = null;
+		try {
+			newChiefId = Integer.parseInt(reader.readLine());
+		} catch (NumberFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		surgeonManager.changeChief(newChiefId);
+		String email= surgeonManager.getEmailById(newChiefId);
+		userManager.changeChief(email);
 	}
 
 	private static void deleteVacations() throws NumberFormatException, Exception {
@@ -301,8 +309,7 @@ public class Menu {
 		surgeonVacationManager.deleteSurgeonVacationById(vacId);
 	}
 
-	public static void getAllVacations() throws Exception
-	{
+	public static void getAllVacations() throws Exception{
 		List<SurgeonVacation> sVacations = new ArrayList<SurgeonVacation>();
 		try {
 			sVacations = surgeonVacationManager.getAllVacations();
@@ -461,22 +468,36 @@ public class Menu {
 			System.out.println("Introduce the new value: ");
 			if(parameterChange.equalsIgnoreCase("surgeryType")) {
 				System.out.println("Type the new surgeryType: ");
-				//String surgeryTypeNew = reader.readLine();
 			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
 				System.out.println("Type the new surgeryDate: ");
-				System.out.println("Day: ");
-				//Integer newDay = Integer.parseInt(reader.readLine());
+				/*System.out.println("Day: ");
 				System.out.println("Month: ");
-				//Integer newMonth = Integer.parseInt(reader.readLine());
-				System.out.println("Year: ");
-				//Integer newYear = Integer.parseInt(reader.readLine());
-				//Date newDate = new Date(newYear, newMonth, newDay);
+				System.out.println("Year: ");*/
 			}else {
 				System.out.println("Type the new startHour: ");
-				//Integer newHour = Integer.parseInt(reader.readLine());
 			}
 			String newAtribute = reader.readLine();
 			surgeryManager.modifySurgery(surgeryId, parameterChange, newAtribute);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void modifyOperatingRoom() {
+		try {
+			
+			System.out.println("Type the roomId you want to change: ");
+			int roomId = Integer.parseInt(reader.readLine());
+			System.out.println("Type the atribute you want to change(roomNumber, roomFloor): ");
+			String parameterChange = reader.readLine();
+			System.out.println("Introduce the new value: ");
+			if(parameterChange.equalsIgnoreCase("roomNumber")) {
+				System.out.println("Type the new roomNumber: ");
+			}else {
+				System.out.println("Type the new roomFloor: ");
+			}
+			String newParameter = reader.readLine();
+			operatingRoomManager.modifyOperatingRoom(roomId, parameterChange, newParameter);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

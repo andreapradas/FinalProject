@@ -15,6 +15,6 @@ public interface UserManager {
 	public List<Role> getRoles();
 	public User checkPassword(String email, String password);
 	public List<User> getUsers();
-//	public User getChief();
+	void changeChief(String email);
 
 }

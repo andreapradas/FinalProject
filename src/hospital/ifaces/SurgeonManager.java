@@ -12,4 +12,5 @@ public interface SurgeonManager {
 	void changeChief(int id);
 	void deleteChief();
 	int getIdByEmail(String email);
+	String getEmailById(int id);
 }
