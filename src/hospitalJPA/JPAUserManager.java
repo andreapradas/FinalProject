@@ -2,6 +2,7 @@ package hospitalJPA;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 
@@ -79,15 +80,32 @@ public class JPAUserManager implements UserManager{
 		return role;
 	}
 	
-//	@Override
-//	public User getChief() {
-//		// TODO Auto-generated method stub
-//		Query q = em.createNativeQuery("SELECT users.* FROM users NAME JOIN roles"
-//				+ " WHERE NAME= ?", Role.class);
-//		q.setParameter(1, "chiefSurgeon");
-//		User role= (User) q.getSingleResult();
-//		return role;
-//	}
+	@Override
+	public void changeChief(String email) {
+		// TODO Auto-generated method stub
+		
+		try{
+			Query q = em.createNativeQuery("UPDATE user INNER JOIN role "
+					+ "SET user.role_id= (SELECT id FROM roles WHERE name= ?) WHERE"
+					+ "user.email= ?");
+			q.setParameter(1, "surgeon");
+			q.setParameter(2, email);
+			
+			q.executeUpdate();
+			
+			Query q2 = em.createNativeQuery("UPDATE user INNER JOIN role "
+					+ "SET user.role_id= roles.id WHERE"
+					+ "roles.name= ? AND user.email= ?");
+			q2.setParameter(1, "chiefSurgeon");
+			q2.setParameter(2, email);
+			
+			q2.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 
 	@Override
