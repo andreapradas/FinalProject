@@ -18,4 +18,7 @@ public interface OperatingRoomManager {
 	//Update
 	public void updateActivity(int roomId, Boolean active);
 	
+	//Modify
+	public void modifyOperatingRoom(int roomId, String parameterChange, String newParameter);
+
 }

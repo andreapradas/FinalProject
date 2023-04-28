@@ -12,6 +12,7 @@ import java.util.List;
 import hospital.ifaces.*;
 import hospital.jdbc.*;
 import hospital.pojos.Nurse;
+import hospital.pojos.OperatingRoom;
 import hospital.pojos.Patient;
 import hospital.pojos.Role;
 import hospital.pojos.Surgeon;
@@ -27,6 +28,7 @@ public class Menu {
 	
 	private static PatientManager patientManager;
 	private static SurgeryManager surgeryManager;
+	private static OperatingRoomManager operatingRoomManager;
 	private static UserManager userManager;
 	private static JDBCManager jdbcManager;
 	private static NurseManager nurseManager;
@@ -466,22 +468,36 @@ public class Menu {
 			System.out.println("Introduce the new value: ");
 			if(parameterChange.equalsIgnoreCase("surgeryType")) {
 				System.out.println("Type the new surgeryType: ");
-				//String surgeryTypeNew = reader.readLine();
 			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
 				System.out.println("Type the new surgeryDate: ");
-				System.out.println("Day: ");
-				//Integer newDay = Integer.parseInt(reader.readLine());
+				/*System.out.println("Day: ");
 				System.out.println("Month: ");
-				//Integer newMonth = Integer.parseInt(reader.readLine());
-				System.out.println("Year: ");
-				//Integer newYear = Integer.parseInt(reader.readLine());
-				//Date newDate = new Date(newYear, newMonth, newDay);
+				System.out.println("Year: ");*/
 			}else {
 				System.out.println("Type the new startHour: ");
-				//Integer newHour = Integer.parseInt(reader.readLine());
 			}
 			String newAtribute = reader.readLine();
 			surgeryManager.modifySurgery(surgeryId, parameterChange, newAtribute);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void modifyOperatingRoom() {
+		try {
+			
+			System.out.println("Type the roomId you want to change: ");
+			int roomId = Integer.parseInt(reader.readLine());
+			System.out.println("Type the atribute you want to change(roomNumber, roomFloor): ");
+			String parameterChange = reader.readLine();
+			System.out.println("Introduce the new value: ");
+			if(parameterChange.equalsIgnoreCase("roomNumber")) {
+				System.out.println("Type the new roomNumber: ");
+			}else {
+				System.out.println("Type the new roomFloor: ");
+			}
+			String newParameter = reader.readLine();
+			operatingRoomManager.modifyOperatingRoom(roomId, parameterChange, newParameter);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

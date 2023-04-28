@@ -3,7 +3,9 @@ package hospital.jdbc;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import hospital.ifaces.OperatingRoomManager;
@@ -77,6 +79,26 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			//Hace falta cambiar la lista de habitaciones al cambiar el active??
 			prep.executeUpdate();
 			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Override
+	public void modifyOperatingRoom(int roomId, String parameterChange, String newParameter) {
+		OperatingRoom o = getRoomById(roomId);
+		try {
+			String sql;
+			if(parameterChange.equalsIgnoreCase("roomNumber")) {
+				int roomNumber = Integer.valueOf(newParameter);
+				o.setRoomNumber(roomNumber);
+				sql = "UPDATE operatingRoom SET " + roomNumber + " = ? WHERE roomId = " + roomId;
+			}else if(parameterChange.equalsIgnoreCase("roomFloor")) {
+				int roomFloor= Integer.valueOf(newParameter);
+				o.setRoomFloor(roomFloor);
+				sql = "UPDATE operatingRoom SET" + roomFloor + " = ? WHERE roomId = " + roomId;
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
