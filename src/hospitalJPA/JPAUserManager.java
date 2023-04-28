@@ -65,8 +65,11 @@ public class JPAUserManager implements UserManager{
 	@Override
 	public Role getRoleByEmail(String email) {
 		// TODO Auto-generated method stub
-		
-		return null;
+		Query q = em.createNativeQuery("SELECT roles.* FROM users INNER JOIN "
+				+ "roles ON roles.id= users.role_id WHERE users.EMAIL= ?", User.class);
+		q.setParameter(1, email);
+		Role r= (Role) q.getSingleResult();
+		return r;
 	}
 	
 	@Override
@@ -98,7 +101,6 @@ public class JPAUserManager implements UserManager{
 	@Override
 	public void changeChief(String email) {
 		// TODO Auto-generated method stub
-		
 		try{
 			em.getTransaction().begin();
 			User u= getUserByEmail(email);
@@ -111,7 +113,6 @@ public class JPAUserManager implements UserManager{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 
@@ -149,7 +150,6 @@ public class JPAUserManager implements UserManager{
 			u= (User) q.getSingleResult();
 		}catch(NoResultException e){
 		}
-		
 		return u;
 	}
 

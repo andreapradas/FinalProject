@@ -18,7 +18,8 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 	{
 		this.manager = m;
 	}
-		
+	
+	@Override
 	public List<SurgeonVacation> getAllVacations () {
 		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
 		try {
@@ -43,10 +44,10 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return surgeonVacations;	
 	}
 	
+	@Override
 	public List<SurgeonVacation> getSurgeonReservedVacation (int id) {
 		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
 		try {
@@ -77,6 +78,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		return surgeonVacations;	
 	}
 	
+	@Override
 	public void addVacation(SurgeonVacation sV) {
 		try{
 			String sql = "INSERT INTO surgeonVacation (starts, ends, surgeonID) VALUES (?,?,?)";
@@ -91,6 +93,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}
 	}
 	
+	@Override
 	public List<Surgeon> getSurgeonsOnVacation(java.sql.Date start, java.sql.Date end){
 		List<Surgeon> surgeons= new ArrayList<Surgeon>();
 		try {
@@ -120,6 +123,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		return surgeons;
 	}
 	
+	@Override
 	public void modifySurgeonVacation(int vacationId, java.sql.Date start, java.sql.Date end) {
 		try {
 			String sql = "UPDATE surgeonVacation SET starts=?, ends=? WHERE vacationId=?;";
@@ -133,6 +137,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}
 	}
 	
+	@Override
 	public int getSurgeonVacationId(int surgeonId, java.sql.Date start, java.sql.Date end) {
 		Integer vacId= null;
 		try {
@@ -151,6 +156,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		return vacId;
 	}
 	
+	@Override
 	public void deleteSurgeonVacationById(int vacationId) {
 		try {
 			
