@@ -31,8 +31,6 @@ public class JPAUserManager implements UserManager{
 		em.getTransaction().commit();
 		System.out.println(this.getRoles().toString());
 		if(this.getRoles().isEmpty()) {
-			//Query q = em.createNativeQuery("ALTER TABLE roles AUTO_INCREMENT=0");
-			//q.executeUpdate();
 			Role surgeon= new Role("surgeon");
 			Role nurse= new Role("nurse");
 			Role chiefSurgeon= new Role("chiefSurgeon");
@@ -81,25 +79,31 @@ public class JPAUserManager implements UserManager{
 	}
 	
 	@Override
+	public User getUserByEmail(String email) {
+		Query q = em.createNativeQuery("SELECT * FROM users WHERE email= ?", User.class);
+		q.setParameter(1, email);
+		User u= (User) q.getSingleResult();
+		return u;
+	}
+	
+	@Override
+	public User getChief() {
+		Query q = em.createNativeQuery("SELECT users.* FROM users INNER JOIN "
+				+ "roles ON roles.id= users.role_id WHERE roles.NAME= ?", User.class);
+		q.setParameter(1, "chiefSurgeon");
+		User u= (User) q.getSingleResult();
+		return u;
+	}
+	
+	@Override
 	public void changeChief(String email) {
 		// TODO Auto-generated method stub
 		
 		try{
-			Query q = em.createNativeQuery("UPDATE user INNER JOIN role "
-					+ "SET user.role_id= (SELECT id FROM roles WHERE name= ?) WHERE"
-					+ "user.email= ?");
-			q.setParameter(1, "surgeon");
-			q.setParameter(2, email);
-			
-			q.executeUpdate();
-			
-			Query q2 = em.createNativeQuery("UPDATE user INNER JOIN role "
-					+ "SET user.role_id= roles.id WHERE"
-					+ "roles.name= ? AND user.email= ?");
-			q2.setParameter(1, "chiefSurgeon");
-			q2.setParameter(2, email);
-			
-			q2.executeUpdate();
+			User u= getUserByEmail(email);
+			u.setRole(getRole("chiefSurgeon"));
+			User u1= getChief();
+			u.setRole(getRole("surgeon"));
 			
 		}catch(Exception e) {
 			e.printStackTrace();
