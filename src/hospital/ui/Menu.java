@@ -485,8 +485,7 @@ public class Menu {
 	@SuppressWarnings("deprecation")
 	public static void createSurgeonVacation() throws Exception
 	{
-		String surgEmail = u.getEmail();
-		Integer surgId = 3; //CAMBIAR!!!! 
+		Integer surgId = surgeonManager.getIdByEmail(u.getEmail());
 		//System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
 		if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
 			throw new Exception();

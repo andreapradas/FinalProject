@@ -36,7 +36,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 		String name= null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT surgeon_name FROM Surgeon WHERE SurgeonID= id";
+			String sql = "SELECT surgeon_name FROM Surgeon WHERE surgeonID= id";
 			ResultSet rs = stmt.executeQuery(sql);
 			name = rs.getString("surgeon_name");
 			rs.close();
@@ -47,6 +47,24 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			e.printStackTrace();
 		}
 		return name;
+	}
+	
+	public int getIdByEmail(String email) {
+		int id=0;
+		try {
+			String sql = "SELECT SurgeonID FROM Surgeon WHERE surgeon_email= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, email);
+			ResultSet rs = prep.executeQuery();
+			id = rs.getInt("surgeonID");
+			rs.close();
+			prep.close();	
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 	
 	@Override

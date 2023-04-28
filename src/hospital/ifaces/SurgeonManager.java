@@ -11,4 +11,5 @@ public interface SurgeonManager {
 	Surgeon getChiefSurgeon();
 	void changeChief(int id);
 	void deleteChief();
+	int getIdByEmail(String email);
 }
