@@ -100,11 +100,14 @@ public class JPAUserManager implements UserManager{
 		// TODO Auto-generated method stub
 		
 		try{
+			em.getTransaction().begin();
 			User u= getUserByEmail(email);
-			u.setRole(getRole("chiefSurgeon"));
 			User u1= getChief();
-			u.setRole(getRole("surgeon"));
-			
+			u.setRole(getRole("chiefSurgeon"));
+			System.out.println(u1);
+			u1.setRole(getRole("surgeon"));
+			em.getTransaction().commit();
+			em.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
