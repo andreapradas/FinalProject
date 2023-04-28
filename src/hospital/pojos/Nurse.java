@@ -40,6 +40,12 @@ public class Nurse implements Serializable{
 		this.nurseAvailability = nurseAvailability;	
 	}
 	
+	public Nurse(Integer nurseID, String nurseName, String email) {
+		super();
+		this.nurseID = nurseID;
+		this.nurseName = nurseName;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
