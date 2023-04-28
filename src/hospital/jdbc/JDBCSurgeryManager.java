@@ -29,7 +29,6 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, s.getSurgeryId());
 			prep.setString(2, s.getSurgeryType());
-			//prep.setInt(3, s.getDuration());
 			prep.setDate(3, s.getSurgeryDate());
 			prep.setTime(4, s.getStartHour());
 			prep.setTime(5, s.getEndHour());
@@ -139,9 +138,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			String sql = "SELECT * FROM surgery WHERE id=" + surgeryId;
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			//Integer surgeryId = rs.getInt("surgeryId");
 			String surgeryType = rs.getString("surgeryType");
-			//Integer duration = rs.getInt("duration");
 			Date surgeryDate = rs.getDate("day");
 			Time startHour = rs.getTime("startHour");
 			Time endHour = rs.getTime("endHour");
