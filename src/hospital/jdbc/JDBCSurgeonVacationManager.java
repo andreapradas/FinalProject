@@ -88,7 +88,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			prep.setDate(2, sV.getEndDate());
 			prep.setInt(3, sV.getSurgeonOnVacationId());
 			prep.executeUpdate();			
-					
+			prep.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -133,6 +133,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			prep.setDate(2, end);
 			prep.setInt(3, vacationId);
 			prep.executeUpdate();
+			prep.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -164,7 +165,8 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			String sql = "DELETE FROM surgeonVacation WHERE vacationId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, vacationId);
-			prep.execute();
+			prep.executeUpdate();
+			prep.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

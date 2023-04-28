@@ -103,10 +103,11 @@ public class Menu {
 				System.out.println("1. Add new patient");
 				System.out.println("2. Get list of patients");
 				System.out.println("3. Add new vacation");
-				System.out.println("4. Get all vacations");
+				System.out.println("4. Get all employee vacations");
 				System.out.println("5. Delete vacation");
 				System.out.println("6. Get list of surgeons");
 				System.out.println("7. Get list of nurses");
+				System.out.println("8. Modify vacation");
 				System.out.println("13. Delete nurse by ID");
 				System.out.println("14. Log out");
 				System.out.println("0. exit");
@@ -135,13 +136,16 @@ public class Menu {
 					getAllVacations();
 					break;
 				case 5:
-					deleteVacations();
+					deleteVacations("surgeon");
 					break;
 				case 6:
 					getAllSurgeons();
 					break;
 				case 7:
 					getAllNurses();
+					break;
+				case 8:
+					modifyVacation("surgeon");
 					break;
 				case 12:
 					deleteNurse();
@@ -174,6 +178,28 @@ public class Menu {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	private static void modifyVacation(String role) throws Exception {
+		// TODO Auto-generated method stub
+		if(role.equals("surgeon")) {
+			List<SurgeonVacation> surgVac= surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
+			System.out.println(surgVac);
+			System.out.println("Select the vacation you want to modify");
+			Integer vacId =  Integer.parseInt(reader.readLine());
+			System.out.println("Select the new vacation dates");
+			java.sql.Date start= selectStartDate();
+			java.sql.Date end= new java.sql.Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
+			surgeonVacationManager.modifySurgeonVacation(vacId, start, end);
+		} else if (role.equals("nurse")) {
+//			List<SurgeonVacation> surgVac= nurseVacationManager.getnurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
+//			System.out.println(nurseVac);
+//			System.out.println("Select the vacation you want to modify");
+//			Integer vacId =  Integer.parseInt(reader.readLine());
+//			java.sql.Date start= selectStartDate();
+//			java.sql.Date end= new java.sql.Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
+//			nurseVacationManager.modifynurseVacation(vacId, start, end);
 		}
 	}
 
@@ -289,8 +315,7 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-}
+	}
 
 
 //	private static void createNurse() throws Exception {
@@ -324,13 +349,22 @@ public class Menu {
 		}
 	}
 
-	private static void deleteVacations() throws NumberFormatException, Exception {
+	private static void deleteVacations(String role) throws Exception{
 		// TODO Auto-generated method stub
-		List<SurgeonVacation> surgVac= surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
-		System.out.println(surgVac);
-		System.out.println("Type the vacation id");
-		Integer vacId =  Integer.parseInt(reader.readLine());
-		surgeonVacationManager.deleteSurgeonVacationById(vacId);
+		if(role.equals("surgeon")) {
+			List<SurgeonVacation> surgVac= surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
+			System.out.println(surgVac);
+			System.out.println("Type the vacation id");
+			Integer vacId =  Integer.parseInt(reader.readLine());
+			surgeonVacationManager.deleteSurgeonVacationById(vacId);
+		} else if (role.equals("nurse")) {
+//			List<NurseVacation> nurseVac= nurseVacationManager.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
+//			System.out.println(nurseVac);
+//			System.out.println("Type the vacation id");
+//			Integer vacId =  Integer.parseInt(reader.readLine());
+//			nurseVacationManager.deleteSurgeonVacationById(vacId);
+		}
+		
 	}
 
 	public static void getAllVacations() throws Exception{
@@ -519,7 +553,6 @@ public class Menu {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void createVacation(String role) throws Exception
 	{
 		int surgId = 0;
@@ -527,15 +560,30 @@ public class Menu {
 		if(role.equals("surgeon")) {
 			surgId = surgeonManager.getIdByEmail(u.getEmail());
 			if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
-				throw new Exception();
+				System.out.println("You cannot add more vacations\n");
+				SurgeonMenu();
 			}	
 		} else if(role.equals("nurse")) {
 //			nurseId = nurseManager.getIdByEmail(u.getEmail());
 //			if(nurseVacationManager.countNurseVacations(nurseId)==2) {
-//				throw new Exception();
+//				System.out.println("You cannot add more vacations\n");
+//  			NurseMenu();
 //			}	
 		}
+		java.sql.Date start= selectStartDate();
+		java.sql.Date end= new java.sql.Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
+		if(role.equals("surgeon")) {
+			SurgeonVacation sVac= new SurgeonVacation(start, end, surgId);
+			System.out.print(sVac.toString());
+			surgeonVacationManager.addVacation(sVac);	
+		} else if(role.equals("nurse")) {
+//			NurseVacation nVac= new NurseVacation(start, end, nurseId);
+//			System.out.print(nVac.toString());
+		}
 			
+	}
+	
+	public static Date selectStartDate() throws Exception {
 		java.sql.Date start = null;
 		Integer year;
 		while(true) {
@@ -579,16 +627,7 @@ public class Menu {
 				break;
 			}
 		} while (option< 1 || option> 6);
-		java.sql.Date end= new java.sql.Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
-		if(role.equals("surgeon")) {
-			SurgeonVacation sVac= new SurgeonVacation(start, end, surgId);
-			System.out.print(sVac.toString());
-			surgeonVacationManager.addVacation(sVac);	
-		} else if(role.equals("nurse")) {
-//			NurseVacation nVac= new NurseVacation(start, end, nurseId);
-//			System.out.print(nVac.toString());
-		}
-			
+		return start;
 	}
 	
 	@SuppressWarnings("deprecation")
