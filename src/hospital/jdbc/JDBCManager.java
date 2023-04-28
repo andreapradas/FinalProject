@@ -40,14 +40,14 @@ public class JDBCManager {
 				"surgeon_name	TEXT NOT NULL," +
 				"chief BOOLEAN," +
 				"surgeon_email	TEXT NOT NULL UNIQUE," +
-				"onVacation	BOOLEAN," +
+				"onVacation	BOOLEAN" +
 				");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE Patient (" +
 				"patientId	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"patientName TEXT NOT NULL," + 
-				"phoneNumber INTEGER NOT NULL UNIQUE," +
+				"phoneNumber INTEGER NOT NULL UNIQUE" +
 			");";
 			stmt.executeUpdate(sql);
 			
@@ -55,7 +55,7 @@ public class JDBCManager {
 				"nurseId INTEGER PRIMARY KEY AUTOINCREMENT," + 
 				"nurse_name TEXT NOT NULL," + 
 				"nurse_email	TEXT NOT NULL UNIQUE," +
-				"onVacation	BOOLEAN," +
+				"onVacation	BOOLEAN" +
 				");";
 			stmt.executeUpdate(sql);
 			
@@ -71,7 +71,7 @@ public class JDBCManager {
 				"roomId INTEGER DEFAULT NULL," +
 				"FOREIGN KEY(patientId) REFERENCES Patient(patientId) ON DELETE SET NULL ON UPDATE CASCADE," +
 				"FOREIGN KEY(roomId) REFERENCES operatingRoom(roomId) ON DELETE SET NULL ON UPDATE CASCADE," +
-				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE," +
+				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE" +
 			");"; 	
 			stmt.executeUpdate(sql);
 			
@@ -80,7 +80,7 @@ public class JDBCManager {
 				"starts	DATE NOT NULL," +
 				"ends DATE NOT NULL," +
 				"nurseId INTEGER,"	+
-				"FOREIGN KEY(nurseId) REFERENCES Nurse(nurseId) ON DELETE SET NULL ON UPDATE CASCADE," +
+				"FOREIGN KEY(nurseId) REFERENCES Nurse(nurseId) ON DELETE SET NULL ON UPDATE CASCADE" +
 			");";
 			stmt.executeUpdate(sql);
 			
@@ -88,7 +88,7 @@ public class JDBCManager {
 				"roomId	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"roomNumber	INTEGER NOT NULL UNIQUE," +
 				"roomFloor	INTEGER NOT NULL," +
-				"active BOOLEAN," +
+				"active BOOLEAN" +
 			");";
 			stmt.executeUpdate(sql);
 			
@@ -97,7 +97,7 @@ public class JDBCManager {
 				"starts DATE NOT NULL," +
 				"ends DATE NOT NULL," +
 				"surgeonID INTEGER," +
-				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE," +
+				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE" +
 			");";
 			stmt.executeUpdate(sql);
 			
@@ -107,7 +107,7 @@ public class JDBCManager {
 				"surgeonID INTEGER," +
 				"nurseId INTEGER,"	+
 				"FOREIGN KEY(nurseId) REFERENCES Nurse(nurseId) ON DELETE SET NULL ON UPDATE CASCADE," +
-				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE," +
+				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE" +
 			");";
 			stmt.executeUpdate(sql);
 			
