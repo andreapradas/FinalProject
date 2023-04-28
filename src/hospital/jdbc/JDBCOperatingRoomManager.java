@@ -50,8 +50,8 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 				Integer roomFloor = rs.getInt("roomFloor");
 				Boolean active = rs.getBoolean("active");
 				
-				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
-				rooms.add(o); //Add the room to the list
+				//OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
+				//rooms.add(o); //Add the room to the list
 			}
 			 
 			rs.close();
@@ -64,6 +64,40 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 		
 		return rooms;
 	}
+	
+
+	public List<OperatingRoom> getListOfOperatingRoomActive(){
+		List<OperatingRoom> roomsAvailable = new ArrayList<OperatingRoom>();
+		
+		try {
+			Statement stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM operatingRoom";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				
+				Integer roomId = rs.getInt("roomId");
+				Integer roomNumber = rs.getInt("roomNumber");
+				Integer roomFloor = rs.getInt("roomFloor");
+				Boolean active = rs.getBoolean("active");
+				
+				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor);
+				roomsAvailable.add(o); //Add the room to the list
+			}
+			 
+			rs.close();
+			stmt.close();	
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	
+	return roomsAvailable;
+	
+	}
+
 	
 	@Override
 	public void updateActivity(int roomId, Boolean active) {

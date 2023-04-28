@@ -32,11 +32,10 @@ public class Surgery implements Serializable{
 		super();
 		this.surgeryId = surgeryId; 
 		this.surgeryType = surgeryType;
-		//this.duration = duration;
 		this.surgeryDate = day;
-		this.startHour = startHour;
-		this.endHour = endHour;
+		this.startHour = startHour;//Se crea al meter la cirugia 
 		this.done = false; //Cambiar cuando se realice a true ??
+		
 		//Foreign keys
 		this.patientId = patientId;
 		this.surgeonId = surgeonId;

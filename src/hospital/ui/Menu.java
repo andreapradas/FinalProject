@@ -207,8 +207,7 @@ public class Menu {
 			case 3:
 				if(userManager.getRole("chiefSurgeon").getUsers().size()!=0) { 
 					System.out.println("There is already one chief, no more chief avaliables");
-					throw new Exception();
-				}
+					main(null);				}
 				else {
 					role= userManager.getRole("chiefSurgeon");
 				}
@@ -458,6 +457,29 @@ public class Menu {
 		}
 	}
 	
+	
+//	private static void createSurgery() throws Exception {
+//		// TODO Auto-generated method stub
+//		System.out.println("Type the type of the surgery: ");
+//		String surgeryType =  reader.readLine();
+//		System.out.println("Type the date of the surgery: ");
+//		System.out.println("Day (dd): ");
+//		Integer day = Integer.parseInt(reader.readLine());
+//		System.out.println("Month(mm): ");
+//		Integer month = Integer.parseInt(reader.readLine());
+//		System.out.println("Year(yyyy): ");
+//		Integer year = Integer.parseInt(reader.readLine());
+//	 	Date surgeryDate = new Date(year, month, day);
+//	 	List<OperatingRoom> rooms = operatingRoomManager.getListOfOperatingRoomActive();
+//		for(int i=0; i<=rooms.size(); i++){//Ver todas las rooms hueco por hueco
+//			for(int j=0;j<=3;j++) {//Hay 4 franjas horarias
+//				
+//			}
+//		}
+//		
+//		Surgery s= new Surgery(surgeryId, surgeryType, surgeryDate);
+//		surgeryManager.addSurgery(s);
+//	}
 	
 //Metodos para modificar la hab. y la cirugia 
 	

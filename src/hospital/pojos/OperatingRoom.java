@@ -11,7 +11,7 @@ public class OperatingRoom implements Serializable{
 	private int roomId;
 	private int roomNumber;
 	private int roomFloor;
-	private Boolean active; //El chiefSurgeon lo gestiona, para gestionar las que esten disponibles
+	private Boolean active; 
 	private List<Boolean> hoursAvailable; //Huecos del horario, crear funcion que te ponga tantos huecos como hab disponibles
 	
 	//Constructors
@@ -20,12 +20,12 @@ public class OperatingRoom implements Serializable{
 		super();
 	}
 	
-	public OperatingRoom(int roomId, int roomNumber, int roomFloor, Boolean active) {
+	public OperatingRoom(int roomId, int roomNumber, int roomFloor) {
 		super();
 		this.roomId = roomId;
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
-		this.active = active;
+		this.active = true;//Por defecto estará activa hasta que se le meta una cirugia 
 	}
 	
 	//Getters and Setters
