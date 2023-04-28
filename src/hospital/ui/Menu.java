@@ -30,6 +30,7 @@ public class Menu {
 	private static JDBCManager jdbcManager;
 	private static NurseManager nurseManager;
 	private static WorksWithManager worksWithManager;
+	private static User u;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -169,7 +170,7 @@ public class Menu {
 		String email= reader.readLine();
 		System.out.println("Password: ");
 		String password= reader.readLine();
-		User u= userManager.checkPassword(email, password);
+		u= userManager.checkPassword(email, password);
 		if(u!=null && u.getRole().getName().equals("surgeon")) {
 			System.out.println("Surgeon Login Successful!");
 			SurgeonMenu();
@@ -484,8 +485,8 @@ public class Menu {
 	@SuppressWarnings("deprecation")
 	public static void createSurgeonVacation() throws Exception
 	{
-		System.out.println("Type the id of the surgeon:");
-		Integer surgId =  Integer.parseInt(reader.readLine());
+		String surgEmail = u.getEmail();
+		Integer surgId = 3; //CAMBIAR!!!! 
 		//System.out.println("Vacations" +surgeonVacationManager.countSurgeonVacations(surgId));
 		if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
 			throw new Exception();
