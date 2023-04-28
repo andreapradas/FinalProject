@@ -16,5 +16,7 @@ public interface UserManager {
 	public User checkPassword(String email, String password);
 	public List<User> getUsers();
 	void changeChief(String email);
+	User getUserByEmail(String email);
+	User getChief();
 
 }

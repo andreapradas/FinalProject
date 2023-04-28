@@ -103,7 +103,7 @@ public class Menu {
 				System.out.println("6. Get all vacations");
 				System.out.println("7. Delete vacation");
 				System.out.println("8. Get list of surgeons");				
-				System.out.println("9. Add new nurse");
+//				System.out.println("9. Add new nurse");
 				System.out.println("10. Get list of nurses");
 				System.out.println("11. Assign nurse to surgeon");
 				//System.out.println("12. Get nurse by ID");
@@ -138,12 +138,14 @@ public class Menu {
 				case 8:
 					getAllSurgeons();
 					break;
-				case 9:
-					createNurse();
+//				case 9:
+//					createNurse();
 				case 10:
 					getAllNurses();
+					break;
 				case 11:
 					assignNurseSurgeon();
+					break;
 				case 12:
 					deleteNurse();
 					break;
@@ -217,7 +219,7 @@ public class Menu {
 		String email= reader.readLine();
 		System.out.println("Type the password: ");
 		String password= reader.readLine();
-		System.out.println("Type the name of the surgeon:");
+		System.out.println("Type your name:");
 		String name =  reader.readLine();
 		Surgeon s;
 		Nurse n;
@@ -233,6 +235,7 @@ public class Menu {
 			n= new Nurse(name, email);
 			nurseManager.addNurse(n);
 		}
+		System.out.println("User has been created correctly");
 		userManager.newUser(u);
 	}
 	
@@ -274,17 +277,16 @@ public class Menu {
 }
 
 
-	private static void createNurse() throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println("Type the name of the nurse:");
-		String name =  reader.readLine();
-		System.out.println("Type the email of the nurse:");
-		String email =  reader.readLine();
-		
-		Nurse n= new Nurse(name, email);
-		nurseManager.addNurse(n);
-	}
-
+//	private static void createNurse() throws Exception {
+//		// TODO Auto-generated method stub
+//		System.out.println("Type the name of the nurse:");
+//		String name =  reader.readLine();
+//		System.out.println("Type the email of the nurse:");
+//		String email =  reader.readLine();
+//		
+//		Nurse n= new Nurse(name, email);
+//		nurseManager.addNurse(n);
+//	}
 
 	private static void changeChiefSurg() {
 	// TODO Auto-generated method stub

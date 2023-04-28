@@ -82,26 +82,6 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 		}
 	}
 	
-	
-	@Override
-	public void modifyOperatingRoom(int roomId, String parameterChange, String newParameter) {
-		OperatingRoom o = getRoomById(roomId);
-		try {
-			String sql;
-			if(parameterChange.equalsIgnoreCase("roomNumber")) {
-				int roomNumber = Integer.valueOf(newParameter);
-				o.setRoomNumber(roomNumber);
-				sql = "UPDATE operatingRoom SET " + roomNumber + " = ? WHERE roomId = " + roomId;
-			}else if(parameterChange.equalsIgnoreCase("roomFloor")) {
-				int roomFloor= Integer.valueOf(newParameter);
-				o.setRoomFloor(roomFloor);
-				sql = "UPDATE operatingRoom SET" + roomFloor + " = ? WHERE roomId = " + roomId;
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	@Override
 	public OperatingRoom getRoomById(int roomId) {
 		// TODO Auto-generated method stub
