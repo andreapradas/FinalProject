@@ -83,17 +83,16 @@ public class JDBCPatientManager implements PatientManager{
 			}
 			rs.close();
 			prep.close();
+			return patients;
 		}catch(Exception e) {
 			e.printStackTrace();
+			return null;
 		}
-		return patients;
 	}
 	
 	@Override
 	public void updatePhoneNumber(int pat_id, int phoneNumber) {
-		// TODO Auto-generated method stub
 		try {
-			
 			String sql = "UPDATE Patient SET phoneNumber=? WHERE id=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, phoneNumber);
@@ -108,8 +107,8 @@ public class JDBCPatientManager implements PatientManager{
 	
 	@Override
 	public Patient getPatientByName(String patientName) {
-		Patient p = null;
 		try {
+			Patient p = null;
 			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM patient WHERE patientName=" + patientName;
 			ResultSet rs = stmt.executeQuery(sql);
@@ -122,11 +121,11 @@ public class JDBCPatientManager implements PatientManager{
 			
 			rs.close();
 			stmt.close();
-			
+			return p;
 		}catch (Exception e){
 			e.printStackTrace();
+			return null;
 		}
-		return p;
 	}
 	
 	@Override
