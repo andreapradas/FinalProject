@@ -10,22 +10,14 @@ public class Surgeon implements Serializable{
 	private Integer surgeonId;
 	private String email;
 	private String name;
+	private String surname;
 	private Boolean chief;
-	private Boolean onVacation;
 	private List<Boolean> hourAvailability;
 	
 	public Surgeon() {
 		super();
 	}
 	
-	public Boolean getOnVacation() {
-		return onVacation;
-	}
-
-	public void setOnVacation(Boolean onVacation) {
-		this.onVacation = onVacation;
-	}
-
 	public List<Boolean> getHourAvailability() {
 		return hourAvailability;
 	}
@@ -42,12 +34,12 @@ public class Surgeon implements Serializable{
 		this.chief = chief;
 	}
 
-	public Surgeon(String name, String email, boolean chief){
+	public Surgeon(String name, String surname, String email, boolean chief){
 		super();
 		this.name= name;
+		this.surname= surname;
 		this.email= email;
 		this.chief= chief;
-		this.onVacation= false; //normalmente no esta de vacaciones
 	}
 	
 	public Surgeon(String name, Integer id){
@@ -60,12 +52,11 @@ public class Surgeon implements Serializable{
 		this.surgeonId = surgeonId;
 	}
 
-	public Surgeon(int surgeonId, String name, String email, boolean chief){
+	public Surgeon(int surgeonId, String name, String surname, String email, boolean chief){
 		this.surgeonId= surgeonId;
 		this.name= name;
 		this.email= email;
 		this.chief= chief;
-		this.onVacation= false;
 	}
 		
 
@@ -96,7 +87,7 @@ public class Surgeon implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Surgeon [id= " + surgeonId + ", name= " + name + ", email= " + email +
+		return "Surgeon [id= " + surgeonId + ", name= " + name + ", surname= " + surname + ", email= " + email +
 				", chief= " + chief + "]";
 	}
 	
@@ -116,15 +107,15 @@ public class Surgeon implements Serializable{
 		return chief;
 	}
 	
-	public boolean getAvaliable() {
-		return onVacation;
-	}
-	
 	public void setChief(boolean chief) {
 		this.chief= chief;
 	}
-	
-	public void setAvaliable(boolean avaliable) {
-		this.onVacation= avaliable;
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 }

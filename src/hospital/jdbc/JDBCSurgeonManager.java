@@ -22,11 +22,12 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	@Override
 	public void addSurgeon(Surgeon surg) {
 		try{
-			String sql = "INSERT INTO Surgeon (surgeon_name, surgeon_email, chief) VALUES (?,?,?)";
+			String sql = "INSERT INTO Surgeon (surgeonName, surgeonSurname, surgeonEmail, chief) VALUES (?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, surg.getName());
-			prep.setString(2, surg.getEmail());
-			prep.setBoolean(3, surg.getChief());
+			prep.setString(2, surg.getSurname());
+			prep.setString(3, surg.getEmail());
+			prep.setBoolean(4, surg.getChief());
 			prep.executeUpdate();			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -36,11 +37,11 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	public String getNameById(int id) {
 		String name= null;
 		try {			
-			String sql = "SELECT surgeon_name FROM Surgeon WHERE surgeonID= ?";
+			String sql = "SELECT surgeonName FROM Surgeon WHERE surgeonId= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);
 			ResultSet rs = prep.executeQuery();
-			name = rs.getString("surgeon_name");
+			name = rs.getString("surgeonName");
 			rs.close();
 			prep.close();	
 		}
@@ -54,11 +55,11 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	public int getIdByEmail(String email) {
 		int id = 0;
 		try {
-			String sql = "SELECT surgeonID FROM Surgeon WHERE surgeon_email= ?";
+			String sql = "SELECT surgeonId FROM Surgeon WHERE surgeonEmail= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, email);
 			ResultSet rs = prep.executeQuery();
-			id = rs.getInt("surgeonID");
+			id = rs.getInt("surgeonId");
 			rs.close();
 			prep.close();	
 		}
@@ -72,11 +73,11 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	public String getEmailById(int id) {
 		String email = null;
 		try {
-			String sql = "SELECT surgeon_email FROM Surgeon WHERE surgeonID= ?";
+			String sql = "SELECT surgeonEmail FROM Surgeon WHERE surgeonId= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);
 			ResultSet rs = prep.executeQuery();
-			email = rs.getString("surgeon_email");
+			email = rs.getString("surgeonEmail");
 			rs.close();
 			prep.close();	
 		}
@@ -98,12 +99,12 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			
 			while(rs.next())
 			{
-				Integer id = rs.getInt("surgeonID");
-				String name = rs.getString("surgeon_name");
-				String email = rs.getString("surgeon_email");
+				Integer id = rs.getInt("surgeonId");
+				String name = rs.getString("surgeonName");
+				String surname = rs.getString("surgeonSurname");
+				String email = rs.getString("surgeonEmail");
 				Boolean chief = rs.getBoolean("chief");
-				
-				Surgeon s = new Surgeon(id, name, email, chief);
+				Surgeon s = new Surgeon(id, name, surname,email, chief);
 				ListOfSurgeons.add(s);
 			}
 			rs.close();
@@ -125,11 +126,12 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			PreparedStatement prep= manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, true);
 			ResultSet rs = prep.executeQuery();
-			Integer id = rs.getInt("surgeonID");
-			String name = rs.getString("surgeon_name");
-			String email = rs.getString("surgeon_email");
+			Integer id = rs.getInt("surgeonId");
+			String name = rs.getString("surgeonName");
+			String surname = rs.getString("surgeonSurname");
+			String email = rs.getString("surgeonEmail");
 			Boolean chief = rs.getBoolean("chief");			
-			s = new Surgeon(id, name, email, chief);
+			s = new Surgeon(id, name, surname, email, chief);
 			rs.close();
 			prep.close();
 		} catch (SQLException e) {
@@ -149,7 +151,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			prep.setBoolean(2, true);
 			prep.executeUpdate();	
 			prep.close();
-			String sql2 = "UPDATE Surgeon SET chief= ? WHERE surgeonID= ?";
+			String sql2 = "UPDATE Surgeon SET chief= ? WHERE surgeonId= ?";
 			PreparedStatement prep2 = manager.getConnection().prepareStatement(sql2);
 			prep2.setBoolean(1, true);
 			prep2.setInt(2, id);
@@ -166,7 +168,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 		Surgeon s= getChiefSurgeon();
 		PreparedStatement prep;
 		try {
-			String sql = "UPDATE Surgeon SET chief=false WHERE surgeonID=?";
+			String sql = "UPDATE Surgeon SET chief=false WHERE surgeonId=?";
 			prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, s.getSurgeonId());
 			ResultSet rs = prep.executeQuery();

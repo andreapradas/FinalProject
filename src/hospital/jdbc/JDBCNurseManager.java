@@ -23,10 +23,11 @@ public class JDBCNurseManager implements NurseManager {
 	public void addNurse(Nurse n) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO Nurse (nurse_name, nurse_email) VALUES (?,?)";
+			String sql = "INSERT INTO Nurse (nurseName, nurseSurname, nurseEmail) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, n.getNurseName());
-			prep.setString(2, n.getEmail());
+			prep.setString(2, n.getNurseSurname());
+			prep.setString(3, n.getEmail());
 			
 			prep.executeUpdate();			
 					
@@ -48,9 +49,9 @@ public class JDBCNurseManager implements NurseManager {
 			
 			while(rs.next())
 			{
-				Integer id = rs.getInt("nurseID");
-				String name = rs.getString("nurse_name");
-				String email = rs.getString("nurse_email");
+				Integer id = rs.getInt("nurseId");
+				String name = rs.getString("nurseName");
+				String email = rs.getString("nurseEmail");
 				
 				Nurse n = new Nurse(id, name, email);
 				ListOfNurses.add(n);
@@ -68,12 +69,12 @@ public class JDBCNurseManager implements NurseManager {
 	}
 
 	@Override
-	public void assign(int nurseID, int surgeonID) {
+	public void assign(int nurseId, int surgeonID) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO WorksWith (nurseID,surgeonID) VALUES (?,?)";
+			String sql = "INSERT INTO WorksWith (nurseId,surgeonID) VALUES (?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, nurseID);
+			prep.setInt(1, nurseId);
 			prep.setInt(2, surgeonID);		
 			
 			prep.executeUpdate();			
@@ -85,13 +86,13 @@ public class JDBCNurseManager implements NurseManager {
 	}
 
 	@Override
-	public void deleteNurseByID(int nurseID) {
+	public void deleteNurseByID(int nurseId) {
 		// TODO Auto-generated method stub
 		try {
 			
 			String sql = "DELETE FROM ListOfNurses WHERE id=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1,nurseID);
+			prep.setInt(1,nurseId);
 			
 			prep.executeUpdate();
 			
@@ -101,16 +102,16 @@ public class JDBCNurseManager implements NurseManager {
 	}
 
 	@Override
-	public Nurse getNurseByID(int nurseID) {
+	public Nurse getNurseByID(int nurseId) {
 		// TODO Auto-generated method stub
 		Nurse n = null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM ListOfNurses WHERE id=" + nurseID;
+			String sql = "SELECT * FROM ListOfNurses WHERE id=" + nurseId;
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			Integer id = rs.getInt("nurseID");
-			String name = rs.getString("nurse_name");
+			Integer id = rs.getInt("nurseId");
+			String name = rs.getString("nurseName");
 			String email = rs.getString("name_email");
 			n = new Nurse(id, name, email);				
 			
