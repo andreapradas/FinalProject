@@ -259,6 +259,8 @@ public class Menu {
 			String password= reader.readLine();
 			System.out.println("Type your name:");
 			String name =  reader.readLine();
+			System.out.println("Type your surname:");
+			String surname =  reader.readLine();
 			Surgeon s;
 			Nurse n;
 			MessageDigest md= MessageDigest.getInstance("MD5");
@@ -268,10 +270,10 @@ public class Menu {
 			u.getRole().addUser(u);
 		
 		if(role.getName().equals("surgeon") || role.getName().equals("chiefSurgeon")){
-			s= new Surgeon(name, email,chief);
+			s= new Surgeon(name, surname, email,chief);
 			surgeonManager.addSurgeon(s);
 		}else if(role.getName().equals("nurse")){
-			n= new Nurse(name, email);
+			n= new Nurse(name, surname, email);
 			nurseManager.addNurse(n);
 		}
 		System.out.println("User has been created correctly");
@@ -538,6 +540,7 @@ public class Menu {
 			
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static Date selectStartDate() throws Exception {
 		java.sql.Date start = null;
 		Integer year;
@@ -563,22 +566,22 @@ public class Menu {
 			System.out.println(option);
 			switch(option) {
 			case 1:
-				start= new java.sql.Date(year, 5, 1);
+				start= new Date(year, 5, 1);
 				break;
 			case 2:
-				start= new java.sql.Date(year, 5, 16);
+				start= new Date(year, 5, 16);
 				break;
 			case 3:
-				start= new java.sql.Date(year, 6, 1);
+				start= new Date(year, 6, 1);
 				break;
 			case 4:
-				start= new java.sql.Date(year, 6, 16);
+				start= new Date(year, 6, 16);
 				break;
 			case 5:
-				start= new java.sql.Date(year, 7, 1);
+				start= new Date(year, 7, 1);
 				break;
 			case 6:
-				start= new java.sql.Date(year, 7, 16);
+				start= new Date(year, 7, 16);
 				break;
 			}
 		} while (option< 1 || option> 6);
