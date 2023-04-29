@@ -24,4 +24,6 @@ public interface OperatingRoomManager {
 	//Modify
 	public void modifyOperatingRoom(int roomId, String parameterChange, String newParameter);
 
+	//Delete
+	public void deleteOperatingRoom(int roomId);
 }

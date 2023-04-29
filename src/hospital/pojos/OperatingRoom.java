@@ -20,7 +20,7 @@ public class OperatingRoom implements Serializable{
 		super();
 	}
 	
-	public OperatingRoom(int roomId, int roomNumber, int roomFloor) {
+	public OperatingRoom(int roomId, int roomNumber, int roomFloor) {//Para cuando la crea el CHIEF
 		super();
 		this.roomId = roomId;
 		this.roomNumber = roomNumber;

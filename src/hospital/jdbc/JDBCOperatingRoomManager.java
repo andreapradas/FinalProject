@@ -66,15 +66,16 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 		return rooms;
 	}
 	
-
+	
+//Return a list of ACTIVE rooms
 	@Override
 	public List<OperatingRoom> getListOfActiveOperatingRoom(){
 		List<OperatingRoom> roomsActive = new ArrayList<OperatingRoom>();
-		
 		try {
-			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM operatingRoom WHERE operatingRoom.active = true";//Solo mostrar las que están activas
-			ResultSet rs = stmt.executeQuery(sql);
+			String sql = "SELECT * FROM operatingRoom WHERE operatingRoom.active = ?";//Solo mostrar las que están activas
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setBoolean(1, true);//Así solo selecciona a las ACTIVAS
+			ResultSet rs = prep.executeQuery(sql);
 			
 			while(rs.next())
 			{
@@ -84,11 +85,11 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 				Boolean active = rs.getBoolean("active");
 				
 				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
-				roomsActive.add(o); //Add the room to the list
+				roomsActive.add(o); //Add the ACTIVE room to the list
 			}
 			 
 			rs.close();
-			stmt.close();	
+			prep.close();	
 			
 		}
 		catch(Exception e) {
@@ -108,9 +109,7 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, active);
 			prep.setInt(2, roomId);
-			//Hace falta cambiar la lista de habitaciones al cambiar el active??
 			prep.executeUpdate();
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -122,14 +121,25 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 		OperatingRoom o = getRoomById(roomId);
 		try {
 			String sql;
+			PreparedStatement prep;
 			if(parameterChange.equalsIgnoreCase("roomNumber")) {
 				int roomNumber = Integer.valueOf(newParameter);
 				o.setRoomNumber(roomNumber);
-				sql = "UPDATE operatingRoom SET " + roomNumber + " = ? WHERE roomId = " + roomId;
+				sql = "UPDATE operatingRoom SET roomNumber=? WHERE roomId =?;";
+				prep = manager.getConnection().prepareStatement(sql);
+				prep.setInt(1, roomNumber);
+				prep.setInt(2, roomId);
+				prep.executeUpdate();
+				prep.close();
 			}else if(parameterChange.equalsIgnoreCase("roomFloor")) {
 				int roomFloor= Integer.valueOf(newParameter);
 				o.setRoomFloor(roomFloor);
-				sql = "UPDATE operatingRoom SET" + roomFloor + " = ? WHERE roomId = " + roomId;
+				sql = "UPDATE operatingRoom SET roomFloor= ? WHERE roomId =?;";
+				prep = manager.getConnection().prepareStatement(sql);
+				prep.setInt(1, roomFloor);
+				prep.setInt(2, roomId);
+				prep.executeUpdate();
+				prep.close();
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -137,9 +147,21 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 	}
 	
 	@Override
+	public void deleteOperatingRoom(int roomId) {
+		try {
+			String sql = "DELETE FROM operatingRoom WHERE roomId=?;";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, roomId);
+			prep.executeUpdate();
+			prep.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	@Override
 	public OperatingRoom getRoomById(int roomId) {
-		// TODO Auto-generated method stub
-		
 		OperatingRoom o = null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
@@ -157,7 +179,6 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		
 		return o;
 	}
 	

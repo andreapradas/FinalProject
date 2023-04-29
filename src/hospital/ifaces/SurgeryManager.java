@@ -20,6 +20,8 @@ public interface SurgeryManager {
 	//Modify a surgery
 	public void modifySurgery(int surgeryId, String parameterChange, String newParameter);
 	
+	//Delete a surgery
+	public void deleteSurgery(int surgeryId);
 	//Assign a surgery to a surgeon
 	//public void assign (int surgeonID, int surgeryID);
 }

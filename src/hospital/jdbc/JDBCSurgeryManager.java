@@ -125,6 +125,19 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		}
 	}
 	
+	@Override
+	public void deleteSurgery(int surgeryId) {
+		try {
+			String sql = "DELETE FROM surgery WHERE surgeryId=?;";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, surgeryId);
+			prep.executeUpdate();
+			prep.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	
 	@Override
@@ -141,7 +154,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			Date surgeryDate = rs.getDate("day");
 			Time startHour = rs.getTime("startHour");
 			Time endHour = rs.getTime("endHour");
-			Boolean done = rs.getBoolean("done");
+			//Boolean done = rs.getBoolean("done");
 			Integer patientId = rs.getInt("patientId");
 			Integer surgeonId = rs.getInt("surgeonId");
 			Integer roomId = rs.getInt("roomId");
@@ -154,7 +167,6 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		
 		return s;
 	}
 
