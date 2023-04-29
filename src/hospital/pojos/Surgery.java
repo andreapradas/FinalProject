@@ -42,6 +42,13 @@ public class Surgery implements Serializable{
 		this.roomId = roomId;
 	}
 	
+	public Surgery(String surgeryType, int patientId) {
+		super();
+		this.surgeryType = surgeryType;
+		this.patientId = patientId;
+	}
+	
+	
 	//Getters and Setters
 
 	public Integer getSurgeryId() {

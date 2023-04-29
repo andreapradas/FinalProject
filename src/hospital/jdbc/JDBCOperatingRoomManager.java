@@ -72,7 +72,7 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 	public List<OperatingRoom> getListOfActiveOperatingRoom(){
 		List<OperatingRoom> roomsActive = new ArrayList<OperatingRoom>();
 		try {
-			String sql = "SELECT * FROM operatingRoom WHERE operatingRoom.active = ?";//Solo mostrar las que están activas
+			String sql = "SELECT * FROM operatingRoom WHERE operatingRoom.active = ?;";//Solo mostrar las que están activas
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, true);//Así solo selecciona a las ACTIVAS
 			ResultSet rs = prep.executeQuery(sql);

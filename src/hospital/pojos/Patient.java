@@ -12,6 +12,7 @@ public class Patient implements Serializable{
 	private int patientId;
 	private int phoneNumber;
 	private String patientName;
+	private String patientSurname;
 	private List<Surgery> surgeries;
 	
 	public Patient() {
@@ -19,9 +20,10 @@ public class Patient implements Serializable{
 		surgeries= new ArrayList <Surgery>();
 	}
 	
-	public Patient(String name, int phoneNumber) throws phoneException {
+	public Patient(String name, String surname, int phoneNumber) throws phoneException {
 		super();
-		this.patientName= name;
+		this.patientName = name;
+		this.patientSurname = surname;
 		if(Integer.toString(phoneNumber).length()!= 9){
 			throw new phoneException();			
 		}
@@ -29,9 +31,21 @@ public class Patient implements Serializable{
 		surgeries= new ArrayList <Surgery>();
 	}
 	
-	public Patient(int id, String name, int phoneNumber) throws phoneException {
+
+	public Patient(int patientId,String name, String surname, int phoneNumber) throws phoneException {
 		super();
-		this.patientId= id;
+		this.patientId = patientId;
+		this.patientName= name;
+		this.patientSurname = surname;
+		if(Integer.toString(phoneNumber).length()!= 9){
+			throw new phoneException();			
+		}
+		this.phoneNumber= phoneNumber;
+		surgeries= new ArrayList <Surgery>();
+	}
+	
+	public Patient(String name, int phoneNumber) throws phoneException {
+		super();
 		this.patientName= name;
 		if(Integer.toString(phoneNumber).length()!= 9){
 			throw new phoneException();			
@@ -87,6 +101,22 @@ public class Patient implements Serializable{
 
 	public void setPatientId(int patientId) {
 		this.patientId = patientId;
+	}
+	
+	public String getPatientSurname() {
+		return patientSurname;
+	}
+
+	public void setPatientSurname(String patientSurname) {
+		this.patientSurname = patientSurname;
+	}
+
+	public List<Surgery> getSurgeries() {
+		return surgeries;
+	}
+
+	public void setSurgeries(List<Surgery> surgeries) {
+		this.surgeries = surgeries;
 	}
 	
 }
