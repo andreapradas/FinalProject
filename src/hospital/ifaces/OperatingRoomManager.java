@@ -9,8 +9,11 @@ public interface OperatingRoomManager {
 	//Add an operating room
 	public void addOperatingRoom(OperatingRoom r);
 	
-	//Get the list of operating rooms
+	//Get the list of ALL rooms
 	public List<OperatingRoom> getListOfOperatingRoom();
+	
+	//Get the list of ACTIVE rooms
+	public List<OperatingRoom> getListOfActiveOperatingRoom();
 	
 	//Get by id
 	public OperatingRoom getRoomById(int roomId);

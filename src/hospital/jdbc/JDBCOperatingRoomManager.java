@@ -22,11 +22,12 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 	public void addOperatingRoom(OperatingRoom r) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO operatingRoom (roomID, roomNumber, floor) VALUES (?,?,?)";
+			String sql = "INSERT INTO operatingRoom (roomID, roomNumber, floor, active) VALUES (?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, r.getRoomId());
 			prep.setInt(2, r.getRoomNumber());
 			prep.setInt(3, r.getRoomFloor());
+			prep.setBoolean(4, r.getActive());
 			prep.executeUpdate();			
 					
 		}catch(Exception e) {
@@ -50,8 +51,8 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 				Integer roomFloor = rs.getInt("roomFloor");
 				Boolean active = rs.getBoolean("active");
 				
-				//OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
-				//rooms.add(o); //Add the room to the list
+				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
+				rooms.add(o); //Add the room to the list
 			}
 			 
 			rs.close();
@@ -66,24 +67,24 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 	}
 	
 
-	public List<OperatingRoom> getListOfOperatingRoomActive(){
-		List<OperatingRoom> roomsAvailable = new ArrayList<OperatingRoom>();
+	@Override
+	public List<OperatingRoom> getListOfActiveOperatingRoom(){
+		List<OperatingRoom> roomsActive = new ArrayList<OperatingRoom>();
 		
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM operatingRoom";
+			String sql = "SELECT * FROM operatingRoom WHERE operatingRoom.active = true";//Solo mostrar las que están activas
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next())
 			{
-				
 				Integer roomId = rs.getInt("roomId");
 				Integer roomNumber = rs.getInt("roomNumber");
 				Integer roomFloor = rs.getInt("roomFloor");
 				Boolean active = rs.getBoolean("active");
 				
-				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor);
-				roomsAvailable.add(o); //Add the room to the list
+				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
+				roomsActive.add(o); //Add the room to the list
 			}
 			 
 			rs.close();
@@ -94,7 +95,7 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			e.printStackTrace();
 		}
 	
-	return roomsAvailable;
+	return roomsActive;
 	
 	}
 

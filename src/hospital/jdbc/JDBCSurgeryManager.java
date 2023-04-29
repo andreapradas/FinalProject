@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import hospital.ui.Menu;
 
 import hospital.ifaces.SurgeryManager;
 import hospital.pojos.Surgery;
@@ -33,7 +32,6 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setTime(4, s.getStartHour());
 			prep.setTime(5, s.getEndHour());
 			prep.setBoolean(6, s.getDone());
-			
 			prep.setInt(7, s.getPatientId());
 			prep.setInt(8, s.getSurgeonId());
 			prep.setInt(9, s.getRoomId());
@@ -89,7 +87,6 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, s.getSurgeryId());
 			prep.setString(2, s.getSurgeryType());
-			//prep.setInt(3, s.getDuration());
 			prep.setDate(4, s.getSurgeryDate());
 			prep.setTime(5, s.getStartHour());
 			prep.setTime(6, s.getEndHour());
@@ -128,6 +125,8 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		}
 	}
 	
+
+	
 	@Override
 	public Surgery getSurgeryById(int surgeryId) {
 		// TODO Auto-generated method stub
@@ -142,7 +141,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			Date surgeryDate = rs.getDate("day");
 			Time startHour = rs.getTime("startHour");
 			Time endHour = rs.getTime("endHour");
-			//Boolean done = rs.getBoolean("done");
+			Boolean done = rs.getBoolean("done");
 			Integer patientId = rs.getInt("patientId");
 			Integer surgeonId = rs.getInt("surgeonId");
 			Integer roomId = rs.getInt("roomId");

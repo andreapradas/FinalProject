@@ -28,6 +28,15 @@ public class OperatingRoom implements Serializable{
 		this.active = true;//Por defecto estará activa hasta que se le meta una cirugia 
 	}
 	
+	public OperatingRoom(int roomId, int roomNumber, int roomFloor, Boolean active) {
+		super();
+		this.roomId = roomId;
+		this.roomNumber = roomNumber;
+		this.roomFloor = roomFloor;
+		this.active = active;
+	}
+	
+	
 	//Getters and Setters
 
 	public int getRoomId() {
