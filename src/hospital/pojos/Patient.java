@@ -1,6 +1,8 @@
 package hospital.pojos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Patient implements Serializable{
@@ -10,9 +12,11 @@ public class Patient implements Serializable{
 	private int patientId;
 	private int phoneNumber;
 	private String patientName;
+	private List<Surgery> surgeries;
 	
 	public Patient() {
 		super();
+		surgeries= new ArrayList <Surgery>();
 	}
 	
 	public Patient(String name, int phoneNumber) throws phoneException {
@@ -22,6 +26,7 @@ public class Patient implements Serializable{
 			throw new phoneException();			
 		}
 		this.phoneNumber= phoneNumber;
+		surgeries= new ArrayList <Surgery>();
 	}
 	
 	public Patient(int id, String name, int phoneNumber) throws phoneException {
@@ -32,6 +37,7 @@ public class Patient implements Serializable{
 			throw new phoneException();			
 		}
 		this.phoneNumber= phoneNumber;
+		surgeries= new ArrayList <Surgery>();
 	}
 	
 	@Override

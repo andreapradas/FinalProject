@@ -19,6 +19,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 		this.manager = m;
 	}
 	
+	@Override
 	public void addSurgeon(Surgeon surg) {
 		try{
 			String sql = "INSERT INTO Surgeon (surgeon_name, surgeon_email, chief) VALUES (?,?,?)";

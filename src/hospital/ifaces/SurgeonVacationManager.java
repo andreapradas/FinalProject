@@ -1,5 +1,6 @@
 package hospital.ifaces;
 
+import java.sql.Date;
 import java.util.List;
 
 import hospital.pojos.Surgeon;
@@ -14,4 +15,5 @@ public interface SurgeonVacationManager {
 	void deleteSurgeonVacationById(int vacationId);
 	List<SurgeonVacation> getAllVacations();
 	int countSurgeonVacations(int id);
+	List<Surgeon> getSurgeonsOnVacation(Date date);
 }
