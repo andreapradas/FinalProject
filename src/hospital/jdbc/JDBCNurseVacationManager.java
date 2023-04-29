@@ -32,7 +32,7 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 				Integer vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
-				Integer nurseId = rs.getInt("nurseID");
+				Integer nurseId = rs.getInt("nurseId");
 			
 				NurseVacation vac= new NurseVacation(vacId, starts, ends, nurseId);
 				nurseVacations.add(vac);
@@ -112,10 +112,11 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			
 			while(rs.next())
 			{
-				String name = rs.getString("nurse_name");
+				String name = rs.getString("nurseName");
+				String surname = rs.getString("nurseSurname");
 				Integer nurseId = rs.getInt("nurseId");
-				String email = rs.getString("nurse_email");
-				Nurse n= new Nurse(nurseId, name ,email);
+				String email = rs.getString("nurseEmail");
+				Nurse n= new Nurse(nurseId, name, surname ,email);
 				nurses.add(n);
 			}
 			rs.close();

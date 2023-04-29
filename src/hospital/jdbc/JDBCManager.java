@@ -36,26 +36,27 @@ public class JDBCManager {
 		try {
 			Statement stmt = c.createStatement();
 			String sql = "CREATE TABLE Surgeon (" +
-				"surgeonID	INTEGER PRIMARY KEY AUTOINCREMENT," +
-				"surgeon_name	TEXT NOT NULL," +
+				"surgeonId	INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"surgeonName	TEXT NOT NULL," +
+				"surgeonSurname TEXT NOT NULL, " +
 				"chief BOOLEAN," +
-				"surgeon_email	TEXT NOT NULL UNIQUE," +
-				"onVacation	BOOLEAN" +
+				"surgeonEmail	TEXT NOT NULL UNIQUE" +
 				");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE Patient (" +
 				"patientId	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"patientName TEXT NOT NULL," + 
+				"patientSurname TEXT NOT NULL," + 
 				"phoneNumber INTEGER NOT NULL UNIQUE" +
 			");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE Nurse (" +
 				"nurseId INTEGER PRIMARY KEY AUTOINCREMENT," + 
-				"nurse_name TEXT NOT NULL," + 
-				"nurse_email	TEXT NOT NULL UNIQUE," +
-				"onVacation	BOOLEAN" +
+				"nurseName TEXT NOT NULL," + 
+				"nurseSurname TEXT NOT NULL," + 
+				"nurseEmail	TEXT NOT NULL UNIQUE" +
 				");";
 			stmt.executeUpdate(sql);
 			
@@ -71,7 +72,7 @@ public class JDBCManager {
 				"roomId INTEGER DEFAULT NULL," +
 				"FOREIGN KEY(patientId) REFERENCES Patient(patientId) ON DELETE SET NULL ON UPDATE CASCADE," +
 				"FOREIGN KEY(roomId) REFERENCES operatingRoom(roomId) ON DELETE SET NULL ON UPDATE CASCADE," +
-				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE" +
+				"FOREIGN KEY(surgeonId) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE" +
 			");"; 	
 			stmt.executeUpdate(sql);
 			
@@ -96,18 +97,18 @@ public class JDBCManager {
 				"vacationId INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"starts DATE NOT NULL," +
 				"ends DATE NOT NULL," +
-				"surgeonID INTEGER," +
-				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE" +
+				"surgeonId INTEGER," +
+				"FOREIGN KEY(surgeonId) REFERENCES Surgeon(surgeonId) ON DELETE SET NULL ON UPDATE CASCADE" +
 			");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE worksWith (" +
 				"teamId	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"dateOfWork DATE NOT NULL," +
-				"surgeonID INTEGER," +
+				"surgeonId INTEGER," +
 				"nurseId INTEGER,"	+
 				"FOREIGN KEY(nurseId) REFERENCES Nurse(nurseId) ON DELETE SET NULL ON UPDATE CASCADE," +
-				"FOREIGN KEY(surgeonID) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE" +
+				"FOREIGN KEY(surgeonId) REFERENCES Surgeon(surgeonId) ON DELETE SET NULL ON UPDATE CASCADE" +
 			");";
 			stmt.executeUpdate(sql);
 			
