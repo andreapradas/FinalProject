@@ -1,6 +1,7 @@
 package hospital.pojos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +27,7 @@ public class OperatingRoom implements Serializable{
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
 		this.active = true;//Por defecto estará activa hasta que se le meta una cirugia 
+		this.hoursAvailable = createHoursRange(4);//4 franjas horarias
 	}
 	
 	public OperatingRoom(int roomId, int roomNumber, int roomFloor, Boolean active) {
@@ -36,6 +38,13 @@ public class OperatingRoom implements Serializable{
 		this.active = active;
 	}
 	
+	private List<Boolean> createHoursRange(int range){
+		List<Boolean> hoursAvailable = new ArrayList<Boolean>();
+		for(int i=0; i<range; i++) {
+			hoursAvailable.add(true); 
+		}
+		return hoursAvailable;
+	}
 	
 	//Getters and Setters
 
