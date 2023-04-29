@@ -1,14 +1,19 @@
 package hospital.ifaces;
 
 import java.util.List;
-
 import hospital.pojos.Patient;
 
 
 public interface PatientManager {
 
-	void addPatient(Patient p);
-	void updatePhoneNumber(int pat_id, int phoneNumber);
-	List<Patient> getListOfPatients();
+	public void addPatient(Patient p);
+	public void updatePhoneNumber(int pat_id, int phoneNumber);
+	public List<Patient> getListOfPatients();
+	//List of Patients with the same name
+	public List<Patient> getListPatientByName(String patientName);
+	//
+	public Patient getPatientByName(String patientName);
+	public Patient getPatientBySurname(String patientSurname);
+
 	
 }

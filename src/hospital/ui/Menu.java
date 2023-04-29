@@ -18,6 +18,7 @@ import hospital.pojos.Patient;
 import hospital.pojos.Role;
 import hospital.pojos.Surgeon;
 import hospital.pojos.SurgeonVacation;
+import hospital.pojos.Surgery;
 import hospital.pojos.User;
 import hospitalJPA.JPAUserManager;
 
@@ -407,7 +408,6 @@ public class Menu {
 				System.out.println(patients.get(i).toString());
 			}			
 		}catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -428,86 +428,39 @@ public class Menu {
 		}
 	}
 	
-	
-//Métodos para pedir los nuevos parámetros a modificar en una SURGERY 
-	
-	private Integer askSurgeryId() {
-		System.out.println("Type the new surgeryId: ");
-		try {
-			Integer surgeryId = Integer.parseInt(reader.readLine());
-			return surgeryId;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return null;
+	private static void createSurgery() throws Exception {
+		System.out.println("Type the name of the patient: ");
+		String patientName = reader.readLine();
+		Surgery s = null;
+		//Prove that exits and there is only one
+		List<Patient> patients = new ArrayList<Patient>();
+		patients = patientManager.getListPatientByName(patientName);
+		if(patients.size()>1) {//quiere decir que hay dos o mas pacientes con el mismo nombre
+			System.out.println("Seems that there are 2 patients or more with the same name ");
+			List <String> surnames = new ArrayList<String>();
+			System.out.println("Do you mean...");
+			for(int i = 0; i<patients.size(); i++) {
+				surnames.add(patients.get(i).getPatientSurname());
+				System.out.println(patientName + surnames.get(i).toString());
+			}
+			String surname = reader.readLine();
+			Patient p= patientManager.getPatientBySurname(surname);
+			int patientId = p.getPatientId();
+			System.out.println("Type the type of the surgery: ");
+			String surgeryType =  reader.readLine();
+			s= new Surgery(surgeryType, patientId);
+		}else if(patients == null){//Si no existe ese nombre entre los pacientes
+			System.out.println("There no such a patient with that name. Please enter another name.");
+			//Volver al menu que no se cual es
+		}else {//Si solo hay un paciente con ese nombre
+			Patient p= patientManager.getPatientByName(patientName);
+			int patientId = p.getPatientId();
+			System.out.println("Type the type of the surgery: ");
+			String surgeryType =  reader.readLine();
+			s= new Surgery(surgeryType, patientId);
 		}
+		surgeryManager.addSurgery(s);
 	}
-	
-	private String askSurgeryType() {
-		System.out.println("Type the new surgeryType: ");
-		try {
-			String surgeryType = reader.readLine();
-			return surgeryType;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	@SuppressWarnings("deprecation")
-	private Date askSurgeryDate() {
-		System.out.println("Type the new date for the surgery: ");
-		try {
-			System.out.println("Day: ");
-			Integer day = Integer.parseInt(reader.readLine());
-			System.out.println("Month: ");
-			Integer month = Integer.parseInt(reader.readLine());
-			System.out.println("Year: ");
-			Integer year = Integer.parseInt(reader.readLine());
-			Date surgeryDate = new Date(year, month, day);
-			
-			return surgeryDate;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	@SuppressWarnings("deprecation")
-	private Time askStartHour() {
-		System.out.println("Type the new startHour: ");
-		try{
-			Integer hour = Integer.parseInt(reader.readLine());
-			Time startHour = new Time(hour, 0, 0);
-			return startHour;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	
-//	private static void createSurgery() throws Exception {
-//		// TODO Auto-generated method stub
-//		System.out.println("Type the type of the surgery: ");
-//		String surgeryType =  reader.readLine();
-//		System.out.println("Type the date of the surgery: ");
-//		System.out.println("Day (dd): ");
-//		Integer day = Integer.parseInt(reader.readLine());
-//		System.out.println("Month(mm): ");
-//		Integer month = Integer.parseInt(reader.readLine());
-//		System.out.println("Year(yyyy): ");
-//		Integer year = Integer.parseInt(reader.readLine());
-//	 	Date surgeryDate = new Date(year, month, day);
-//	 	List<OperatingRoom> rooms = operatingRoomManager.getListOfOperatingRoomActive();
-//		for(int i=0; i<=rooms.size(); i++){//Ver todas las rooms hueco por hueco
-//			for(int j=0;j<=3;j++) {//Hay 4 franjas horarias
-//				
-//			}
-//		}
-//		
-//		Surgery s= new Surgery(surgeryId, surgeryType, surgeryDate);
-//		surgeryManager.addSurgery(s);
-//	}
 	
 //Metodos para modificar la hab. y la cirugia 
 	
