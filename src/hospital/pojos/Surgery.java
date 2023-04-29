@@ -13,7 +13,7 @@ public class Surgery implements Serializable{
 	private int surgeryId;
 	private String surgeryType;
 	private Date surgeryDate;
-	private Time startHour;
+	private Time startHour;//Se limita a 4 franjas horarias que ya tienen estipuladas las horas
 	private Time endHour;
 	private Boolean done;
 	//Foreign keys

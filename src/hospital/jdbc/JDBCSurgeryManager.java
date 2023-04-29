@@ -106,6 +106,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		Surgery s = getSurgeryById(surgeryId);
 		try {
 			String sql;
+			PreparedStatement prep;
 			Date surgeryDate = null;
 			Time startHour = null;
 			if(parameterChange.equalsIgnoreCase("surgeryType")) {
@@ -118,7 +119,8 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			}else {
 				startHour = Time.valueOf(parameterChange);
 				s.setStartHour(startHour);
-				sql = "UPDATE surgery SET" + startHour + " = ? WHERE surgeryId = " +surgeryId;
+				sql = "UPDATE surgery SET startHour= ? WHERE surgeryId=?;";
+				prep = manager.getConnection().prepareStatement(sql);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -143,7 +145,6 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	@Override
 	public Surgery getSurgeryById(int surgeryId) {
 		// TODO Auto-generated method stub
-		
 		Surgery s = null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
@@ -169,7 +170,4 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		}
 		return s;
 	}
-
-	
-	
 }
