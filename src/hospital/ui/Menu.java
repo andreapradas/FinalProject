@@ -109,7 +109,8 @@ public class Menu {
 				System.out.println("6. Get list of surgeons");
 				System.out.println("7. Get list of nurses");
 				System.out.println("8. Modify vacation");
-				System.out.println("13. Delete nurse by ID");
+				System.out.println("9. Delete nurse by ID");
+				System.out.println("10. Assign nurse to surgeon");
 				System.out.println("14. Log out");
 				System.out.println("0. exit");
 				//System.out.println("3. Change chief surgeon");
@@ -147,6 +148,9 @@ public class Menu {
 					break;
 				case 8:
 					modifyVacation("surgeon");
+					break;
+				case 10:
+					createTeam();
 					break;
 				case 12:
 					deleteNurse();
@@ -293,14 +297,16 @@ public class Menu {
 }
 
 
-	private static void assignNurseSurgeon() throws Exception {
+	private static void createTeam() throws Exception {
 	// TODO Auto-generated method stub
 		System.out.println("Please enter the nurse ID to assign:");
 		Integer nurseID = Integer.parseInt(reader.readLine());
 		System.out.println("Please enter the surgeon ID to assign:");
 		Integer surgeonID = Integer.parseInt(reader.readLine());
+		//comprobra que los id que se meten existen
 		
 		nurseManager.assign(nurseID, surgeonID);
+		//crea el ww solo con los ids pero me falta meter la fecha tb
 }
 
 

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hospital.ifaces.SurgeonManager;
-import hospital.pojos.Nurse;
 import hospital.pojos.Surgeon;
 
 public class JDBCSurgeonManager implements SurgeonManager{
