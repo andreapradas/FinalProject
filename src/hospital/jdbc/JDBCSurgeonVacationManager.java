@@ -98,21 +98,25 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 	public List<Surgeon> getSurgeonsOnVacation(java.sql.Date start, java.sql.Date end){
 		List<Surgeon> surgeons= new ArrayList<Surgeon>();
 		try {
-			String sql = "SELECT Surgeon.surgeonID, Surgeon.surgeon_name FROM surgeonVacation INNER JOIN Surgeon "
+			String sql = "SELECT Surgeon.* FROM surgeonVacation INNER JOIN Surgeon "
 					+ "ON Surgeon.surgeonID=surgeonVacation.surgeonID "
-					+ "WHERE (starts >=? AND starts <=?) OR (ends >=? AND ends <=?)";
+					+ "WHERE (starts >=? AND starts <=?) OR (ends >=? AND ends <=?) OR (starts <=? AND ends >=?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, start);
 			prep.setDate(2, end);
 			prep.setDate(3, start);
 			prep.setDate(4, end);
+			prep.setDate(5, start);
+			prep.setDate(6, end);
 			ResultSet rs = prep.executeQuery();
 			
 			while(rs.next())
 			{
 				String name = rs.getString("surgeon_name");
 				Integer surgId = rs.getInt("surgeonID");
-				Surgeon s= new Surgeon(name, surgId);
+				String email = rs.getString("surgeon_email");
+				Boolean chief = rs.getBoolean("chief");
+				Surgeon s= new Surgeon(surgId, name ,email, chief);
 				surgeons.add(s);
 			}
 			rs.close();
@@ -122,6 +126,11 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			e.printStackTrace();
 		}
 		return surgeons;
+	}
+	
+	@Override
+	public List<Surgeon> getSurgeonsOnVacation(java.sql.Date date){
+		return getSurgeonsOnVacation(date, date);
 	}
 	
 	@Override

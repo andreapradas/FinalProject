@@ -161,8 +161,8 @@ public class Menu {
 					System.exit(0);
 				default:
 					break;
-//				case 4:
-//					getSurgeonsOnVacation();
+//				case 15:
+//					System.out.println(avaliableSurgeons(new java.sql.Date(2023-1900, 5, 18)));
 //					break;
 //				case 9:
 //					createNurse();
@@ -171,8 +171,10 @@ public class Menu {
 //					break;
 //				case 11:
 //					assignNurseSurgeon();
+////					break;
+//				case 16:
+//					getSurgeonsOnVacation();
 //					break;
-					
 				}
 			}while(true);
 		} catch (Exception e) {
@@ -630,7 +632,6 @@ public class Menu {
 		return start;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static void getSurgeonsOnVacation() throws Exception {
 		System.out.println("Show all surgeons on vacation during any of these days");
 		System.out.println("Type the start date:");
@@ -679,11 +680,11 @@ public class Menu {
 			e.printStackTrace();
 		}
 		try {
-			surgeons = surgeonVacationManager.getSurgeonsOnVacation(start, end);;
+			surgeons = surgeonVacationManager.getSurgeonsOnVacation(start);
 			int i;
 			for(i=0; i< surgeons.size(); i++)
 			{
-				System.out.println(surgeons.get(i).toString());
+				System.out.println("Name: " + surgeons.get(i).getName() + " Id: " + surgeons.get(i).getSurgeonId());
 			}			
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -691,4 +692,10 @@ public class Menu {
 		}
 	}
 	
+	public static List<Surgeon> avaliableSurgeons(java.sql.Date date){
+		System.out.println(date);
+		List<Surgeon> avaliable= surgeonManager.getListOfSurgeons();
+		avaliable.removeAll(surgeonVacationManager.getSurgeonsOnVacation(date));
+		return avaliable;
+	}
 }
