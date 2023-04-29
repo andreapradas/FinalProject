@@ -18,7 +18,7 @@ public class Nurse implements Serializable{
 		super();
 	}
 	
-	public Nurse(Integer nurseId, String nurseSurname, String nurseName, String email) {
+	public Nurse(Integer nurseId, String nurseName, String nurseSurname, String email) {
 		super();
 		this.nurseId = nurseId;
 		this.nurseName = nurseName;

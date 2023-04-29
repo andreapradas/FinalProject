@@ -99,7 +99,8 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		try {
 			String sql = "SELECT Surgeon.* FROM surgeonVacation INNER JOIN Surgeon "
 					+ "ON Surgeon.surgeonId=surgeonVacation.surgeonId "
-					+ "WHERE (starts >=? AND starts <=?) OR (ends >=? AND ends <=?) OR (starts <=? AND ends >=?)";
+					+ "WHERE ((starts >=? AND starts <=?) OR (ends >=? AND ends <=?) OR (starts <=? AND ends >=?)) "
+					+ "ORDER BY surgeonName";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, start);
 			prep.setDate(2, end);
