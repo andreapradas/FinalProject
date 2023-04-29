@@ -130,7 +130,7 @@ public class JDBCNurseManager implements NurseManager {
 	public int getIdByEmail(String email) {
 		int id = 0;
 		try {
-			String sql = "SELECT surgeonId FROM Surgeon WHERE surgeonEmail= ?";
+			String sql = "SELECT nurseId FROM Nurse WHERE nurseEmail= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, email);
 			ResultSet rs = prep.executeQuery();
