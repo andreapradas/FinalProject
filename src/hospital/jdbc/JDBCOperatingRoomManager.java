@@ -54,7 +54,6 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
 				rooms.add(o); //Add the room to the list
 			}
-			 
 			rs.close();
 			stmt.close();	
 			

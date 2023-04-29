@@ -83,7 +83,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	public void createSurgery(Surgery s) {
 		try{
 			String sql = "INSERT INTO surgery (surgeryId, surgeryType, surgeryDate, startHour, endHour,"
-					+ "patientId, surgeonID, roomId ) VALUES (?,?,?,?,?,?,?,?)";
+					+ "patientId, surgeonId, roomId ) VALUES (?,?,?,?,?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, s.getSurgeryId());
 			prep.setString(2, s.getSurgeryType());
