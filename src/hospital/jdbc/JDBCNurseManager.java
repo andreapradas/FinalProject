@@ -51,9 +51,9 @@ public class JDBCNurseManager implements NurseManager {
 			{
 				Integer id = rs.getInt("nurseId");
 				String name = rs.getString("nurseName");
+				String surname = rs.getString("nurseSurname");
 				String email = rs.getString("nurseEmail");
-				
-				Nurse n = new Nurse(id, name, email);
+				Nurse n = new Nurse(id, name, surname, email);
 				ListOfNurses.add(n);
 			}
 			
@@ -112,9 +112,9 @@ public class JDBCNurseManager implements NurseManager {
 			
 			Integer id = rs.getInt("nurseId");
 			String name = rs.getString("nurseName");
-			String email = rs.getString("name_email");
-			n = new Nurse(id, name, email);				
-			
+			String surname = rs.getString("nurseSurname");
+			String email = rs.getString("nameEmail");
+			n= new Nurse (id, name, surname, email);
 			rs.close();
 			stmt.close();
 			
@@ -124,6 +124,24 @@ public class JDBCNurseManager implements NurseManager {
 		
 		return n;
 	
+	}
+
+	@Override
+	public int getIdByEmail(String email) {
+		int id = 0;
+		try {
+			String sql = "SELECT nurseId FROM Nurse WHERE nurseEmail= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, email);
+			ResultSet rs = prep.executeQuery();
+			id = rs.getInt("nurseId");
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 	
 }
