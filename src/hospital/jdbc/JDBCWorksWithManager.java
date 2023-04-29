@@ -23,12 +23,12 @@ public class JDBCWorksWithManager implements WorksWithManager {
 	public void addWorksWith(WorksWith wW) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO worksWith (teamID, surgeonID, nurseID, date) VALUES (?,?,?,?)";
+			String sql = "INSERT INTO worksWith (teamId, dateOfWork, surgeonID, nurseId) VALUES (?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, wW.getTeamID());
-			prep.setInt(2, wW.getSurgeonID());
-			prep.setInt(3, wW.getNurseID());
-			prep.setDate(4, wW.getDate());
+			prep.setDate(2, wW.getDate());
+			prep.setInt(3, wW.getSurgeonID());
+			prep.setInt(4, wW.getNurseID());
 			prep.executeUpdate();			
 					
 		}catch(Exception e) {

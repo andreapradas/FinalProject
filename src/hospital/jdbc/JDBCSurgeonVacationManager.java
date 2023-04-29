@@ -148,24 +148,24 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}
 	}
 	
-	@Override
-	public int getSurgeonVacationId(int surgeonId, java.sql.Date start, java.sql.Date end) {
-		Integer vacId= null;
-		try {
-			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT vacationId FROM surgeonVacation WHERE surgeonID= surgeonId"
-					+ " AND starts= start AND ends= end";
-			ResultSet rs = stmt.executeQuery(sql);
-			vacId= rs.getInt("vacationId");
-			rs.close();
-			stmt.close();
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return vacId;
-	}
+//	@Override
+//	public int getSurgeonVacationId(int surgeonId, java.sql.Date start, java.sql.Date end) {
+//		Integer vacId= null;
+//		try {
+//			Statement stmt = manager.getConnection().createStatement();
+//			String sql = "SELECT vacationId FROM surgeonVacation WHERE surgeonID= surgeonId"
+//					+ " AND starts= start AND ends= end";
+//			ResultSet rs = stmt.executeQuery(sql);
+//			vacId= rs.getInt("vacationId");
+//			rs.close();
+//			stmt.close();
+//			
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return vacId;
+//	}
 	
 	@Override
 	public void deleteSurgeonVacationById(int vacationId) {

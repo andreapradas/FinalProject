@@ -11,7 +11,7 @@ public interface SurgeonVacationManager {
 	void addVacation(SurgeonVacation sV);
 	List<Surgeon> getSurgeonsOnVacation(java.sql.Date start, java.sql.Date end);
 	void modifySurgeonVacation(int vacationId, java.sql.Date starts, java.sql.Date ends);
-	int getSurgeonVacationId(int vacationId, java.sql.Date start, java.sql.Date end);
+//	int getSurgeonVacationId(int vacationId, java.sql.Date start, java.sql.Date end);
 	void deleteSurgeonVacationById(int vacationId);
 	List<SurgeonVacation> getAllVacations();
 	int countSurgeonVacations(int id);

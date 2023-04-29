@@ -9,8 +9,8 @@ public class NurseVacation implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -3514210278458069620L;
-	private Integer vacationID;
-	private Integer nurseID;
+	private Integer vacationId;
+	private Integer nurseId;
 	private Date starts;
 	private Date ends;
 	
@@ -19,57 +19,27 @@ public class NurseVacation implements Serializable{
 		super();
 	}
 	
-	public NurseVacation(Integer vacationID, Integer nurseID, Date starts, Date ends) {
+	public NurseVacation(Date starts, Date ends, Integer nurseID) {
 		super();
-		this.vacationID = vacationID;
-		this.nurseID = nurseID;
+		this.starts= starts;
+		this.ends= ends;
+		this.nurseId= nurseID;
+	}
+	
+	
+	public NurseVacation(Integer vacationID, Date starts, Date ends, Integer nurseID) {
+		super();
+		this.vacationId = vacationID;
+		this.nurseId = nurseID;
 		this.starts = starts;
 		this.ends = ends;	
 	}
 	
 	@Override
-	public String toString() {
-		return 
-				"NurseVacation [VacationID=" + vacationID + ", nurseID=" + nurseID + ", starts=" + starts + ", ends=" + ends + "]";
-	}
-
-	public Integer getVacationID() {
-		return vacationID;
-	}
-
-	public void setVacationID(Integer vacationID) {
-		this.vacationID = vacationID;
-	}
-	
-	public Integer getNurseID() {
-		return nurseID;
-	}
-
-	public void setNurseId(Integer nurseID) {
-		this.nurseID = nurseID;
-	}
-	
-	public Date getStarts() {
-		return starts;
-	}
-
-	public void setStarts(Date starts) {
-		this.starts = starts;
-	}
-	
-	public Date getEnds() {
-		return ends;
-	}
-
-	public void setEnds(Date ends) {
-		this.ends = ends;
-	}
-	
-	@Override
 	public int hashCode() {
-		return Objects.hash(vacationID);
+		return Objects.hash(this.vacationId);
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -79,6 +49,65 @@ public class NurseVacation implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		NurseVacation other = (NurseVacation) obj;
-		return Objects.equals(vacationID, other.vacationID);
+		return Objects.equals(this.vacationId, other.vacationId);
 	}
+	
+	@Override
+	public String toString() {
+		return "Nurse vacation [start date= " + starts + ", end date= " + ends + "] (vacId: "+ vacationId
+				+ " nurseId: " + nurseId +")";
+	}
+
+	public Date getStartDate() {
+		return starts;
+	}
+	
+	public void setStartDate(Date start) {
+		this.starts= start;
+	}
+	
+	public Date getEndDate() {
+		return ends;
+	}
+	
+	public void setEndDate(Date end) {
+		this.ends= end;
+	}
+	
+	public int getVacationId() {
+		return vacationId;
+	}
+		
+	public int getNurseOnVacationId() {
+		return nurseId;
+	}
+
+	public Date getStarts() {
+		return starts;
+	}
+
+	public void setStarts(Date starts) {
+		this.starts = starts;
+	}
+
+	public Date getEnds() {
+		return ends;
+	}
+
+	public void setEnds(Date ends) {
+		this.ends = ends;
+	}
+
+	public int getNurseId() {
+		return nurseId;
+	}
+
+	public void setNurseId(int nurseId) {
+		this.nurseId = nurseId;
+	}
+
+	public void setVacationId(int vacationId) {
+		this.vacationId = vacationId;
+	}
+	
 }

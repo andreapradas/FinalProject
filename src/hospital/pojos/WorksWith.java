@@ -22,6 +22,12 @@ public class WorksWith {
 		this.date = date;	
 	}
 	
+	public WorksWith(Integer surgeonID, Integer nurseID) {
+		super();
+		this.surgeonID = surgeonID;
+		this.nurseID = nurseID;
+	}
+	
 	@Override
 	public String toString() {
 		return 

@@ -11,18 +11,16 @@ public class Nurse implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer nurseID;
 	private String nurseName;
-	private Boolean onVacation;
 	private String email;
 	
 	public Nurse() {
 		super();
 	}
 	
-	public Nurse(Integer nurseID, String nurseName, Boolean nurseAvailability, String email) {
+	public Nurse(Integer nurseID, String nurseName, String email) {
 		super();
 		this.nurseID = nurseID;
 		this.nurseName = nurseName;
-		this.onVacation = nurseAvailability;	
 		this.email = email;
 	}
 	
@@ -30,20 +28,6 @@ public class Nurse implements Serializable{
 		super();
 		this.nurseName= name;
 		this.email= email;
-		this.onVacation= true;
-	}
-	
-	public Nurse(Integer nurseID, String nurseName, String email, Boolean nurseAvailability) {
-		super();
-		this.nurseID = nurseID;
-		this.nurseName = nurseName;
-		this.onVacation = nurseAvailability;	
-	}
-	
-	public Nurse(Integer nurseID, String nurseName, String email) {
-		super();
-		this.nurseID = nurseID;
-		this.nurseName = nurseName;
 	}
 	
 	public String getEmail() {
@@ -82,14 +66,6 @@ public class Nurse implements Serializable{
 
 	public void setId(String nurseName) {
 		this.nurseName = nurseName;
-	}
-	
-	public Boolean getNurseAvailability() {
-		return onVacation;
-	}
-
-	public void setNurseAvailability(Boolean nurseAvailability) {
-		this.onVacation = nurseAvailability;
 	}
 	
 	@Override

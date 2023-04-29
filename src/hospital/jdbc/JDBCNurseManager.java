@@ -111,9 +111,8 @@ public class JDBCNurseManager implements NurseManager {
 			
 			Integer id = rs.getInt("nurseID");
 			String name = rs.getString("nurse_name");
-			Boolean availability = rs.getBoolean("nurseAvailability");
 			String email = rs.getString("name_email");
-			n = new Nurse(id, name, availability, email);				
+			n = new Nurse(id, name, email);				
 			
 			rs.close();
 			stmt.close();
