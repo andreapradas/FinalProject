@@ -25,20 +25,17 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM surgeonVacation";
 			ResultSet rs = stmt.executeQuery(sql);
-			
 			while(rs.next())
 			{
 				Integer vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
 				Integer surgId = rs.getInt("surgeonId");
-			
 				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
 				surgeonVacations.add(vac);
 			}
 			rs.close();
 			stmt.close();	
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -56,25 +53,21 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);	
 			ResultSet rs = prep.executeQuery();
-			
 			while(rs.next())
 			{
 				Integer vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
 				Integer surgId = rs.getInt("surgeonId");
-			
 				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
 				surgeonVacations.add(vac);
 			}
 			rs.close();
 			prep.close();	
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return surgeonVacations;	
 	}
 	
@@ -109,7 +102,6 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			prep.setDate(5, start);
 			prep.setDate(6, end);
 			ResultSet rs = prep.executeQuery();
-			
 			while(rs.next())
 			{
 				String name = rs.getString("surgeonName");
@@ -170,8 +162,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 	
 	@Override
 	public void deleteSurgeonVacationById(int vacationId) {
-		try {
-			
+		try {			
 			String sql = "DELETE FROM surgeonVacation WHERE vacationId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, vacationId);
@@ -194,10 +185,23 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			countVac= rs.getInt("count");
 			rs.close();
 			prep.close();
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return countVac;
+	}
+	
+	@Override
+	public void deleteSurgeonByID(int id) {
+		// TODO Auto-generated method stub
+		try {
+			String sql = "DELETE FROM Surgeon WHERE surgeonId=?;";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1,id);
+			prep.executeUpdate();
+			prep.close();	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

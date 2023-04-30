@@ -55,6 +55,7 @@ public class Surgeon implements Serializable{
 	public Surgeon(int surgeonId, String name, String surname, String email, boolean chief){
 		this.surgeonId= surgeonId;
 		this.name= name;
+		this.surname= surname;
 		this.email= email;
 		this.chief= chief;
 	}

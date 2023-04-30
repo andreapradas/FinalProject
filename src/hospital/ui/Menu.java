@@ -48,6 +48,7 @@ public class Menu {
 	nurseManager = new JDBCNurseManager(jdbcManager);
 	worksWithManager = new JDBCWorksWithManager(jdbcManager);
 	surgeryManager = new JDBCSurgeryManager(jdbcManager);
+	nurseVacationManager = new JDBCNurseVacationManager(jdbcManager);
 	
 		try {
 			userManager.getRole("surgeon").setUsers(userManager.getSpecificUsers("surgeon"));
@@ -153,7 +154,8 @@ public class Menu {
 					break;
 
 				case 10:
-					createTeam();
+					createTeam(new Date(2023-1900, 2, 14));
+					System.out.println(worksWithManager.getListOfWorksWith());
 					break;
 //				case 12:
 //					deleteNurse();
@@ -387,15 +389,42 @@ public class Menu {
 //}
 
 
-	private static void createTeam() throws Exception {
+	private static void createTeam(Date date) throws Exception {
 	// TODO Auto-generated method stub
-		System.out.println("Please enter the nurse ID to assign:");
-		Integer nurseID = Integer.parseInt(reader.readLine());
-		System.out.println("Please enter the surgeon ID to assign:");
-		Integer surgeonID = Integer.parseInt(reader.readLine());
-		//comprobra que los id que se meten existen
+		Integer nurseId;
+		do {
+			System.out.println(avaliableNurses(date).removeAll(nurseManager.getNursesAssignedThisDay(date)));
+			System.out.println("Please enter the nurse ID to assign:");
+			nurseId = Integer.parseInt(reader.readLine());
+			if(!avaliableNurses(date).contains(nurseManager.getNurseById(nurseId))) {
+				System.out.println("That nurse is not avaliable\n");
+			}
+			else {
+				break;
+			}
+		} while(true);
 		
-		nurseManager.assign(nurseID, surgeonID);
+		Integer surgeonId;
+		do {
+			System.out.println(avaliableSurgeons(date));
+			System.out.println(avaliableSurgeons(date).removeAll(surgeonManager.getSurgeonsAssignedThisDay(date)));
+			System.out.println("Please enter the surgeon ID to assign:");
+			surgeonId = Integer.parseInt(reader.readLine());
+			if(!avaliableSurgeons(date).contains(surgeonManager.getSurgeonById(surgeonId))) {
+				System.out.println("That surgeon is not avaliable");
+			}else {
+				break;
+			}
+		} while(true);
+		
+		
+//		System.out.println("Please enter the nurse ID to assign:");
+//		nurseId = Integer.parseInt(reader.readLine());
+//		System.out.println("Please enter the surgeon ID to assign:");
+//		Integer surgeonId = Integer.parseInt(reader.readLine());
+//		//comprobra que los id que se meten existen
+		
+		worksWithManager.assign(nurseId, surgeonId, date);
 		//crea el ww solo con los ids pero me falta meter la fecha tb
 }
 
@@ -468,14 +497,21 @@ public class Menu {
 
 	public static void getAllVacations() throws Exception{
 		List<SurgeonVacation> sVacations = new ArrayList<SurgeonVacation>();
+		List<NurseVacation> nVacations = new ArrayList<NurseVacation>();
 		try {
 			sVacations = surgeonVacationManager.getAllVacations();
+			nVacations = nurseVacationManager.getAllVacations();
 			int i;
 			for(i=0; i< sVacations.size(); i++)
 			{
 				System.out.print(sVacations.get(i).toString());
 				System.out.println(" Surgeon name: "+ surgeonManager.getNameById(sVacations.get(i).getSurgeonId()));
-			}			
+			}	
+			for(i=0; i< nVacations.size(); i++)
+			{
+				System.out.print(nVacations.get(i).toString());
+				System.out.println(" Nurse name: "+ nurseManager.getNameById(nVacations.get(i).getNurseId()));
+			}		
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -625,13 +661,12 @@ public class Menu {
 		Date end= new Date (start.getTime() + (1000 * 60 * 60 * 24 * 14));
 		if(role.equals("surgeon")) {
 			SurgeonVacation sVac= new SurgeonVacation(start, end, surgId);
-			System.out.print(sVac.toString());
 			surgeonVacationManager.addVacation(sVac);	
 		} else if(role.equals("nurse")) {
 			NurseVacation nVac= new NurseVacation(start, end, nurseId);
-			System.out.print(nVac.toString());
+			nurseVacationManager.addVacation(nVac);
 		}
-			
+		System.out.println("Vacation successfully saved!\n");
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -717,8 +752,8 @@ public class Menu {
 			System.out.println("Type the day:");
 			endDay= Integer.parseInt(reader.readLine());
 		} while (endDay<1 || endMonth>31);
-		java.sql.Date start= new java.sql.Date(startYear-1900, startMonth-1, startDay);
-		java.sql.Date end= new java.sql.Date(endYear-1900, endMonth-1, endDay);
+		java.sql.Date start= new Date(startYear-1900, startMonth-1, startDay);
+		java.sql.Date end= new Date(endYear-1900, endMonth-1, endDay);
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 		if(start.compareTo(end)>0) {
@@ -742,10 +777,15 @@ public class Menu {
 		}
 	}
 	
-	public static List<Surgeon> avaliableSurgeons(java.sql.Date date){
-		System.out.println(date);
+	public static List<Surgeon> avaliableSurgeons(Date date){
 		List<Surgeon> avaliable= surgeonManager.getListOfSurgeons();
 		avaliable.removeAll(surgeonVacationManager.getSurgeonsOnVacation(date));
+		return avaliable;
+	}
+	
+	public static List<Nurse> avaliableNurses(Date date){
+		List<Nurse> avaliable= nurseManager.getListOfNurses();
+		avaliable.removeAll(nurseVacationManager.getNursesOnVacation(date));
 		return avaliable;
 	}
 }

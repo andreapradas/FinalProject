@@ -2,6 +2,7 @@ package hospital.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -30,7 +31,7 @@ public class JDBCNurseManager implements NurseManager {
 			prep.setString(3, n.getEmail());
 			
 			prep.executeUpdate();			
-					
+			prep.close();	
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -68,33 +69,50 @@ public class JDBCNurseManager implements NurseManager {
 		return ListOfNurses;
 	}
 
+//	@Override
+//	public void assign(int nurseId, int surgeonID) {
+//		// TODO Auto-generated method stub
+//		try{
+//			String sql = "INSERT INTO WorksWith (nurseId,surgeonID) VALUES (?,?)";
+//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+//			prep.setInt(1, nurseId);
+//			prep.setInt(2, surgeonID);		
+//			
+//			prep.executeUpdate();			
+//					
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
+	
 	@Override
-	public void assign(int nurseId, int surgeonID) {
-		// TODO Auto-generated method stub
-		try{
-			String sql = "INSERT INTO WorksWith (nurseId,surgeonID) VALUES (?,?)";
+	public String getNameById(int id) {
+		String name= null;
+		try {			
+			String sql = "SELECT nurseName FROM Nurse WHERE nurseId= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, nurseId);
-			prep.setInt(2, surgeonID);		
-			
-			prep.executeUpdate();			
-					
-		}catch(Exception e) {
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery();
+			name = rs.getString("nurseName");
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+		return name;
 	}
 
 	@Override
 	public void deleteNurseByID(int nurseId) {
 		// TODO Auto-generated method stub
 		try {
-			
-			String sql = "DELETE FROM ListOfNurses WHERE id=?;";
+			String sql = "DELETE FROM Nurse WHERE nurseId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1,nurseId);
-			
 			prep.executeUpdate();
+			prep.close();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -102,28 +120,25 @@ public class JDBCNurseManager implements NurseManager {
 	}
 
 	@Override
-	public Nurse getNurseByID(int nurseId) {
+	public Nurse getNurseById(int nurseId) {
 		// TODO Auto-generated method stub
 		Nurse n = null;
 		try {
-			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM ListOfNurses WHERE id=" + nurseId;
-			ResultSet rs = stmt.executeQuery(sql);
-			
+			String sql = "SELECT * FROM Nurse WHERE nurseId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1,nurseId);
+			ResultSet rs = prep.executeQuery();
 			Integer id = rs.getInt("nurseId");
 			String name = rs.getString("nurseName");
 			String surname = rs.getString("nurseSurname");
-			String email = rs.getString("nameEmail");
+			String email = rs.getString("nurseEmail");
 			n= new Nurse (id, name, surname, email);
 			rs.close();
-			stmt.close();
-			
+			prep.close();
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		
 		return n;
-	
 	}
 
 	@Override
@@ -142,6 +157,34 @@ public class JDBCNurseManager implements NurseManager {
 			e.printStackTrace();
 		}
 		return id;
+	}
+	
+	@Override
+	public List<Nurse> getNursesAssignedThisDay(Date date) {
+		// TODO Auto-generated method stub
+		List<Nurse> nurses = new ArrayList<Nurse>();
+		try {
+			String sql = "SELECT Nurse.* FROM worksWith INNER JOIN Nurse ON Nurse.nurseId= worksWith.nurseId"
+					+ "WHERE dateOfWork= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setDate(1, date);
+			ResultSet rs = prep.executeQuery();
+			while(rs.next())
+			{
+				Integer nurseId = rs.getInt("nurseId");
+				String name = rs.getString("nurseName");
+				String surname = rs.getString("nurseSurname");
+				String email = rs.getString("nurseEmail");
+				Nurse s = new Nurse(nurseId, name, surname, email);
+				nurses.add(s);
+			}
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return nurses;
 	}
 	
 }

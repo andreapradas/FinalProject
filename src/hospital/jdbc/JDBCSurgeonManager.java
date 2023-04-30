@@ -1,5 +1,6 @@
 package hospital.jdbc;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,6 +49,29 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			e.printStackTrace();
 		}
 		return name;
+	}
+	
+	@Override
+	public Surgeon getSurgeonById(int Id) {
+		// TODO Auto-generated method stub
+		Surgeon s = null;
+		try {
+			String sql = "SELECT * FROM Surgeon WHERE surgeonId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, Id);
+			ResultSet rs = prep.executeQuery();
+			Integer id = rs.getInt("surgeonId");
+			String name = rs.getString("surgeonName");
+			String surname = rs.getString("surgeonSurname");
+			String email = rs.getString("surgeonEmail");
+			Boolean chief = rs.getBoolean("chief");
+			s= new Surgeon (id, name, surname, email, chief);
+			rs.close();
+			prep.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return s;
 	}
 	
 	@Override
@@ -180,5 +204,33 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	}
 	
 
+	@Override
+	public List<Surgeon> getSurgeonsAssignedThisDay(Date date) {
+		// TODO Auto-generated method stub
+		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+		try {
+			String sql = "SELECT surgeon.* FROM worksWith INNER JOIN surgeon ON surgeon.surgeonId= worksWith.surgeonId"
+					+ "WHERE dateOfWork= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setDate(1, date);
+			ResultSet rs = prep.executeQuery();
+			while(rs.next())
+			{
+				Integer surgeonId = rs.getInt("surgeonId");
+				String name = rs.getString("surgeonName");
+				String surname = rs.getString("surgeonSurname");
+				String email = rs.getString("surgeonEmail");
+				Boolean chief = rs.getBoolean("chief");
+				Surgeon s = new Surgeon(surgeonId, name, surname, email, chief);
+				surgeons.add(s);
+			}
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return surgeons;
+	}
 	
 }

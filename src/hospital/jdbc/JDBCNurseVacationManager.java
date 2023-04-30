@@ -98,7 +98,7 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 	public List<Nurse> getNursesOnVacation(Date start, Date end){
 		List<Nurse> nurses= new ArrayList<Nurse>();
 		try {
-			String sql = "SELECT Nurse.* FROM nurseVacation INNER JOIN Surgeon "
+			String sql = "SELECT Nurse.* FROM nurseVacation INNER JOIN Nurse "
 					+ "ON Nurse.nurseId=nurseVacation.nurseId "
 					+ "WHERE (starts >=? AND starts <=?) OR (ends >=? AND ends <=?) OR (starts <=? AND ends >=?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
@@ -179,5 +179,22 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			e.printStackTrace();
 		}
 		return countVac;
+	}
+	
+	public String getNameById(int id) {
+		String name= null;
+		try {			
+			String sql = "SELECT nurseName FROM Nurse WHERE nurseId= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery();
+			name = rs.getString("nurseName");
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return name;
 	}
 }
