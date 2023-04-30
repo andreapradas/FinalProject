@@ -117,7 +117,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 		
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM Surgeon";
+			String sql = "SELECT * FROM Surgeon ORDER BY surgeonName";
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next())
@@ -232,5 +232,4 @@ public class JDBCSurgeonManager implements SurgeonManager{
 		}
 		return surgeons;
 	}
-	
 }

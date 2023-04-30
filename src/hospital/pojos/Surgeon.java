@@ -88,8 +88,7 @@ public class Surgeon implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Surgeon [id= " + surgeonId + ", name= " + name + ", surname= " + surname + ", email= " + email +
-				", chief= " + chief + "]";
+		return name + " " + surname + " Email: " + this.email + "  Id: " + this.surgeonId + " Chief: " + chief;
 	}
 	
 	public String getName() {

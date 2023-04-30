@@ -58,8 +58,7 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Sign in");
 				System.out.println("2. Log in");
-				System.out.println("3. List of users");
-				System.out.println("4. Get list of surgeons");	
+				System.out.println("3. List of users");	
 				System.out.println("0. exit");
 				int choice = Integer.parseInt(reader.readLine());
 				switch(choice)
@@ -73,9 +72,6 @@ public class Menu {
 					break;
 				case 3:
 					getUsers();
-					break;
-				case 4:
-					getAllSurgeons();
 					break;
 				case 0: 
 					jdbcManager.disconnect();
@@ -93,36 +89,34 @@ public class Menu {
 	
 	private static void getUsers() {
 		// TODO Auto-generated method stub
-		List<User> users= userManager.getUsers();
-		System.out.println(users);
-		
+		System.out.format("%-20s %s\n", "Email", "Role");
+		System.out.println("------------------------------------");
+		for(User u: userManager.getUsers()) {
+            System.out.format("%-20s %s\n", u.getEmail(), u.getRole().getName());
+		}
+		System.out.println();
 	}
 
-	private static void SurgeonMenu() throws Exception{
+	private static void chiefSurgeonMenu() throws Exception{
 		try {
 			do {
 				System.out.println("Choose an option");
-				System.out.println("1. Add new patient");
-				System.out.println("2. Get list of patients");
-				System.out.println("3. Add new vacation");
-				System.out.println("4. Get all employee vacations");
-				System.out.println("5. Delete vacation");
-				System.out.println("6. Get list of surgeons");
-				System.out.println("7. Get list of nurses");
-				System.out.println("8. Modify vacation");
-				System.out.println("9. Delete nurse by ID");
+				System.out.println(" 1. Add new patient");
+				System.out.println(" 2. Get list of patients");
+				System.out.println(" 3. Add new vacation");
+				System.out.println(" 4. Modify vacation");
+				System.out.println(" 5. Delete vacation");
+				System.out.println(" 6. Get all employee vacations");
+				System.out.println(" 7. Get list of surgeons");
+				System.out.println(" 8. Get list of nurses");
+				System.out.println(" 9. Get list of all employees");	
 				System.out.println("10. Assign nurse to surgeon");
-
-				System.out.println("14. Log out");
-				System.out.println("0. exit");
-//				System.out.println("13. Delete nurse by ID");
-				//System.out.println("3. Change chief surgeon");
-				//System.out.println("5. Get surgeons on vacation any day of the given period");				
-//				System.out.println("9. Add new nurse");
-				//System.out.println("12. Get nurse by ID");
-//				System.out.println("11. Assign nurse to surgeon");
+				System.out.println("11. Change chief surgeon");
+				System.out.println("12. Get surgeons on vacation any day of the given period");
+		
+				System.out.println("13. Log out");
+				System.out.println(" 0. exit");
 				
-	
 				int choice = Integer.parseInt(reader.readLine());
 				switch(choice)
 				{
@@ -133,40 +127,41 @@ public class Menu {
 					getPatients();
 					break;
 				case 3:
-					createVacation("surgeon"); //estamos dentro del menu de surgeons 
-					//por lo que el que este aqui metido va a ser un surgeon y solo podra
+					createVacation("surgeon"); //estamos dentro del menu de chiefSurgeons 
+					//por lo que el que este aqui metido va a ser un chief y solo podra
 					//añadir sus vacaciones
 					break;
 				case 4:
-					getAllVacations();
+					modifyVacation("surgeon");
 					break;
 				case 5:
 					deleteVacations("surgeon");
 					break;
 				case 6:
-					getAllSurgeons();
+					getAllVacations();
 					break;
 				case 7:
-					getAllNurses();
+					getAllSurgeons();
 					break;
 				case 8:
-					modifyVacation("surgeon");
+					getAllNurses();;
 					break;
-
+				case 9:
+					getUsers();
+					break;
 				case 10:
 					Date date = null;//Completar
 					createTeam(date);
 					System.out.println(worksWithManager.getListOfWorksWith());
 					break;
-//				case 12:
-//					deleteNurse();
-//					break;
-				case 13: 
+		 		case 11:
+					changeChiefSurg();
 					break;
-//				case 12:
-//					deleteNurse();
-//					break;
-				case 14:
+				case 12: 
+					getSurgeonsOnVacation();
+					break;
+				
+				case 13:
 					main(null);
 					break;
 				case 0: 
@@ -175,19 +170,71 @@ public class Menu {
 					System.exit(0);
 				default:
 					break;
-//				case 15:
-//					System.out.println(avaliableSurgeons(new java.sql.Date(2023-1900, 5, 18)));
-//					break;
-//				case 9:
-//					createNurse();
-//				case 3:
-//					changeChiefSurg();
-//					break;
-//				case 11:
-//					assignNurseSurgeon();
-//					break;
-				case 16:
-					getSurgeonsOnVacation();
+				}
+			}while(true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+}
+	
+	private static void surgeonMenu() throws Exception{
+		try {
+			do {System.out.println("Choose an option");
+			System.out.println(" 1. Add new patient");
+			System.out.println(" 2. Get list of patients");
+			System.out.println(" 3. Add new vacation");
+			System.out.println(" 4. Modify vacation");
+			System.out.println(" 5. Delete vacation");
+			System.out.println(" 6. Get all employee vacations");
+			System.out.println(" 7. Get list of surgeons");
+			System.out.println(" 8. Get list of nurses");
+			System.out.println(" 9. Get list of all employees");	
+	
+			System.out.println("10. Log out");
+			System.out.println(" 0. exit");
+			
+			int choice = Integer.parseInt(reader.readLine());
+			switch(choice)
+			{
+				case 1:
+					createPatient();
+					break;
+				case 2:
+					getPatients();
+					break;
+				case 3:
+					createVacation("surgeon"); //estamos dentro del menu de sSurgeons 
+					//por lo que el que este aqui metido va a ser un surgeon y solo podra
+					//añadir sus vacaciones
+					break;
+				case 4:
+					modifyVacation("surgeon");
+					break;
+				case 5:
+					deleteVacations("surgeon");
+					break;
+				case 6:
+					getAllVacations();
+					break;
+				case 7:
+					getAllSurgeons();
+					break;
+				case 8:
+					getAllNurses();;
+					break;
+				case 9:
+					getUsers();
+					break;
+				
+				case 10:
+					main(null);
+					break;
+				case 0: 
+					jdbcManager.disconnect();
+					userManager.disconnect();
+					System.exit(0);
+				default:
 					break;
 				}
 			}while(true);
@@ -201,75 +248,57 @@ public class Menu {
 		try {
 			do {
 				System.out.println("Choose an option");
-				System.out.println("1. Get list of patients");
-				System.out.println("2. Add new vacation");
-				System.out.println("3. Get all employee vacations");
-				System.out.println("4. Delete vacation");
-				System.out.println("5. Get list of surgeons");
-				System.out.println("6. Get list of nurses");
-				System.out.println("7. Modify vacation");
-				System.out.println("14. Log out");
-				System.out.println("0. exit");
-				//System.out.println("13. Delete nurse by ID");
-				//System.out.println("3. Change chief surgeon");
-				//System.out.println("5. Get surgeons on vacation any day of the given period");				
-//				System.out.println("9. Add new nurse");
-				//System.out.println("12. Get nurse by ID");
-//				System.out.println("11. Assign nurse to surgeon");
+				System.out.println(" 1. Get list of patients");
+				System.out.println(" 2. Add new vacation");
+				System.out.println(" 3. Modify vacation");
+				System.out.println(" 4. Delete vacation");
+				System.out.println(" 5. Get all employee vacations");
+				System.out.println(" 6. Get list of surgeons");
+				System.out.println(" 7. Get list of nurses");
+				System.out.println(" 8. Get list of all employees");
 				
-	
+				System.out.println(" 9. Log out");
+				System.out.println(" 0. exit");
+				
 				int choice = Integer.parseInt(reader.readLine());
 				switch(choice)
 				{
-				case 1:
-					getPatients();
-					break;
-				case 2:
-					createVacation("nurse"); //estamos dentro del menu de nurses 
-					//por lo que el que este aqui metido va a ser nurse y solo podra
-					//añadir sus vacaciones
-					break;
-				case 3:
-					getAllVacations();
-					break;
-				case 4:
-					deleteVacations("nurse");
-					break;
-				case 5:
-					getAllSurgeons();
-					break;
-				case 6:
-					getAllNurses();
-					break;
-				case 7:
-					modifyVacation("nurse");
-					break;
-				case 14:
-					main(null);
-					break;
-				case 0: 
-					jdbcManager.disconnect();
-					userManager.disconnect();
-					System.exit(0);
-				default:
-					break;
-//				case 12:
-//					deleteNurse();
-//					break;
-//				case 15:
-//					System.out.println(avaliableSurgeons(new java.sql.Date(2023-1900, 5, 18)));
-//					break;
-//				case 9:
-//					createNurse();
-//				case 3:
-//					changeChiefSurg();
-//					break;
-//				case 11:
-//					assignNurseSurgeon();
-//					break;
-				case 16:
-					getSurgeonsOnVacation();
-					break;
+					case 1:
+						getPatients();
+						break;
+					case 2:
+						createVacation("nurse"); //estamos dentro del menu de nurse 
+						//por lo que el que este aqui metido va a ser un nurse y solo podra
+						//añadir sus vacaciones
+						break;
+					case 3:
+						modifyVacation("nurse");
+						break;
+					case 4:
+						deleteVacations("nurse");
+						break;
+					case 5:
+						getAllVacations();
+						break;
+					case 6:
+						getAllSurgeons();
+						break;
+					case 7:
+						getAllNurses();;
+						break;
+					case 8:
+						getUsers();
+						break;
+					
+					case 9:
+						main(null);
+						break;
+					case 0: 
+						jdbcManager.disconnect();
+						userManager.disconnect();
+						System.exit(0);
+					default:
+						break;
 				}
 			}while(true);
 		} catch (Exception e) {
@@ -307,14 +336,14 @@ public class Menu {
 		String password= reader.readLine();
 		u= userManager.checkPassword(email, password);
 		if(u!=null && u.getRole().getName().equals("surgeon")) {
-			System.out.println("Surgeon Login Successful!");
-			SurgeonMenu();
+			System.out.println("Surgeon Login Successful!\n");
+			surgeonMenu();
 		} else if(u!=null && u.getRole().getName().equals("nurse")) {
-			System.out.println("Nurse Login Successful!");
+			System.out.println("Nurse Login Successful!\n");
 			NurseMenu();
 		} else if(u!=null && u.getRole().getName().equals("chiefSurgeon")) {
-			System.out.println("ChiefSurgeon Login Successful!");
-			SurgeonMenu(); //HAY QUE CREAR CHIEF SURGEON MENU
+			System.out.println("ChiefSurgeon Login Successful!\n");
+			surgeonMenu(); //HAY QUE CREAR CHIEF SURGEON MENU
 		} else {
 			System.out.println("Incorrect user or password\n");
 		}
@@ -432,18 +461,17 @@ public class Menu {
 
 	private static void getAllNurses() throws Exception {
 	// TODO Auto-generated method stub
-		List<Nurse> nurses = new ArrayList<Nurse>();
+		System.out.format("%-10s %-15s %-20s %-3s\n", "Name", "Surname", "Email", "Id");
+		System.out.println("----------------------------------------------------");
 		try {
-			nurses = nurseManager.getListOfNurses();
-			int i;
-			for(i=0; i< nurses.size(); i++)
-			{
-				System.out.println(nurses.get(i).toString());
-			}			
+			for(Nurse n: nurseManager.getListOfNurses()) {
+				System.out.format("%-10s %-15s %-20s %-3d\n", n.getNurseName(), n.getNurseSurname(), n.getEmail(), n.getNurseId());
+			}
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println();
 	}
 
 
@@ -460,7 +488,20 @@ public class Menu {
 
 	private static void changeChiefSurg() {
 	// TODO Auto-generated method stub
-		System.out.println("The chief is going to be changed and the previous is going to be deleted as chief");
+		System.out.println("The chief is going to be changed and you are going to be deleted as chief");
+		int count=0;
+//		for(count=0; count< surgeonManager.getListOfSurgeons().size(); count++) {
+//			if(surgeonManager.getListOfSurgeons().get(count).equals(surgeonManager.getChiefSurgeon())){
+//				continue;
+//			}
+//			System.out.println(surgeonManager.getListOfSurgeons().get(count).showSurgeon());
+//		}
+		for(Surgeon s: surgeonManager.getListOfSurgeons()){
+			if(surgeonManager.getListOfSurgeons().get(count).equals(surgeonManager.getChiefSurgeon())){
+				continue;
+			}
+            System.out.format("%-10s %-15s Id: %d\n", s.getName(), s.getSurname(), s.getSurgeonId());
+        }
 		System.out.println("Type the new chief id");
 		Integer newChiefId = null;
 		try {
@@ -469,12 +510,17 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(!userManager.getChief().getEmail().equals(surgeonManager.getEmailById(newChiefId))) {
+		if(userManager.getChief().getEmail().equals(surgeonManager.getEmailById(newChiefId))) {
+			System.out.println("That's the actual chief, no changes done\n");
+			
+		} else if(surgeonManager.getListOfSurgeons().contains(surgeonManager.getSurgeonById(newChiefId))){
 			surgeonManager.changeChief(newChiefId);
 			String email= surgeonManager.getEmailById(newChiefId);
 			userManager.changeChief(email);
+			System.out.println("You will have to log in again in order to have the appropiate menu to your new role");
+			main(null);
 		} else {
-			System.out.println("That's the actual chief, no changes done");
+			System.out.println("Not valid Id\n");
 		}
 	}
 
@@ -547,18 +593,17 @@ public class Menu {
 	
 	public static void getAllSurgeons() throws Exception
 	{
-		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+		System.out.format("%-10s %-15s %-20s %-3s %s\n", "Name", "Surname", "Email", "Id", "Chief");
+		System.out.println("-----------------------------------------------------------");
 		try {
-			surgeons = surgeonManager.getListOfSurgeons();
-			int i;
-			for(i=0; i< surgeons.size(); i++)
-			{
-				System.out.println(surgeons.get(i).toString());
-			}			
+			for(Surgeon s: surgeonManager.getListOfSurgeons()) {
+				System.out.format("%-10s %-15s %-20s %-3d %s\n", s.getName(), s.getSurname(), s.getEmail(), s.getSurgeonId(), s.getChief());
+			}
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println();
 	}
 	
 	private static void createSurgery() throws Exception {
@@ -693,7 +738,7 @@ public class Menu {
 			surgId = surgeonManager.getIdByEmail(u.getEmail());
 			if(surgeonVacationManager.countSurgeonVacations(surgId)==2) {
 				System.out.println("You cannot add more vacations\n");
-				SurgeonMenu();
+				surgeonMenu();
 			}	
 		} else if(role.equals("nurse")) {
 			nurseId = nurseManager.getIdByEmail(u.getEmail());

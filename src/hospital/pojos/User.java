@@ -71,6 +71,7 @@ public class User implements Serializable{
 		result = prime * result + Arrays.hashCode(password);
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -85,7 +86,6 @@ public class User implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", password=" + password.toString() + ", role=" + role.getName()
-				+ "]";
+		return "Email: " + email + "     Role: " + role.getName();
 	}
 }

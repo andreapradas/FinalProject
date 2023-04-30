@@ -131,7 +131,7 @@ public class JPAUserManager implements UserManager{
 	@Override
 	public List<User> getUsers() {
 		// TODO Auto-generated method stub
-		Query q = em.createNativeQuery("SELECT * FROM users", User.class);
+		Query q = em.createNativeQuery("SELECT * FROM users ORDER BY email", User.class);
 		List<User> users = (List<User>) q.getResultList();
 		return users;
 	}
