@@ -36,7 +36,6 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setInt(8, s.getSurgeonId());
 			prep.setInt(9, s.getRoomId());
 			prep.executeUpdate();			
-					
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
