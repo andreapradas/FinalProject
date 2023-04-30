@@ -13,7 +13,7 @@ public class Surgery implements Serializable{
 	private int surgeryId;
 	private String surgeryType;
 	private Date surgeryDate;
-	private Time startHour;//Se limita a 4 franjas horarias que ya tienen estipuladas las horas
+	private int startHour;//Se limita a 4 franjas horarias que ya tienen estipuladas las horas
 	private Time endHour;
 	private Boolean done;
 	//Foreign keys
@@ -27,7 +27,7 @@ public class Surgery implements Serializable{
 		super();
 	}
 	
-	public Surgery(Integer surgeryId, String surgeryType, Date day, Time startHour, Time endHour,  
+	public Surgery(Integer surgeryId, String surgeryType, Date day, int startHour, Time endHour,  
 			Integer patientId, Integer surgeonId, Integer roomId) {
 		super();
 		this.surgeryId = surgeryId; 
@@ -69,10 +69,10 @@ public class Surgery implements Serializable{
 	public void setSurgeryDate(Date day) {
 		this.surgeryDate = day;
 	}
-	public Time getStartHour() {
+	public int getStartHour() {
 		return startHour;
 	}
-	public void setStartHour(Time startHour) {
+	public void setStartHour(int startHour) {
 		this.startHour = startHour;
 	}
 	public Time getEndHour() {

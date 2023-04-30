@@ -39,12 +39,30 @@ public class OperatingRoom implements Serializable{
 		this.hoursAvailable = createHoursRange(4);//4 franjas horarias
 	}
 	
-	private List<Boolean> createHoursRange(int range){
+	private List<Boolean> createHoursRange(int rangeAmount){
 		List<Boolean> hoursAvailable = new ArrayList<Boolean>();
-		for(int i=0; i<range; i++) {
+		for(int i=0; i<rangeAmount; i++) {
 			hoursAvailable.add(true); 
 		}
 		return hoursAvailable;
+	}
+	
+	public void changeHoursAvailable(int hourRange) {
+		this.hoursAvailable.set(hourRange, false);
+	}
+	
+	public int getStartHour(int space) {
+		switch(space) {
+		case 0:
+			return 8;
+		case 1:
+			return 10;
+		case 2:
+			return 12;
+		case 3:
+			return 14;
+		}
+		return -1;
 	}
 	
 	//Getters and Setters

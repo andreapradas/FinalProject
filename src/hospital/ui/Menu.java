@@ -154,7 +154,7 @@ public class Menu {
 					break;
 
 				case 10:
-					Date date = new Date();
+					Date date = null;//Completar
 					createTeam(date);
 					System.out.println(worksWithManager.getListOfWorksWith());
 					break;
@@ -595,6 +595,50 @@ public class Menu {
 		surgeryManager.addSurgery(s);
 	}
 	
+	private static int assignRoom (int surgeryId) {
+		List<OperatingRoom> rooms = new ArrayList<OperatingRoom>();
+		rooms = operatingRoomManager.getListOfActiveOperatingRoom();
+		int roomId;
+		Surgery s = surgeryManager.getSurgeryById(surgeryId);
+		for(int i=0; i<rooms.size();i++) {
+			for(int j =0; j<4; j++) {
+				if(rooms.get(i).getHoursAvailable().get(j)== true) {
+					//Ya se encontró un hueco disponible
+					roomId = rooms.get(i).getRoomId();
+					rooms.get(i).changeHoursAvailable(j);//Cambiar el hueco a OCUPADO
+					s.setStartHour(rooms.get(i).getStartHour(j));//Obtener la hora de la surgery
+					return roomId;
+				}
+			}
+		}
+		return -1;
+	}
+	
+	private static int assignSurgeon(int surgeryId) {
+		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+		surgeons = surgeonManager.getListOfSurgeons();
+		int surgeonId;
+		Surgery s = surgeryManager.getSurgeryById(surgeryId);
+		for(int i=0; i<surgeons.size();i++) {
+			for(int j=0; j<4; j++) {
+				
+			}
+		}
+		return -1;
+	}
+	
+	private static void manageSurgery(int surgeryId) {
+		//Asignarle una room
+		Surgery s = surgeryManager.getSurgeryById(surgeryId);
+		int roomId = assignRoom(surgeryId);
+		if(roomId==-1) {//No hay huecos disponibles
+			System.out.println("There are not empty spaces");
+			//No seguir 
+		}
+		s.setRoomId(roomId);
+		//Asignarle un surgeon
+		s.setSurgeonId(assignSurgeon(surgeryId));
+	}
 //Metodos para modificar la hab. y la cirugia 
 	
 	private static void modifySurgery() {

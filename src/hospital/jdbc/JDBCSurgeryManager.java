@@ -29,7 +29,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setInt(1, s.getSurgeryId());
 			prep.setString(2, s.getSurgeryType());
 			prep.setDate(3, s.getSurgeryDate());
-			prep.setTime(4, s.getStartHour());
+			prep.setInt(4, s.getStartHour());
 			prep.setTime(5, s.getEndHour());
 			prep.setBoolean(6, s.getDone());
 			prep.setInt(7, s.getPatientId());
@@ -52,14 +52,14 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			
 			while(rs.next())
 			{
-				Integer surgeryId = rs.getInt("surgeryId");
+				int surgeryId = rs.getInt("surgeryId");
 				String surgeryType = rs.getString("surgeryType");
 				Date surgeryDate = rs.getDate("surgeryDate");
-				Time startHour = rs.getTime("startHour");
+				int startHour = rs.getInt("startHour");
 				Time endHour = rs.getTime("endHour");
-				Integer patientId = rs.getInt("patientId");
-				Integer surgeonId = rs.getInt("surgeonId");
-				Integer roomId = rs.getInt("roomId");
+				int patientId = rs.getInt("patientId");
+				int surgeonId = rs.getInt("surgeonId");
+				int roomId = rs.getInt("roomId");
 				
 				
 				Surgery s = new Surgery(surgeryId,surgeryType,surgeryDate, startHour, endHour, patientId, surgeonId, roomId);
@@ -87,7 +87,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setInt(1, s.getSurgeryId());
 			prep.setString(2, s.getSurgeryType());
 			prep.setDate(4, s.getSurgeryDate());
-			prep.setTime(5, s.getStartHour());
+			prep.setInt(5, s.getStartHour());
 			prep.setTime(6, s.getEndHour());
 			prep.setBoolean(7, s.getDone());
 			prep.setInt(8, s.getPatientId());
@@ -107,7 +107,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			String sql;
 			PreparedStatement prep;
 			Date surgeryDate = null;
-			Time startHour = null;
+			int startHour = 0;
 			if(parameterChange.equalsIgnoreCase("surgeryType")) {
 				s.setSurgeryType(newParameter);
 				sql = "UPDATE surgery SET " + parameterChange + " = ? WHERE surgeryId = " + surgeryId;
@@ -116,7 +116,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 				s.setSurgeryDate(surgeryDate);
 				sql = "UPDATE surgery SET" + surgeryDate + " = ? WHERE surgeryId = " + surgeryId;
 			}else {
-				startHour = Time.valueOf(parameterChange);
+				startHour = Integer.valueOf(parameterChange);
 				s.setStartHour(startHour);
 				sql = "UPDATE surgery SET startHour= ? WHERE surgeryId=?;";
 				prep = manager.getConnection().prepareStatement(sql);
@@ -152,7 +152,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			
 			String surgeryType = rs.getString("surgeryType");
 			Date surgeryDate = rs.getDate("day");
-			Time startHour = rs.getTime("startHour");
+			int startHour = rs.getInt("startHour");
 			Time endHour = rs.getTime("endHour");
 			//Boolean done = rs.getBoolean("done");
 			Integer patientId = rs.getInt("patientId");
