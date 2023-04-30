@@ -154,7 +154,8 @@ public class Menu {
 					break;
 
 				case 10:
-					createTeam(new Date(2023-1900, 2, 14));
+					Date date = new Date();
+					createTeam(date);
 					System.out.println(worksWithManager.getListOfWorksWith());
 					break;
 //				case 12:

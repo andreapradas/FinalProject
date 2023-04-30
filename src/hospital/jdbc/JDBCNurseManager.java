@@ -166,6 +166,7 @@ public class JDBCNurseManager implements NurseManager {
 		try {
 			String sql = "SELECT Nurse.* FROM worksWith INNER JOIN Nurse ON Nurse.nurseId= worksWith.nurseId"
 					+ "WHERE dateOfWork= ?";
+			//aqui algo esta dando error--> dice que cerca del dateOfWork
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, date);
 			ResultSet rs = prep.executeQuery();

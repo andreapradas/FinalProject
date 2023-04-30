@@ -129,7 +129,6 @@ public class JDBCWorksWithManager implements WorksWithManager {
 			prep.setInt(1, nurseId);
 			prep.setInt(2, surgeonID);	
 			prep.setDate(3, date);
-			//creo que esto no esta guardando bien la fecha pq en la bd hay un numero muy raro
 			prep.executeUpdate();			
 			prep.close();
 		}catch(Exception e) {
