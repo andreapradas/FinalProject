@@ -577,7 +577,7 @@ public class Menu {
 				System.out.println(patientName + surnames.get(i).toString());
 			}
 			String surname = reader.readLine();
-			Patient p= patientManager.getPatientBySurname(surname);
+			Patient p= patientManager.getPatientBySurname(surname,patientName);
 			int patientId = p.getPatientId();
 			System.out.println("Type the type of the surgery: ");
 			String surgeryType =  reader.readLine();

@@ -129,15 +129,15 @@ public class JDBCPatientManager implements PatientManager{
 	}
 	
 	@Override
-	public Patient getPatientBySurname(String patientSurname) {
+	public Patient getPatientBySurname(String patientSurname, String patientName) {
 		Patient p = null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM patient WHERE patientName=" + patientSurname;
+			String sql = "SELECT * FROM patient WHERE patientName=" + patientName 
+					+ "AND patientSurname =" + patientSurname;
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			Integer patientId = rs.getInt("patientId");
-			String patientName = rs.getString("patientName");
 			Integer phoneNumber = rs.getInt("phoneNumber");
 
 			p = new Patient(patientId, patientName, patientSurname, phoneNumber);				

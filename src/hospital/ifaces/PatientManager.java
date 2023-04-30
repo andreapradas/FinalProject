@@ -13,7 +13,7 @@ public interface PatientManager {
 	public List<Patient> getListPatientByName(String patientName);
 	//
 	public Patient getPatientByName(String patientName);
-	public Patient getPatientBySurname(String patientSurname);
+	public Patient getPatientBySurname(String patientSurname, String patientName);
 
 	
 }
