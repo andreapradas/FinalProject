@@ -34,6 +34,21 @@ public class JDBCSurgeonManager implements SurgeonManager{
 		}
 	}
 	
+	@Override
+	public void deleteSurgeonByID(int id) {
+		// TODO Auto-generated method stub
+		try {
+			String sql = "DELETE FROM Surgeon WHERE surgeonId=?;";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1,id);
+			prep.executeUpdate();
+			prep.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public String getNameById(int id) {
 		String name= null;
 		try {			

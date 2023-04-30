@@ -62,14 +62,25 @@ public class JPAUserManager implements UserManager{
 		em.getTransaction().commit();
 	}
 
+//	@Override
+//	public Role getRoleByEmail(String email) {
+//		// TODO Auto-generated method stub
+//		Query q = em.createNativeQuery("SELECT roles.* FROM users INNER JOIN "
+//				+ "roles ON roles.id= users.role_id WHERE users.EMAIL= ?", User.class);
+//		q.setParameter(1, email);
+//		Role r= (Role) q.getSingleResult();
+//		return r;
+//	}
+	
 	@Override
-	public Role getRoleByEmail(String email) {
+	public void deletUser(String email) {
 		// TODO Auto-generated method stub
-		Query q = em.createNativeQuery("SELECT roles.* FROM users INNER JOIN "
-				+ "roles ON roles.id= users.role_id WHERE users.EMAIL= ?", User.class);
+		Query q = em.createNativeQuery("SELECT * FROM users WHERE users.EMAIL= ?", User.class);
 		q.setParameter(1, email);
-		Role r= (Role) q.getSingleResult();
-		return r;
+		User u= (User) q.getSingleResult();
+		em.getTransaction().begin();
+		em.remove(u);
+		em.getTransaction().commit();
 	}
 	
 	@Override

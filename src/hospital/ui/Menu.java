@@ -65,7 +65,6 @@ public class Menu {
 				{
 				case 1:
 					signIn();
-					//System.out.println(userManager.getRole("surgeon").getUsers());
 					break;
 				case 2:
 					logIn();
@@ -113,8 +112,9 @@ public class Menu {
 				System.out.println("10. Assign nurse to surgeon");
 				System.out.println("11. Change chief surgeon");
 				System.out.println("12. Get surgeons on vacation any day of the given period");
+				System.out.println("13. Delete account");
 		
-				System.out.println("13. Log out");
+				System.out.println("14. Log out");
 				System.out.println(" 0. exit");
 				
 				int choice = Integer.parseInt(reader.readLine());
@@ -160,8 +160,10 @@ public class Menu {
 				case 12: 
 					getSurgeonsOnVacation();
 					break;
-				
 				case 13:
+					deletAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
+				
+				case 14:
 					main(null);
 					break;
 				case 0: 
@@ -189,9 +191,10 @@ public class Menu {
 			System.out.println(" 6. Get all employee vacations");
 			System.out.println(" 7. Get list of surgeons");
 			System.out.println(" 8. Get list of nurses");
-			System.out.println(" 9. Get list of all employees");	
+			System.out.println(" 9. Get list of all employees");
+			System.out.println("10. Delete account");
 	
-			System.out.println("10. Log out");
+			System.out.println("11. Log out");
 			System.out.println(" 0. exit");
 			
 			int choice = Integer.parseInt(reader.readLine());
@@ -226,8 +229,12 @@ public class Menu {
 				case 9:
 					getUsers();
 					break;
-				
 				case 10:
+					deletAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
+					main(null);
+					break;
+				
+				case 11:
 					main(null);
 					break;
 				case 0: 
@@ -256,8 +263,9 @@ public class Menu {
 				System.out.println(" 6. Get list of surgeons");
 				System.out.println(" 7. Get list of nurses");
 				System.out.println(" 8. Get list of all employees");
+				System.out.println(" 9. Delete account");
 				
-				System.out.println(" 9. Log out");
+				System.out.println("10. Log out");
 				System.out.println(" 0. exit");
 				
 				int choice = Integer.parseInt(reader.readLine());
@@ -289,8 +297,11 @@ public class Menu {
 					case 8:
 						getUsers();
 						break;
-					
 					case 9:
+						deletAccount("nurse", nurseManager.getIdByEmail(u.getEmail()), u.getEmail());
+						main(null);
+						break;
+					case 10:
 						main(null);
 						break;
 					case 0: 
@@ -343,7 +354,7 @@ public class Menu {
 			NurseMenu();
 		} else if(u!=null && u.getRole().getName().equals("chiefSurgeon")) {
 			System.out.println("ChiefSurgeon Login Successful!\n");
-			surgeonMenu(); //HAY QUE CREAR CHIEF SURGEON MENU
+			chiefSurgeonMenu();
 		} else {
 			System.out.println("Incorrect user or password\n");
 		}
@@ -417,6 +428,17 @@ public class Menu {
 //		Integer nurseID =  Integer.parseInt(reader.readLine());
 //		nurseManager.deleteNurseByID(nurseID);
 //}
+	private static void deletAccount(String role, int id, String email) {
+		userManager.deletUser(email);
+		if(role.equals("surgeon") || role.equals("chiefSurgeon")){
+			userManager.getRole(role).getUsers().remove(surgeonManager.getSurgeonById(id));	
+			surgeonManager.deleteSurgeonByID(id);
+		} else if(role.equals("nurse")){
+			userManager.getRole(role).getUsers().remove(nurseManager.getNurseById(id));	
+			nurseManager.deleteNurseByID(id);
+		}
+		System.out.println("Your account has been deleted\n\n");
+	}
 
 
 	private static void createTeam(Date date) throws Exception {

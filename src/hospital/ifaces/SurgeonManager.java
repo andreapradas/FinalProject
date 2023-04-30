@@ -16,4 +16,5 @@ public interface SurgeonManager {
 	String getEmailById(int id);
 	Surgeon getSurgeonById(int Id);
 	List<Surgeon> getSurgeonsAssignedThisDay(Date date);
+	void deleteSurgeonByID(int id);
 }
