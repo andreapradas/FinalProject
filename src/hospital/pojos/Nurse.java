@@ -9,24 +9,27 @@ public class Nurse implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer nurseID;
+	private Integer nurseId;
 	private String nurseName;
+	private String nurseSurname;
 	private String email;
 	
 	public Nurse() {
 		super();
 	}
 	
-	public Nurse(Integer nurseID, String nurseName, String email) {
+	public Nurse(Integer nurseId, String nurseName, String nurseSurname, String email) {
 		super();
-		this.nurseID = nurseID;
+		this.nurseId = nurseId;
 		this.nurseName = nurseName;
+		this.nurseSurname = nurseSurname;
 		this.email = email;
 	}
 	
-	public Nurse(String name, String email){
+	public Nurse(String name, String surname,String email){
 		super();
 		this.nurseName= name;
+		this.nurseSurname= surname;
 		this.email= email;
 	}
 	
@@ -38,10 +41,6 @@ public class Nurse implements Serializable{
 		this.email = email;
 	}
 
-	public void setNurseID(Integer nurseID) {
-		this.nurseID = nurseID;
-	}
-
 	public void setNurseName(String nurseName) {
 		this.nurseName = nurseName;
 	}
@@ -49,28 +48,32 @@ public class Nurse implements Serializable{
 	@Override
 	public String toString() {
 		return 
-				"Nurse [id=" + nurseID + ", name=" + nurseName + "]";
+				"Nurse [id=" + nurseId + ", name=" + nurseName + ", surname=" + nurseSurname + "]";
 	}
 
-	public Integer getNurseID() {
-		return nurseID;
+	public String getNurseSurname() {
+		return nurseSurname;
 	}
 
-	public void setNurseId(Integer nurseID) {
-		this.nurseID = nurseID;
+	public void setNurseSurname(String nurseSurname) {
+		this.nurseSurname = nurseSurname;
+	}
+
+	public Integer getNurseId() {
+		return nurseId;
+	}
+
+	public void setNurseId(Integer nurseId) {
+		this.nurseId = nurseId;
 	}
 	
 	public String getNurseName() {
 		return nurseName;
 	}
-
-	public void setId(String nurseName) {
-		this.nurseName = nurseName;
-	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(nurseID);
+		return Objects.hash(nurseId);
 	}
 
 	@Override
@@ -82,6 +85,6 @@ public class Nurse implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Nurse other = (Nurse) obj;
-		return Objects.equals(nurseID, other.nurseID);
+		return Objects.equals(nurseId, other.nurseId);
 	}
 }

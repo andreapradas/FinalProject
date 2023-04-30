@@ -2,6 +2,7 @@ package hospital.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -23,13 +24,14 @@ public class JDBCNurseManager implements NurseManager {
 	public void addNurse(Nurse n) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO Nurse (nurse_name, nurse_email) VALUES (?,?)";
+			String sql = "INSERT INTO Nurse (nurseName, nurseSurname, nurseEmail) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, n.getNurseName());
-			prep.setString(2, n.getEmail());
+			prep.setString(2, n.getNurseSurname());
+			prep.setString(3, n.getEmail());
 			
 			prep.executeUpdate();			
-					
+			prep.close();	
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -48,11 +50,11 @@ public class JDBCNurseManager implements NurseManager {
 			
 			while(rs.next())
 			{
-				Integer id = rs.getInt("nurseID");
-				String name = rs.getString("nurse_name");
-				String email = rs.getString("nurse_email");
-				
-				Nurse n = new Nurse(id, name, email);
+				Integer id = rs.getInt("nurseId");
+				String name = rs.getString("nurseName");
+				String surname = rs.getString("nurseSurname");
+				String email = rs.getString("nurseEmail");
+				Nurse n = new Nurse(id, name, surname, email);
 				ListOfNurses.add(n);
 			}
 			
@@ -67,33 +69,50 @@ public class JDBCNurseManager implements NurseManager {
 		return ListOfNurses;
 	}
 
+//	@Override
+//	public void assign(int nurseId, int surgeonID) {
+//		// TODO Auto-generated method stub
+//		try{
+//			String sql = "INSERT INTO WorksWith (nurseId,surgeonID) VALUES (?,?)";
+//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+//			prep.setInt(1, nurseId);
+//			prep.setInt(2, surgeonID);		
+//			
+//			prep.executeUpdate();			
+//					
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
+	
 	@Override
-	public void assign(int nurseID, int surgeonID) {
-		// TODO Auto-generated method stub
-		try{
-			String sql = "INSERT INTO WorksWith (nurseID,surgeonID) VALUES (?,?)";
+	public String getNameById(int id) {
+		String name= null;
+		try {			
+			String sql = "SELECT nurseName FROM Nurse WHERE nurseId= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, nurseID);
-			prep.setInt(2, surgeonID);		
-			
-			prep.executeUpdate();			
-					
-		}catch(Exception e) {
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery();
+			name = rs.getString("nurseName");
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+		return name;
 	}
 
 	@Override
-	public void deleteNurseByID(int nurseID) {
+	public void deleteNurseByID(int nurseId) {
 		// TODO Auto-generated method stub
 		try {
-			
-			String sql = "DELETE FROM ListOfNurses WHERE id=?;";
+			String sql = "DELETE FROM Nurse WHERE nurseId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1,nurseID);
-			
+			prep.setInt(1,nurseId);
 			prep.executeUpdate();
+			prep.close();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -101,28 +120,72 @@ public class JDBCNurseManager implements NurseManager {
 	}
 
 	@Override
-	public Nurse getNurseByID(int nurseID) {
+	public Nurse getNurseById(int nurseId) {
 		// TODO Auto-generated method stub
 		Nurse n = null;
 		try {
-			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM ListOfNurses WHERE id=" + nurseID;
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			Integer id = rs.getInt("nurseID");
-			String name = rs.getString("nurse_name");
-			String email = rs.getString("name_email");
-			n = new Nurse(id, name, email);				
-			
+			String sql = "SELECT * FROM Nurse WHERE nurseId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1,nurseId);
+			ResultSet rs = prep.executeQuery();
+			Integer id = rs.getInt("nurseId");
+			String name = rs.getString("nurseName");
+			String surname = rs.getString("nurseSurname");
+			String email = rs.getString("nurseEmail");
+			n= new Nurse (id, name, surname, email);
 			rs.close();
-			stmt.close();
-			
+			prep.close();
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		
 		return n;
+	}
+
+	@Override
+	public int getIdByEmail(String email) {
+		int id = 0;
+		try {
+			String sql = "SELECT nurseId FROM Nurse WHERE nurseEmail= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, email);
+			ResultSet rs = prep.executeQuery();
+			id = rs.getInt("nurseId");
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
 	
+	@Override
+	public List<Nurse> getNursesAssignedThisDay(Date date) {
+		// TODO Auto-generated method stub
+		List<Nurse> nurses = new ArrayList<Nurse>();
+		try {
+			String sql = "SELECT Nurse.* FROM worksWith INNER JOIN Nurse ON Nurse.nurseId= worksWith.nurseId"
+					+ "WHERE dateOfWork= ?";
+			//aqui algo esta dando error--> dice que cerca del dateOfWork
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setDate(1, date);
+			ResultSet rs = prep.executeQuery();
+			while(rs.next())
+			{
+				Integer nurseId = rs.getInt("nurseId");
+				String name = rs.getString("nurseName");
+				String surname = rs.getString("nurseSurname");
+				String email = rs.getString("nurseEmail");
+				Nurse s = new Nurse(nurseId, name, surname, email);
+				nurses.add(s);
+			}
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return nurses;
 	}
 	
 }
