@@ -36,6 +36,7 @@ public class OperatingRoom implements Serializable{
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
 		this.active = active;
+		this.hoursAvailable = createHoursRange(4);//4 franjas horarias
 	}
 	
 	private List<Boolean> createHoursRange(int range){
