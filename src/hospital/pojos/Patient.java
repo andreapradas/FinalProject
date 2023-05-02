@@ -24,7 +24,7 @@ public class Patient implements Serializable{
 		super();
 		this.patientName = name;
 		this.patientSurname = surname;
-		if(Integer.toString(phoneNumber).length()!= 9){
+		if(Integer.toString(phoneNumber).length()!= 8){//Son 9 numeros pero empieza a contar en 0
 			throw new phoneException();			
 		}
 		this.phoneNumber= phoneNumber;
@@ -37,7 +37,7 @@ public class Patient implements Serializable{
 		this.patientId = patientId;
 		this.patientName= name;
 		this.patientSurname = surname;
-		if(Integer.toString(phoneNumber).length()!= 9){
+		if(Integer.toString(phoneNumber).length()!= 8){
 			throw new phoneException();			
 		}
 		this.phoneNumber= phoneNumber;
@@ -47,7 +47,7 @@ public class Patient implements Serializable{
 	public Patient(String name, int phoneNumber) throws phoneException {
 		super();
 		this.patientName= name;
-		if(Integer.toString(phoneNumber).length()!= 9){
+		if(Integer.toString(phoneNumber).length()!= 8){
 			throw new phoneException();			
 		}
 		this.phoneNumber= phoneNumber;
