@@ -1,6 +1,7 @@
 package hospital.pojos;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class WorksWith {
@@ -8,6 +9,7 @@ public class WorksWith {
 	private Integer surgeonID;
 	private Integer nurseID;
 	private Date date;
+	private List<Boolean> hourAvailability;
 	
 	
 	public WorksWith() {

@@ -31,6 +31,13 @@ public class Patient implements Serializable{
 		surgeries= new ArrayList <Surgery>();
 	}
 	
+		public Patient(String name, String surname) throws phoneException {
+			super();
+			this.patientName = name;
+			this.patientSurname = surname;
+		}	
+	
+	
 
 	public Patient(int patientId,String name, String surname, int phoneNumber) throws phoneException {
 		super();
@@ -73,7 +80,7 @@ public class Patient implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Patient [id= " + patientId + ", name= " + patientName + ", phone number= " + phoneNumber + "]";
+		return patientName + " " + patientSurname + " Phone Number: " + phoneNumber + "  Id: " + patientId;
 	}
 	
 	public String getPatientName() {

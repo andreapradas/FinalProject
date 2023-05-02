@@ -22,10 +22,11 @@ public class JDBCPatientManager implements PatientManager{
 	@Override
 	public void addPatient(Patient p) {
 		try{
-			String sql = "INSERT INTO Patient (patientName, phoneNumber) VALUES (?,?)";
+			String sql = "INSERT INTO Patient (patientName, patientSurname,phoneNumber) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, p.getPatientName());
-			prep.setInt(2, p.getPhoneNumber());
+			prep.setString(2, p.getPatientSurname());
+			prep.setInt(3, p.getPhoneNumber());
 			prep.executeUpdate();			
 					
 		}catch(Exception e) {
@@ -47,7 +48,6 @@ public class JDBCPatientManager implements PatientManager{
 					String name = rs.getString("patientName");
 					String surname = rs.getString("patientSurname");
 					Integer phoneNumber = rs.getInt("phoneNumber");
-					
 					Patient pat = new Patient(id, name, surname,phoneNumber);
 					patients.add(pat);
 				}
@@ -65,20 +65,19 @@ public class JDBCPatientManager implements PatientManager{
 	
 	@Override
 	public List<Patient> getListPatientByName(String patientName) {
-		List <Patient> patients = new ArrayList<Patient>();
+		List <Patient> patients= new ArrayList<Patient>();
 		try {
-			String sql = "SELECT * FROM Patient WHERE patientName =?;";
+			String sql = "SELECT * FROM Patient WHERE UPPER(patientName) =UPPER(?) ORDER BY patientSurname";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1,patientName);
-			ResultSet rs = prep.executeQuery(sql);
-			
+			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
 				String name = rs.getString("patientName");
 				String surname = rs.getString("patientSurname");
 				Integer phoneNumber = rs.getInt("phoneNumber");
-				
-				Patient pat = new Patient(name, surname,phoneNumber);
+				Integer id = rs.getInt("patientId");
+				Patient pat = new Patient(id, name, surname,phoneNumber);
 				patients.add(pat);
 			}
 			rs.close();
@@ -98,7 +97,7 @@ public class JDBCPatientManager implements PatientManager{
 			prep.setInt(1, phoneNumber);
 			prep.setInt(2, pat_id);
 			prep.executeUpdate();
-			
+			prep.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -109,18 +108,17 @@ public class JDBCPatientManager implements PatientManager{
 	public Patient getPatientByName(String patientName) {
 		try {
 			Patient p = null;
-			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM patient WHERE patientName=" + patientName;
-			ResultSet rs = stmt.executeQuery(sql);
-			
+			String sql = "SELECT * FROM patient WHERE UPPER(patientName)=UPPER(?)";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, patientName);
+			ResultSet rs = prep.executeQuery();
+			String name = rs.getString("patientName");
 			Integer patientId = rs.getInt("patientId");
 			String patientSurname = rs.getString("patientSurname");
 			Integer phoneNumber = rs.getInt("phoneNumber");
-
-			p = new Patient(patientId, patientName, patientSurname, phoneNumber);				
-			
+			p = new Patient(patientId, name, patientSurname, phoneNumber);	
 			rs.close();
-			stmt.close();
+			prep.close();
 			return p;
 		}catch (Exception e){
 			e.printStackTrace();
@@ -129,25 +127,52 @@ public class JDBCPatientManager implements PatientManager{
 	}
 	
 	@Override
-	public Patient getPatientBySurname(String patientSurname, String patientName) {
-		Patient p = null;
+	public Patient getPatientById(int id) {
 		try {
-			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM patient WHERE patientName=" + patientName 
-					+ "AND patientSurname =" + patientSurname;
-			ResultSet rs = stmt.executeQuery(sql);
-			
+			Patient p = null;
+			String sql = "SELECT * FROM patient WHERE patientId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery();
+			String name = rs.getString("patientName");
 			Integer patientId = rs.getInt("patientId");
+			String patientSurname = rs.getString("patientSurname");
 			Integer phoneNumber = rs.getInt("phoneNumber");
-
-			p = new Patient(patientId, patientName, patientSurname, phoneNumber);				
-			
+			p = new Patient(patientId, name, patientSurname, phoneNumber);	
 			rs.close();
-			stmt.close();
-			
+			prep.close();
+			return p;
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Patient> getPatientBySurname(String patientSurname, String patientName) {
+		Patient p = null;
+		List<Patient> patients = null;
+		try {
+			String sql = "SELECT * FROM patient WHERE UPPER(patientName)=UPPER(?)"
+					+ " AND UPPER(patientSurname)=UPPER(?) ORDER BY patientName, patientSurname";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, patientName);
+			prep.setString(2, patientSurname);
+			ResultSet rs = prep.executeQuery();
+			while(rs.next())
+			{
+				String name = rs.getString("patientName");
+				Integer patientId = rs.getInt("patientId");
+				String surname = rs.getString("patientSurname");
+				Integer phoneNumber = rs.getInt("phoneNumber");
+				p = new Patient(patientId, name, surname, phoneNumber);
+				patients.add(p);
+			}		
+			rs.close();
+			prep.close();
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		return p;
+		return patients;
 	}
 }

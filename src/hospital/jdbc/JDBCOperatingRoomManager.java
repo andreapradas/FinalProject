@@ -22,7 +22,7 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 	public void addOperatingRoom(OperatingRoom r) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO operatingRoom (roomID, roomNumber, floor, active) VALUES (?,?,?,?)";
+			String sql = "INSERT INTO operatingRoom (roomID, roomNumber, roomFloor, active) VALUES (?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, r.getRoomId());
 			prep.setInt(2, r.getRoomNumber());
@@ -56,7 +56,6 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			}
 			rs.close();
 			stmt.close();	
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -75,7 +74,6 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, true);//Así solo selecciona a las ACTIVAS
 			ResultSet rs = prep.executeQuery(sql);
-			
 			while(rs.next())
 			{
 				Integer roomId = rs.getInt("roomId");
@@ -86,24 +84,19 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
 				roomsActive.add(o); //Add the ACTIVE room to the list
 			}
-			 
 			rs.close();
 			prep.close();	
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-	
-	return roomsActive;
-	
+		return roomsActive;
 	}
 
 	
 	@Override
 	public void updateActivity(int roomId, Boolean active) {
 		try {
-			
 			String sql = "UPDATE operatingRoom SET active=? WHERE roomId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, active);

@@ -23,18 +23,10 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	
 	public void addSurgery(Surgery s) {
 		try{
-			String sql = "INSERT INTO surgery (surgeryId, surgeryType, surgeryDate, startHour, "
-					+ "endHour, done, patientId, surgeonId, roomId) VALUES (?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO surgery (surgeryType, patientId) VALUES (?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, s.getSurgeryId());
-			prep.setString(2, s.getSurgeryType());
-			prep.setDate(3, s.getSurgeryDate());
-			prep.setInt(4, s.getStartHour());
-			prep.setTime(5, s.getEndHour());
-			prep.setBoolean(6, s.getDone());
-			prep.setInt(7, s.getPatientId());
-			prep.setInt(8, s.getSurgeonId());
-			prep.setInt(9, s.getRoomId());
+			prep.setString(1, s.getSurgeryType());
+			prep.setInt(2, s.getPatientId());
 			prep.executeUpdate();			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -60,8 +52,6 @@ public class JDBCSurgeryManager implements SurgeryManager{
 				int patientId = rs.getInt("patientId");
 				int surgeonId = rs.getInt("surgeonId");
 				int roomId = rs.getInt("roomId");
-				
-				
 				Surgery s = new Surgery(surgeryId,surgeryType,surgeryDate, startHour, endHour, patientId, surgeonId, roomId);
 				surgeries.add(s);//Add the new surgery to the list
 			}
@@ -138,8 +128,6 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			e.printStackTrace();
 		}
 	}
-	
-
 	
 	@Override
 	public Surgery getSurgeryById(int surgeryId) {

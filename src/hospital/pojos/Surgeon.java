@@ -12,18 +12,9 @@ public class Surgeon implements Serializable{
 	private String name;
 	private String surname;
 	private Boolean chief;
-	private List<Boolean> hourAvailability;
 	
 	public Surgeon() {
 		super();
-	}
-	
-	public List<Boolean> getHourAvailability() {
-		return hourAvailability;
-	}
-
-	public void setHourAvailability(List<Boolean> hourAvailability) {
-		this.hourAvailability = hourAvailability;
 	}
 
 	public void setSurgeonId(Integer surgeonId) {

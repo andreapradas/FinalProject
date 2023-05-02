@@ -20,6 +20,7 @@ import hospital.pojos.Surgeon;
 import hospital.pojos.SurgeonVacation;
 import hospital.pojos.Surgery;
 import hospital.pojos.User;
+import hospital.pojos.WorksWith;
 import hospitalJPA.JPAUserManager;
 
 public class Menu {
@@ -49,6 +50,7 @@ public class Menu {
 	worksWithManager = new JDBCWorksWithManager(jdbcManager);
 	surgeryManager = new JDBCSurgeryManager(jdbcManager);
 	nurseVacationManager = new JDBCNurseVacationManager(jdbcManager);
+	operatingRoomManager = new JDBCOperatingRoomManager(jdbcManager);
 	
 		try {
 			userManager.getRole("surgeon").setUsers(userManager.getSpecificUsers("surgeon"));
@@ -108,13 +110,16 @@ public class Menu {
 				System.out.println(" 6. Get all employee vacations");
 				System.out.println(" 7. Get list of surgeons");
 				System.out.println(" 8. Get list of nurses");
-				System.out.println(" 9. Get list of all employees");	
-				System.out.println("10. Assign nurse to surgeon");
+				System.out.println(" 9. Get list of all employees");
+				System.out.println("10. Add new operating room");
 				System.out.println("11. Change chief surgeon");
 				System.out.println("12. Get surgeons on vacation any day of the given period");
 				System.out.println("13. Delete account");
+				System.out.println("14. Create surgery");
+				System.out.println("15. Get list of surgeries");
+				System.out.println("16. Create schedule");
 		
-				System.out.println("14. Log out");
+				System.out.println("17. Log out");
 				System.out.println(" 0. exit");
 				
 				int choice = Integer.parseInt(reader.readLine());
@@ -150,9 +155,7 @@ public class Menu {
 					getUsers();
 					break;
 				case 10:
-					Date date = null;//Completar
-					createTeam(date);
-					System.out.println(worksWithManager.getListOfWorksWith());
+					newOperatingRoom();
 					break;
 		 		case 11:
 					changeChiefSurg();
@@ -162,8 +165,18 @@ public class Menu {
 					break;
 				case 13:
 					deletAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
-				
+					main(null);
 				case 14:
+					createSurgery();
+					break;
+				case 15:
+					getAllSurgeries();
+					break;
+				case 16:
+					createSchedule();
+					break;
+					
+				case 17:
 					main(null);
 					break;
 				case 0: 
@@ -178,8 +191,9 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-}
-	
+	}
+
+
 	private static void surgeonMenu() throws Exception{
 		try {
 			do {System.out.println("Choose an option");
@@ -193,8 +207,10 @@ public class Menu {
 			System.out.println(" 8. Get list of nurses");
 			System.out.println(" 9. Get list of all employees");
 			System.out.println("10. Delete account");
+			System.out.println("11. Create surgery");
+			System.out.println("12. Get list of surgeries");
 	
-			System.out.println("11. Log out");
+			System.out.println("13. Log out");
 			System.out.println(" 0. exit");
 			
 			int choice = Integer.parseInt(reader.readLine());
@@ -233,8 +249,15 @@ public class Menu {
 					deletAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
 					break;
-				
 				case 11:
+					createSurgery();
+					break;
+				case 12: 
+					getAllSurgeries();
+					break;
+					
+				
+				case 13:
 					main(null);
 					break;
 				case 0: 
@@ -250,7 +273,7 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void NurseMenu() throws Exception{
 		try {
 			do {
@@ -441,45 +464,63 @@ public class Menu {
 	}
 
 
-	private static void createTeam(Date date) throws Exception {
+	private static void createTeams(Date date) throws Exception {
 	// TODO Auto-generated method stub
-		Integer nurseId;
-		do {
-			System.out.println(avaliableNurses(date).removeAll(nurseManager.getNursesAssignedThisDay(date)));
-			System.out.println("Please enter the nurse ID to assign:");
-			nurseId = Integer.parseInt(reader.readLine());
-			if(!avaliableNurses(date).contains(nurseManager.getNurseById(nurseId))) {
-				System.out.println("That nurse is not avaliable\n");
-			}
-			else {
-				break;
-			}
-		} while(true);
-		
-		Integer surgeonId;
-		do {
-			System.out.println(avaliableSurgeons(date));
-			System.out.println(avaliableSurgeons(date).removeAll(surgeonManager.getSurgeonsAssignedThisDay(date)));
-			System.out.println("Please enter the surgeon ID to assign:");
-			surgeonId = Integer.parseInt(reader.readLine());
-			if(!avaliableSurgeons(date).contains(surgeonManager.getSurgeonById(surgeonId))) {
-				System.out.println("That surgeon is not avaliable");
-			}else {
-				break;
-			}
-		} while(true);
-		
-		
-//		System.out.println("Please enter the nurse ID to assign:");
-//		nurseId = Integer.parseInt(reader.readLine());
-//		System.out.println("Please enter the surgeon ID to assign:");
-//		Integer surgeonId = Integer.parseInt(reader.readLine());
-//		//comprobra que los id que se meten existen
-		
-		worksWithManager.assign(nurseId, surgeonId, date);
-		//crea el ww solo con los ids pero me falta meter la fecha tb
-}
-
+		List<Nurse> nurses= avaliableNurses(date);
+		List<Surgeon> surgeons= avaliableSurgeons(date);		
+		if(nurses.size()>0 && surgeons.size()>0) {
+			do {
+				Integer nurseId;
+				do {				
+					System.out.println("\nThese are the avaliable nurses:");
+					System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
+					System.out.println("-----------------------------------------------------------");
+					nurses.removeAll(nurseManager.getNursesAssignedThisDay(date));
+					for(Nurse n: nurses) {
+						System.out.format("%-10s %-15s %-3d\n", n.getNurseName(), n.getNurseSurname(), n.getNurseId());
+					}
+					System.out.print("\nPlease enter the nurse ID to assign: ");
+					nurseId = Integer.parseInt(reader.readLine());
+					if(!avaliableNurses(date).contains(nurseManager.getNurseById(nurseId))) {
+						System.out.println("That nurse is not avaliable\n");
+					}
+					else {
+						break;
+					}
+				} while(true);
+				
+				Integer surgeonId;
+				do {
+					System.out.println("\nThese are the avaliable surgeons:");
+					System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
+					System.out.println("-----------------------------------------------------------");
+					surgeons.removeAll(surgeonManager.getSurgeonsAssignedThisDay(date));
+					for(Surgeon s: avaliableSurgeons(date)) {
+						System.out.format("%-10s %-15s %-3d\n", s.getName(), s.getSurname(), s.getSurgeonId());
+					}
+					System.out.print("\nPlease enter the surgeon ID to assign: ");
+					surgeonId = Integer.parseInt(reader.readLine());
+					if(!avaliableSurgeons(date).contains(surgeonManager.getSurgeonById(surgeonId))) {
+						System.out.println("That surgeon is not avaliable");
+					}else {
+						break;
+					}
+				} while(true);
+				worksWithManager.assign(nurseId, surgeonId, date);
+				nurses.removeAll(nurseManager.getNursesAssignedThisDay(date));
+				surgeons.removeAll(surgeonManager.getSurgeonsAssignedThisDay(date));
+				System.out.print("\nDo you want to create another team (Y/N): ");
+				String confirmation = reader.readLine();
+				if(confirmation.equalsIgnoreCase("y") && nurses.size()>0 && surgeons.size()>0) {
+				} else {
+					System.out.println("No more surgeons or nurses avaliable\n");
+					break;
+				}
+			}while(true);
+		} else {
+			System.out.println("No surgeons or nurses avaliable\n");
+		}
+	}
 
 	private static void getAllNurses() throws Exception {
 	// TODO Auto-generated method stub
@@ -511,20 +552,13 @@ public class Menu {
 	private static void changeChiefSurg() {
 	// TODO Auto-generated method stub
 		System.out.println("The chief is going to be changed and you are going to be deleted as chief");
-		int count=0;
-//		for(count=0; count< surgeonManager.getListOfSurgeons().size(); count++) {
-//			if(surgeonManager.getListOfSurgeons().get(count).equals(surgeonManager.getChiefSurgeon())){
-//				continue;
-//			}
-//			System.out.println(surgeonManager.getListOfSurgeons().get(count).showSurgeon());
-//		}
 		for(Surgeon s: surgeonManager.getListOfSurgeons()){
-			if(surgeonManager.getListOfSurgeons().get(count).equals(surgeonManager.getChiefSurgeon())){
+			if(s.equals(surgeonManager.getChiefSurgeon())){
 				continue;
 			}
             System.out.format("%-10s %-15s Id: %d\n", s.getName(), s.getSurname(), s.getSurgeonId());
         }
-		System.out.println("Type the new chief id");
+		System.out.println("\nType the new chief id");
 		Integer newChiefId = null;
 		try {
 			newChiefId = Integer.parseInt(reader.readLine());
@@ -548,18 +582,21 @@ public class Menu {
 
 	private static void deleteVacations(String role) throws Exception{
 		// TODO Auto-generated method stub
-		if(role.equals("surgeon")) {
-			List<SurgeonVacation> surgVac= surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
-			System.out.println(surgVac);
-			System.out.println("Type the vacation id");
-			Integer vacId =  Integer.parseInt(reader.readLine());
-			surgeonVacationManager.deleteSurgeonVacationById(vacId);
-		} else if (role.equals("nurse")) {
-			List<NurseVacation> nurseVac= nurseVacationManager.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
-			System.out.println(nurseVac);
-			System.out.println("Type the vacation id");
-			Integer vacId =  Integer.parseInt(reader.readLine());
-			nurseVacationManager.deleteNurseVacationById(vacId);
+		try {
+			if(role.equals("surgeon")) {
+				List<SurgeonVacation> surgVac= surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
+				System.out.println(surgVac);
+				System.out.println("Type the vacation id");
+				Integer vacId =  Integer.parseInt(reader.readLine());
+				surgeonVacationManager.deleteSurgeonVacationById(vacId);
+			} else if (role.equals("nurse")) {
+				List<NurseVacation> nurseVac= nurseVacationManager.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
+				System.out.println(nurseVac);
+				System.out.println("Type the vacation id");
+				Integer vacId =  Integer.parseInt(reader.readLine());
+				nurseVacationManager.deleteNurseVacationById(vacId);
+			}
+		}catch(Exception e) {
 		}
 		
 	}
@@ -582,32 +619,30 @@ public class Menu {
 				System.out.println(" Nurse name: "+ nurseManager.getNameById(nVacations.get(i).getNurseId()));
 			}		
 		}catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
-
-	public static void createPatient() throws Exception
-	{
+	public static void createPatient() throws Exception{
 		System.out.println("Type the name of the patient:");
 		String name =  reader.readLine();
+		System.out.println("Type the surname of the patient:");
+		String surname =  reader.readLine();
 		System.out.println("Type the phone number");
 		Integer phone =  Integer.parseInt(reader.readLine());
-		Patient p = new Patient(name, phone);
-		patientManager.addPatient(p);		
+		Patient patient = new Patient(name, surname, phone);
+		patientManager.addPatient(patient);
+		System.out.println("Patient created successfully\n");
 	}
 	
 	public static void getPatients() throws Exception
 	{
 		List<Patient> patients = new ArrayList<Patient>();
 		try {
-			patients = patientManager.getListOfPatients();
-			int i;
-			for(i=0; i< patients.size(); i++)
-			{
-				System.out.println(patients.get(i).toString());
-			}			
+			System.out.format("%-10s %-15s %-10s %-3s\n", "Name", "Surname", "PhoneNumber", "Id");
+			System.out.println("----------------------------------------------------");
+			for(Patient p: patientManager.getListOfPatients()) {
+				System.out.format("%-10s %-15s %-12d %-3d\n", p.getPatientName(), p.getPatientSurname(), p.getPhoneNumber(), p.getPatientId());
+			}		
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -628,37 +663,77 @@ public class Menu {
 		System.out.println();
 	}
 	
-	private static void createSurgery() throws Exception {
-		System.out.println("Type the name of the patient: ");
-		String patientName = reader.readLine();
-		Surgery s = null;
-		//Prove that exits and there is only one
-		List<Patient> patients = new ArrayList<Patient>();
-		patients = patientManager.getListPatientByName(patientName);
-		if(patients.size()>1) {//quiere decir que hay dos o mas pacientes con el mismo nombre
-			System.out.println("Seems that there are 2 patients or more with the same name ");
-			List <String> surnames = new ArrayList<String>();
-			System.out.println("Do you mean...");
-			for(int i = 0; i<patients.size(); i++) {
-				surnames.add(patients.get(i).getPatientSurname());
-				System.out.println(patientName + surnames.get(i).toString());
+	private static void getAllSurgeries() {
+		// TODO Auto-generated method stub
+		//List<Surgery> s= ;
+		System.out.format("%-15s %-18s %-13s %-15s %s\n", "Patient name", "Patient surname", "Patient id", "Surgery type", "Surgery Id");
+		System.out.println("-------------------------------------------------------------------------");
+		try {
+			for(Surgery s: surgeryManager.getListOfSurgeries()) {
+				System.out.format("%-15s %-18s %-13d %-15s %d\n", 
+						patientManager.getPatientById(s.getPatientId()).getPatientName(),
+						patientManager.getPatientById(s.getPatientId()).getPatientSurname(),
+						s.getPatientId(), s.getSurgeryType(), s.getSurgeryId());
 			}
-			String surname = reader.readLine();
-			Patient p= patientManager.getPatientBySurname(surname,patientName);
-			int patientId = p.getPatientId();
-			System.out.println("Type the type of the surgery: ");
-			String surgeryType =  reader.readLine();
-			s= new Surgery(surgeryType, patientId);
-		}else if(patients == null){//Si no existe ese nombre entre los pacientes
-			System.out.println("There no such a patient with that name. Please enter another name.");
-			//Volver al menu que no se cual es
-		}else {//Si solo hay un paciente con ese nombre
-			Patient p= patientManager.getPatientByName(patientName);
-			int patientId = p.getPatientId();
-			System.out.println("Type the type of the surgery: ");
-			String surgeryType =  reader.readLine();
-			s= new Surgery(surgeryType, patientId);
+				
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		System.out.println();
+	}
+	
+	private static void createSurgery() throws Exception {
+		try {
+			patientManager.getListOfPatients();
+		}catch(Exception e) {
+			System.out.println("No patients in the data base");
+		}
+		System.out.println("Type the name of the patient: ");
+		Surgery s = null;
+		do {
+			String patientName = reader.readLine();
+			//Prove that exits and there is only one
+			List<Patient> patients = new ArrayList<Patient>();
+			patients = patientManager.getListPatientByName(patientName);
+			if(patients.size() == 0){//Si no existe ese nombre entre los pacientes
+					System.out.println("There no such a patient with that name. Please enter another name: ");
+					System.out.println("These are the patients\n");
+					System.out.format("%-10s %-15s\n", "Name", "Surname");
+					System.out.println("-----------------------");
+					for(Patient p: patientManager.getListOfPatients()) {
+						System.out.format("%-10s %-15s\n", p.getPatientName(), p.getPatientSurname());
+					}
+			 } else if(patients.size()>1) {//quiere decir que hay dos o mas pacientes con el mismo nombre
+				System.out.println("\nSeems that there are 2 patients or more with the same name ");
+				System.out.println("Do you mean (type the Id)...");
+				int patientId;
+				do {
+					System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
+					System.out.println("-----------------------------");
+					for(Patient p: patients) {
+						System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(), p.getPatientId());
+					}
+					patientId = Integer.parseInt(reader.readLine());
+					if(patientManager.getListOfPatients().contains(patientManager.getPatientById(patientId))) {
+						break;
+					} else {
+						System.out.println("Incorrect id, type id again: ");
+					}
+				} while (true);
+				System.out.println("Type the type of the surgery: ");
+				String surgeryType =  reader.readLine();
+				s= new Surgery(surgeryType, patientId);
+				break;
+			}else {//Si solo hay un paciente con ese nombre
+				Patient p= patientManager.getPatientByName(patientName);
+				int patientId = p.getPatientId();
+				System.out.println("Type the type of the surgery: ");
+				String surgeryType =  reader.readLine();
+				s= new Surgery(surgeryType, patientId);
+				break;
+			}
+		}while(true);
 		surgeryManager.addSurgery(s);
 	}
 	
@@ -732,9 +807,98 @@ public class Menu {
 		}
 	}
 	
+	private static void createSchedule() {
+		// TODO Auto-generated method stub
+		try {
+			System.out.println();
+			//Esto depende de si decidimos que siempre va a ser mañana 
+			System.out.println("Type the date for which you want to create the schedule: "); 
+			Date date= getDate(); //si es siempre "mañana" date= tomorrow
+			chooseActiveRooms();
+			createTeams(date);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private static void chooseActiveRooms() {
+		try {
+			if(operatingRoomManager.getListOfActiveOperatingRoom().size() !=0) {
+				while(true) {
+					System.out.println("These are the active rooms, do you want to make any modification?");
+					for (OperatingRoom oR: operatingRoomManager.getListOfActiveOperatingRoom()) {
+						System.out.println(oR);
+					}
+					System.out.println("1. Activate new room");
+					System.out.println("2. Disable a room");
+					System.out.println("3. No more modifications");
+					int option = Integer.parseInt(reader.readLine());
+					switch(option) {
+						case 1:
+							List<OperatingRoom> rooms= operatingRoomManager.getListOfOperatingRoom();
+							rooms.removeAll(operatingRoomManager.getListOfActiveOperatingRoom());
+							for (OperatingRoom oR: rooms) {
+								System.out.println(oR);
+							}
+							System.out.print("Activate room: ");
+							int roomId = Integer.parseInt(reader.readLine());
+							operatingRoomManager.updateActivity(roomId, true);
+							break;
+						case 2: 
+							for (OperatingRoom oR: operatingRoomManager.getListOfActiveOperatingRoom()) {
+								System.out.println(oR);
+							}
+							System.out.print("Disable room: ");
+							int rId = Integer.parseInt(reader.readLine());
+							operatingRoomManager.updateActivity(rId, false);
+							break;
+						case 3: 
+							break;
+					}
+					if(option==3) {
+						break;
+					}
+				}
+			}
+			else {
+				System.out.println("Choose the active rooms: ");
+				List<OperatingRoom> rooms= operatingRoomManager.getListOfOperatingRoom();
+				while(true) {
+					rooms.removeAll(operatingRoomManager.getListOfActiveOperatingRoom());
+					for (OperatingRoom oR: rooms) {
+						System.out.println(oR);
+					}
+					System.out.print("Activate room: ");
+					int roomId = Integer.parseInt(reader.readLine());
+					operatingRoomManager.updateActivity(roomId, true);
+					System.out.print("Do you want to activate another room (Y/N): ");
+					String confirmation = reader.readLine();
+					if(confirmation.equalsIgnoreCase("y")) {
+					} else {
+						break;
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	private static void newOperatingRoom() throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("Type the room number: ");
+		Integer roomNumber =  Integer.parseInt(reader.readLine());
+		System.out.println("Type the room floor: ");
+		Integer roomFloor =  Integer.parseInt(reader.readLine());
+		OperatingRoom r= new OperatingRoom(roomNumber, roomFloor);
+		operatingRoomManager.addOperatingRoom(r);
+	}
+	
 	private static void modifyOperatingRoom() {
 		try {
-			
 			System.out.println("Type the roomId you want to change: ");
 			int roomId = Integer.parseInt(reader.readLine());
 			System.out.println("Type the atribute you want to change(roomNumber, roomFloor): ");
@@ -781,7 +945,6 @@ public class Menu {
 		System.out.println("Vacation successfully saved!\n");
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static Date selectStartDate() throws Exception {
 		java.sql.Date start = null;
 		Integer year;
@@ -829,43 +992,32 @@ public class Menu {
 		return start;
 	}
 	
+	public static Date getDate() throws Exception{
+		Integer Year;
+		Integer Month;
+		Integer Day;
+		do {
+			System.out.println("Type the year:");
+			Year= Integer.parseInt(reader.readLine());
+		} while (Year.toString().length()!= 4);
+		do {
+			System.out.println("Type the month [1-12]:");
+			Month= Integer.parseInt(reader.readLine());
+		} while (Month<1 || Month>12);
+		do {
+			System.out.println("Type the day:");
+			Day= Integer.parseInt(reader.readLine());
+		} while (Day<1 || Month>31);
+		Date date= new Date(Year-1900, Month-1, Day);
+		return date;
+	}
+	
 	public static void getSurgeonsOnVacation() throws Exception {
 		System.out.println("Show all surgeons on vacation during any of these days");
 		System.out.println("Type the start date:");
-		Integer startYear;
-		Integer startMonth;
-		Integer startDay;
-		do {
-			System.out.println("Type the year:");
-			startYear= Integer.parseInt(reader.readLine());
-		} while (startYear.toString().length()!= 4);
-		do {
-			System.out.println("Type the month [1-12]:");
-			startMonth= Integer.parseInt(reader.readLine());
-		} while (startMonth<1 || startMonth>12);
-		do {
-			System.out.println("Type the day:");
-			startDay= Integer.parseInt(reader.readLine());
-		} while (startDay<1 || startMonth>31);
-		
+		Date start= getDate();
 		System.out.println("Type the end date:");
-		Integer endYear;
-		Integer endMonth;
-		Integer endDay;
-		do {
-			System.out.println("Type the year:");
-			endYear= Integer.parseInt(reader.readLine());
-		} while (endYear.toString().length()!= 4);
-		do {
-			System.out.println("Type the month [1-12]:");
-			endMonth= Integer.parseInt(reader.readLine());
-		} while (endMonth<1 || endMonth>12);
-		do {
-			System.out.println("Type the day:");
-			endDay= Integer.parseInt(reader.readLine());
-		} while (endDay<1 || endMonth>31);
-		java.sql.Date start= new Date(startYear-1900, startMonth-1, startDay);
-		java.sql.Date end= new Date(endYear-1900, endMonth-1, endDay);
+		Date end= getDate();
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 		if(start.compareTo(end)>0) {

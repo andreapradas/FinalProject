@@ -21,9 +21,8 @@ public class OperatingRoom implements Serializable{
 		super();
 	}
 	
-	public OperatingRoom(int roomId, int roomNumber, int roomFloor) {//Para cuando la crea el CHIEF
+	public OperatingRoom(int roomNumber, int roomFloor) {//Para cuando la crea el CHIEF
 		super();
-		this.roomId = roomId;
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
 		this.active = true;//Por defecto estará activa hasta que se le meta una cirugia 
@@ -132,12 +131,4 @@ public class OperatingRoom implements Serializable{
 	public String toString() {
 		return "OperatingRoom [roomId=" + roomId + ", roomNumber=" + roomNumber + ", roomFloor=" + roomFloor + "]";
 	}
-
-	
-	
-	
-	
-	
-	
-	
 }
