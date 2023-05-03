@@ -84,13 +84,11 @@ public class Menu {
 				}
 			}while(true);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	private static void getUsers() {
-		// TODO Auto-generated method stub
 		System.out.format("%-20s %s\n", "Email", "Role");
 		System.out.println("------------------------------------");
 		for(User u: userManager.getUsers()) {
@@ -274,7 +272,6 @@ public class Menu {
 				}
 			}while(true);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -345,7 +342,6 @@ public class Menu {
 				}
 			}while(true);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -456,7 +452,6 @@ public class Menu {
 			byte[] hash= md.digest();
 			User u= new User(email, hash, role);
 			u.getRole().addUser(u);
-		
 		if(role.getName().equals("surgeon") || role.getName().equals("chiefSurgeon")){
 			s= new Surgeon(name, surname, email,chief);
 			surgeonManager.addSurgeon(s);
@@ -494,7 +489,6 @@ public class Menu {
 
 
 	private static void createTeams(Date date) throws Exception {
-	// TODO Auto-generated method stub
 		List<Nurse> nurses= avaliableNurses(date);
 		List<Surgeon> surgeons= avaliableSurgeons(date);		
 		if(nurses.size()>0 && surgeons.size()>0) {
@@ -552,7 +546,6 @@ public class Menu {
 	}
 
 	private static void getAllNurses() throws Exception {
-	// TODO Auto-generated method stub
 		System.out.format("%-10s %-15s %-20s %-3s\n", "Name", "Surname", "Email", "Id");
 		System.out.println("----------------------------------------------------");
 		try {
@@ -560,14 +553,12 @@ public class Menu {
 				System.out.format("%-10s %-15s %-20s %-3d\n", n.getNurseName(), n.getNurseSurname(), n.getEmail(), n.getNurseId());
 			}
 		}catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println();
 	}
 
 	private static void changeChiefSurg() {
-	// TODO Auto-generated method stub
 		System.out.println("The chief is going to be changed and you are going to be deleted as chief");
 		for(Surgeon s: surgeonManager.getListOfSurgeons()){
 			if(s.equals(surgeonManager.getChiefSurgeon())){
@@ -580,7 +571,6 @@ public class Menu {
 		try {
 			newChiefId = Integer.parseInt(reader.readLine());
 		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(userManager.getChief().getEmail().equals(surgeonManager.getEmailById(newChiefId))) {
@@ -734,11 +724,9 @@ public class Menu {
 			System.out.println("The phone number is incorrect, introduce the patient again:");
 			createPatient();
 		}
-		
 	}
 	
-	public static void getPatients() throws Exception
-	{
+	public static void getPatients() throws Exception{
 		try {
 			System.out.format("%-10s %-15s %-10s %-3s\n", "Name", "Surname", "PhoneNumber", "Id");
 			System.out.println("----------------------------------------------------");
@@ -750,8 +738,7 @@ public class Menu {
 		}
 	}
 	
-	public static void getAllSurgeons() throws Exception
-	{
+	public static void getAllSurgeons() throws Exception{
 		System.out.format("%-10s %-15s %-20s %-3s %s\n", "Name", "Surname", "Email", "Id", "Chief");
 		System.out.println("-----------------------------------------------------------");
 		try {
@@ -759,7 +746,6 @@ public class Menu {
 				System.out.format("%-10s %-15s %-20s %-3d %s\n", s.getName(), s.getSurname(), s.getEmail(), s.getSurgeonId(), s.getChief());
 			}
 		}catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println();
@@ -908,7 +894,6 @@ public class Menu {
 	}
 	
 	private static void createSchedule() {
-		// TODO Auto-generated method stub
 		try {
 			System.out.println();
 			//Esto depende de si decidimos que siempre va a ser mañana 
@@ -988,7 +973,6 @@ public class Menu {
 	}
 	
 	private static void newOperatingRoom() throws Exception {
-		// TODO Auto-generated method stub
 		System.out.println("Type the room number: ");
 		Integer roomNumber =  Integer.parseInt(reader.readLine());
 		System.out.println("Type the room floor: ");
@@ -1134,7 +1118,6 @@ public class Menu {
 				System.out.println("Name: " + surgeons.get(i).getName() + " Id: " + surgeons.get(i).getSurgeonId());
 			}			
 		}catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
