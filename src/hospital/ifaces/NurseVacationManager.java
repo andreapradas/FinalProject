@@ -18,4 +18,5 @@ public interface NurseVacationManager {
 	int countNurseVacations(int id);
 	List<Nurse> getNursesOnVacation(Date date);
 	List<NurseVacation> getMyVacationsNurse(int id);
+	void deleteNurseVacations(int nId);
 }

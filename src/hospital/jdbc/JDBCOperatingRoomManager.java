@@ -22,14 +22,12 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 	public void addOperatingRoom(OperatingRoom r) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "INSERT INTO operatingRoom (roomID, roomNumber, roomFloor, active) VALUES (?,?,?,?)";
+			String sql = "INSERT INTO operatingRoom (roomNumber, roomFloor, active) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, r.getRoomId());
-			prep.setInt(2, r.getRoomNumber());
-			prep.setInt(3, r.getRoomFloor());
-			prep.setBoolean(4, r.getActive());
-			prep.executeUpdate();			
-					
+			prep.setInt(1, r.getRoomNumber());
+			prep.setInt(2, r.getRoomFloor());
+			prep.setBoolean(3, r.getActive());
+			prep.executeUpdate();		
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

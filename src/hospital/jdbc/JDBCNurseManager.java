@@ -154,7 +154,6 @@ public class JDBCNurseManager implements NurseManager {
 			prep.close();	
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 		}
 		return id;
 	}

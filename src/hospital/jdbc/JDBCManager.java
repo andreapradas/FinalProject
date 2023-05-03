@@ -86,12 +86,13 @@ public class JDBCManager {
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE operatingRoom (" +
-					"roomId	INTEGER," +
+					"roomId	INTEGER AUTOINCREMENT," +
 					"roomNumber	INTEGER NOT NULL," +
 					"roomFloor	INTEGER NOT NULL," +
 					"active	BOOLEAN," +
-					"CONSTRAINT roomid PRIMARY KEY(roomNumber, roomFloor)" +
-				");";
+					"PRIMARY KEY (roomId AUTOINCREMENT)," +
+					"UNIQUE(roomNumber, roomFloor)" +
+				");";			
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE surgeonVacation (" +
