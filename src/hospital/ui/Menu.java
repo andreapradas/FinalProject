@@ -986,7 +986,7 @@ public class Menu {
 				break;
 			case 3:
 				start= new Date(year, 6, 1);
-				break; //
+				break; 
 			case 4:
 				start= new Date(year, 6, 16);
 				break;
