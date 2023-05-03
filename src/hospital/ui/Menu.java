@@ -21,6 +21,7 @@ import hospital.pojos.SurgeonVacation;
 import hospital.pojos.Surgery;
 import hospital.pojos.User;
 import hospital.pojos.WorksWith;
+import hospital.pojos.phoneException;
 import hospitalJPA.JPAUserManager;
 
 public class Menu {
@@ -79,6 +80,7 @@ public class Menu {
 					userManager.disconnect();
 					System.exit(0);
 				default:
+					System.out.println("Please choose one of the options");
 					break;
 				}
 			}while(true);
@@ -622,16 +624,23 @@ public class Menu {
 		}
 	}
 
-	public static void createPatient() throws Exception{
-		System.out.println("Type the name of the patient:");
-		String name =  reader.readLine();
-		System.out.println("Type the surname of the patient:");
-		String surname =  reader.readLine();
-		System.out.println("Type the phone number");
-		Integer phone =  Integer.parseInt(reader.readLine());
-		Patient patient = new Patient(name, surname, phone);
-		patientManager.addPatient(patient);
-		System.out.println("Patient created successfully\n");
+	public static void createPatient() throws phoneException{
+		try {
+			System.out.println("Type the name of the patient:");
+			String name =  reader.readLine();
+			System.out.println("Type the surname of the patient:");
+			String surname =  reader.readLine();
+			System.out.println("Type the phone number");
+			Integer phone =  Integer.parseInt(reader.readLine());
+			Patient patient = new Patient(name, surname, phone);
+			patientManager.addPatient(patient);
+			System.out.println("Patient created successfully\n");
+		}
+		catch (Exception e) {
+			System.out.println("The phone number is incorrect, introduce the patient again:");
+			createPatient();
+		}
+		
 	}
 	
 	public static void getPatients() throws Exception
