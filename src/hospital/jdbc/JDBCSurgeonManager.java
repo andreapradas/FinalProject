@@ -243,7 +243,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			prep.close();	
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 		}
 		return surgeons;
 	}

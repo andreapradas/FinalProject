@@ -105,20 +105,20 @@ public class JDBCWorksWithManager implements WorksWithManager {
 		
 	}
 	
-	@Override
-	public void assign(int nurseId, int surgeonID) {
-		// TODO Auto-generated method stub
-		try{
-			String sql = "INSERT INTO WorksWith (nurseId,surgeonID) VALUES (?,?)";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, nurseId);
-			prep.setInt(2, surgeonID);		
-			prep.executeUpdate();			
-			prep.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	@Override
+//	public void assign(int nurseId, int surgeonID) {
+//		// TODO Auto-generated method stub
+//		try{
+//			String sql = "INSERT INTO WorksWith (nurseId,surgeonID) VALUES (?,?)";
+//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+//			prep.setInt(1, nurseId);
+//			prep.setInt(2, surgeonID);		
+//			prep.executeUpdate();			
+//			prep.close();
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	@Override
 	public void assign(int nurseId, int surgeonID, Date date) {

@@ -63,7 +63,7 @@ public class JDBCManager {
 			sql = "CREATE TABLE Surgery (" +
 				"surgeryId	INTEGER PRIMARY KEY AUTOINCREMENT," + 
 				"surgeryType TEXT NOT NULL," +
-				"day DATE DEFAULT NULL," +
+				"surgeryDate DATE DEFAULT NULL," +
 				"startHour TIME DEFAULT NULL," +
 				"endHour	TIME DEFAULT NULL," +
 				"done BOOLEAN,"	+
@@ -86,11 +86,12 @@ public class JDBCManager {
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE operatingRoom (" +
-				"roomId	INTEGER PRIMARY KEY AUTOINCREMENT," +
-				"roomNumber	INTEGER NOT NULL UNIQUE," +
-				"roomFloor	INTEGER NOT NULL," +
-				"active BOOLEAN" +
-			");";
+					"roomId	INTEGER," +
+					"roomNumber	INTEGER NOT NULL," +
+					"roomFloor	INTEGER NOT NULL," +
+					"active	BOOLEAN," +
+					"CONSTRAINT roomid PRIMARY KEY(roomNumber, roomFloor)" +
+				");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE surgeonVacation (" +

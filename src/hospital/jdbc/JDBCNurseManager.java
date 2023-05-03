@@ -164,9 +164,9 @@ public class JDBCNurseManager implements NurseManager {
 		// TODO Auto-generated method stub
 		List<Nurse> nurses = new ArrayList<Nurse>();
 		try {
-			String sql = "SELECT Nurse.* FROM worksWith INNER JOIN Nurse ON Nurse.nurseId= worksWith.nurseId"
+			String sql = "SELECT Nurse.*, dateOfWork FROM worksWith INNER JOIN Nurse ON "
+					+ "Nurse.nurseId= worksWith.nurseId "
 					+ "WHERE dateOfWork= ?";
-			//aqui algo esta dando error--> dice que cerca del dateOfWork
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, date);
 			ResultSet rs = prep.executeQuery();

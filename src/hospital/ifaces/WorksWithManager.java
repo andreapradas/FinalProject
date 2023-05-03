@@ -17,8 +17,7 @@ public interface WorksWithManager {
 
 	void assign(int nurseId, int surgeonID, Date date);
 
-	void assign(int nurseId, int surgeonID);
+	//void assign(int nurseId, int surgeonID);
 	
-	//modify
 }
 
