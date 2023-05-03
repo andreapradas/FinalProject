@@ -17,4 +17,5 @@ public interface SurgeonVacationManager {
 	int countSurgeonVacations(int id);
 	List<Surgeon> getSurgeonsOnVacation(Date date);
 	void deleteSurgeonByID(int id);
+	List<SurgeonVacation> getMyVacationsSurgeon(int id);
 }

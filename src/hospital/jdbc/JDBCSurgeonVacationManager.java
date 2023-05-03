@@ -129,7 +129,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 	@Override
 	public void modifySurgeonVacation(int vacationId, java.sql.Date start, java.sql.Date end) {
 		try {
-			String sql = "UPDATE surgeonVacation SET starts=?, ends=? WHERE vacationId=?;";
+			String sql = "UPDATE surgeonVacation SET starts=?, ends=? WHERE vacationId=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, start);
 			prep.setDate(2, end);
@@ -203,5 +203,32 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<SurgeonVacation> getMyVacationsSurgeon(int id) {
+		// TODO Auto-generated method stub
+		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
+		try {
+			String sql = "SELECT * FROM surgeonVacation WHERE surgeonId = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1,id);	
+			ResultSet rs = prep.executeQuery();
+			while(rs.next())
+			{
+				Integer vacId = rs.getInt("vacationId");
+				java.sql.Date starts = rs.getDate("starts");
+				java.sql.Date ends = rs.getDate("ends");
+				Integer surgId = rs.getInt("surgeonId");
+				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
+				surgeonVacations.add(vac);
+			}
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return surgeonVacations;
 	}
 }

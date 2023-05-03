@@ -40,7 +40,6 @@ public class Menu {
 	private static User u;
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	jdbcManager = new JDBCManager();
 	surgeonManager = new JDBCSurgeonManager(jdbcManager);
@@ -120,8 +119,9 @@ public class Menu {
 				System.out.println("14. Create surgery");
 				System.out.println("15. Get list of surgeries");
 				System.out.println("16. Create schedule");
+				System.out.println("17. Get my vacations");
 		
-				System.out.println("17. Log out");
+				System.out.println("18. Log out");
 				System.out.println(" 0. exit");
 				
 				int choice = Integer.parseInt(reader.readLine());
@@ -177,10 +177,13 @@ public class Menu {
 				case 16:
 					createSchedule();
 					break;
-					
 				case 17:
+					getMyVacations();
+					break;
+				case 18:
 					main(null);
 					break;
+					
 				case 0: 
 					jdbcManager.disconnect();
 					userManager.disconnect();
@@ -211,8 +214,9 @@ public class Menu {
 			System.out.println("10. Delete account");
 			System.out.println("11. Create surgery");
 			System.out.println("12. Get list of surgeries");
+			System.out.println("13. Get my vacations");
 	
-			System.out.println("13. Log out");
+			System.out.println("14. Log out");
 			System.out.println(" 0. exit");
 			
 			int choice = Integer.parseInt(reader.readLine());
@@ -257,9 +261,11 @@ public class Menu {
 				case 12: 
 					getAllSurgeries();
 					break;
-					
-				
 				case 13:
+					getMyVacations();
+					break;
+				
+				case 14:
 					main(null);
 					break;
 				case 0: 
@@ -289,8 +295,9 @@ public class Menu {
 				System.out.println(" 7. Get list of nurses");
 				System.out.println(" 8. Get list of all employees");
 				System.out.println(" 9. Delete account");
+				System.out.println("10. Get my vacations");
 				
-				System.out.println("10. Log out");
+				System.out.println("11. Log out");
 				System.out.println(" 0. exit");
 				
 				int choice = Integer.parseInt(reader.readLine());
@@ -327,6 +334,9 @@ public class Menu {
 						main(null);
 						break;
 					case 10:
+						getMyVacations();
+						break;
+					case 11:
 						main(null);
 						break;
 					case 0: 
@@ -348,7 +358,7 @@ public class Menu {
 		if(role.equals("surgeon")) {
 			List<SurgeonVacation> surgVac= surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
 			System.out.println(surgVac);
-			System.out.println("Select the vacation you want to modify");
+			System.out.println("Select the id of the vacation you want to modify");
 			Integer vacId =  Integer.parseInt(reader.readLine());
 			System.out.println("Select the new vacation dates");
 			java.sql.Date start= selectStartDate();
@@ -357,7 +367,7 @@ public class Menu {
 		} else if (role.equals("nurse")) {
 			List<NurseVacation> nurseVac= nurseVacationManager.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
 			System.out.println(nurseVac);
-			System.out.println("Select the vacation you want to modify");
+			System.out.println("Select the id of the vacation you want to modify");
 			Integer vacId =  Integer.parseInt(reader.readLine());
 			java.sql.Date start= selectStartDate();
 			java.sql.Date end= new java.sql.Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
@@ -532,18 +542,6 @@ public class Menu {
 		System.out.println();
 	}
 
-
-//	private static void createNurse() throws Exception {
-//		// TODO Auto-generated method stub
-//		System.out.println("Type the name of the nurse:");
-//		String name =  reader.readLine();
-//		System.out.println("Type the email of the nurse:");
-//		String email =  reader.readLine();
-//		
-//		Nurse n= new Nurse(name, email);
-//		nurseManager.addNurse(n);
-//	}
-
 	private static void changeChiefSurg() {
 	// TODO Auto-generated method stub
 		System.out.println("The chief is going to be changed and you are going to be deleted as chief");
@@ -603,6 +601,7 @@ public class Menu {
 			sVacations = surgeonVacationManager.getAllVacations();
 			nVacations = nurseVacationManager.getAllVacations();
 			int i;
+			
 			for(i=0; i< sVacations.size(); i++)
 			{
 				System.out.print(sVacations.get(i).toString());
@@ -617,6 +616,32 @@ public class Menu {
 		}
 	}
 
+	public static void getMyVacations() throws Exception{
+		try {
+			if(u.getRole().getName().equals("surgeon")) {
+				List<SurgeonVacation> sVacations = new ArrayList<SurgeonVacation>();
+				sVacations = surgeonVacationManager.getMyVacationsSurgeon((surgeonManager.getIdByEmail(u.getEmail())));
+				int i;
+				for(i=0; i< sVacations.size(); i++)
+				{
+					System.out.print(sVacations.get(i).toString());
+					System.out.println(" Surgeon name: "+ surgeonManager.getNameById(sVacations.get(i).getSurgeonId()));
+				}
+			}
+			else if (u.getRole().getName().equals("nurse")) {
+				List<NurseVacation> nVacations = new ArrayList<NurseVacation>();
+				nVacations = nurseVacationManager.getMyVacationsNurse((nurseManager.getIdByEmail(u.getEmail())));
+				int i;
+				for(i=0; i< nVacations.size(); i++)
+				{
+					System.out.print(nVacations.get(i).toString());
+					System.out.println(" Nurse name: "+ nurseManager.getNameById(nVacations.get(i).getNurseId()));
+				}	
+			}	
+		}catch (Exception e) {
+		}
+	}
+	
 	public static void createPatient() throws phoneException{
 		try {
 			System.out.println("Type the name of the patient:");
@@ -968,7 +993,6 @@ public class Menu {
 			System.out.println("6) 16 august to 30 august");
 			option= Integer.parseInt(reader.readLine());
 			year= year-1900;
-			System.out.println(option);
 			switch(option) {
 			case 1:
 				start= new Date(year, 5, 1);

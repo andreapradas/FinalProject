@@ -10,6 +10,7 @@ import java.util.List;
 import hospital.ifaces.NurseVacationManager;
 import hospital.pojos.Nurse;
 import hospital.pojos.NurseVacation;
+import hospital.pojos.SurgeonVacation;
 
 public class JDBCNurseVacationManager implements NurseVacationManager{
 	private JDBCManager manager;
@@ -197,4 +198,32 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 		}
 		return name;
 	}
+
+	@Override
+	public List<NurseVacation> getMyVacationsNurse(int id) {
+		// TODO Auto-generated method stub
+		List<NurseVacation> nurseVacations= new ArrayList<NurseVacation>();
+		try {
+			String sql = "SELECT * FROM nurseVacation WHERE nurseId = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1,id);	
+			ResultSet rs = prep.executeQuery();
+			while(rs.next())
+			{
+				Integer vacId = rs.getInt("vacationId");
+				java.sql.Date starts = rs.getDate("starts");
+				java.sql.Date ends = rs.getDate("ends");
+				Integer surgId = rs.getInt("nurseId");
+				NurseVacation vac= new NurseVacation(vacId, starts, ends, surgId);
+				nurseVacations.add(vac);
+			}
+			rs.close();
+			prep.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return nurseVacations;
+	}
+	
 }
