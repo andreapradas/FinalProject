@@ -394,7 +394,7 @@ public class Menu {
 			Integer option= Integer.parseInt(reader.readLine());
 			Role role = null;
 			Boolean chief = null;
-			List<User> users= new ArrayList<User>();
+//			List<User> users= new ArrayList<User>();
 			switch (option) {
 				case 1:
 					role= userManager.getRole("surgeon");
@@ -446,13 +446,6 @@ public class Menu {
 		}
 	}
 	
-
-//	private static void deleteNurse() throws Exception {
-//	// TODO Auto-generated method stub
-//		System.out.println("Type the nurse id");
-//		Integer nurseID =  Integer.parseInt(reader.readLine());
-//		nurseManager.deleteNurseByID(nurseID);
-//}
 	private static void deletAccount(String role, int id, String email) {
 		userManager.deletUser(email);
 		if(role.equals("surgeon") || role.equals("chiefSurgeon")){
@@ -645,7 +638,6 @@ public class Menu {
 	
 	public static void getPatients() throws Exception
 	{
-		List<Patient> patients = new ArrayList<Patient>();
 		try {
 			System.out.format("%-10s %-15s %-10s %-3s\n", "Name", "Surname", "PhoneNumber", "Id");
 			System.out.println("----------------------------------------------------");
