@@ -1062,3 +1062,4 @@ public class Menu {
 		return avaliable;
 	}
 }
+
