@@ -808,18 +808,14 @@ public class Menu {
 				} while (true);
 				System.out.println("Type the type of the surgery: ");
 				String surgeryType =  reader.readLine();
-				System.out.println("Type the date of the surgery: ");
-				Date surgeryDate = getDate();
-				s= new Surgery(surgeryType, surgeryDate, patientId);
+				s= new Surgery(surgeryType, patientId);
 				break;
 			}else {//Si solo hay un paciente con ese nombre
 				Patient p= patientManager.getPatientByName(patientName);
 				int patientId = p.getPatientId();
 				System.out.println("Type the type of the surgery: ");
 				String surgeryType =  reader.readLine();
-				System.out.println("Type the date of the surgery: ");
-				Date surgeryDate = getDate();
-				s= new Surgery(surgeryType, surgeryDate, patientId);
+				s= new Surgery(surgeryType, patientId);
 				break;
 			}
 		}while(true);
@@ -915,7 +911,7 @@ public class Menu {
 				manageSurgery(surgeries.get(surgeriesCount).getSurgeryId(),date);
 				//Mostrar SCHEDULE
 				showSchedule();
-				surgeries.get(surgeriesCount).setDone(true);//Ya se han realizado
+				//surgeries.get(surgeriesCount).setDone(true);//Ya se han realizado
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -54,10 +54,9 @@ public class Surgery implements Serializable{
 		this.surgeonId = surgeonId;
 		this.roomId = roomId;
 	}
-	public Surgery(String surgeryType, Date surgeryDate, int patientId) {//Al crear la cirugia solo esos parametros 
+	public Surgery(String surgeryType, int patientId) {//Al crear la cirugia solo esos parametros 
 		super();
 		this.surgeryType = surgeryType;
-		this.surgeryDate = surgeryDate;
 		this.patientId = patientId;
 	}
 	
