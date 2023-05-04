@@ -22,10 +22,11 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	
 	public void addSurgery(Surgery s) {
 		try{
-			String sql = "INSERT INTO surgery (surgeryType, patientId) VALUES (?,?)";
+			String sql = "INSERT INTO Surgery (surgeryType, patientId, done) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, s.getSurgeryType());
 			prep.setInt(2, s.getPatientId());
+			prep.setBoolean(3, false);
 			prep.executeUpdate();			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -35,7 +36,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	@Override 
 	public void createSurgery(Surgery s) {
 		try{
-			String sql = "INSERT INTO surgery (surgeryId, surgeryType, surgeryDate, startHour,"
+			String sql = "INSERT INTO Surgery (surgeryId, surgeryType, surgeryDate, startHour,"
 					+ "done, patientId, surgeonId, roomId ) VALUES (?,?,?,?,?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, s.getSurgeryId());
@@ -82,7 +83,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	@Override
 	public void deleteSurgery(int surgeryId) {
 		try {
-			String sql = "DELETE FROM surgery WHERE surgeryId=?;";
+			String sql = "DELETE FROM Surgery WHERE surgeryId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, surgeryId);
 			prep.executeUpdate();
@@ -97,7 +98,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		List<Surgery> surgeries = new ArrayList<Surgery>();
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM surgery";
+			String sql = "SELECT * FROM Surgery";
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
 				int surgeryId = rs.getInt("surgeryId");
@@ -126,9 +127,9 @@ public class JDBCSurgeryManager implements SurgeryManager{
 	
 	@Override
 	public List<Surgery> getListOfSurgeriesNotDone() {
-		List<Surgery> surgeriesDone = new ArrayList<Surgery>();
+		List<Surgery> surgeriesNotDone = new ArrayList<Surgery>();
 		try {
-			String sql = "SELECT * FROM worksWith WHERE done=?";
+			String sql = "SELECT * FROM Surgery WHERE done= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, false);
 			ResultSet rs = prep.executeQuery();
@@ -143,7 +144,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 				int surgeonId = rs.getInt("surgeonId");
 				int roomId = rs.getInt("roomId");
 				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour,done, patientId,surgeonId, roomId);
-				surgeriesDone.add(s);
+				surgeriesNotDone.add(s);
 			}
 			rs.close();
 			prep.close();	
@@ -151,7 +152,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return surgeriesDone;
+		return surgeriesNotDone;
 	}
 	
 	@Override
@@ -159,12 +160,12 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		Surgery s = null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM surgery WHERE id=" + surgeryId;
+			String sql = "SELECT * FROM Surgery WHERE surgeryId=" + surgeryId;
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			surgeryId = rs.getInt("surgeryId");
 			String surgeryType = rs.getString("surgeryType");
-			Date surgeryDate = rs.getDate("day");
+			Date surgeryDate = rs.getDate("surgeryDate");
 			int startHour = rs.getInt("startHour");
 			Boolean done = rs.getBoolean("done");
 			Integer patientId = rs.getInt("patientId");

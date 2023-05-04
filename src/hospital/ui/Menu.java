@@ -381,6 +381,7 @@ public class Menu {
 					Date start= selectStartDate();
 					Date end= new java.sql.Date (start.getTime() + (1000 * 60 * 60 * 24 * 15));
 					nurseVacationManager.modifyNurseVacation(vacId, start, end);
+					break;
 				}else {
 					System.out.println("Incorrect vacationId\n");
 				}
@@ -417,7 +418,6 @@ public class Menu {
 			Integer option= Integer.parseInt(reader.readLine());
 			Role role = null;
 			Boolean chief = null;
-//			List<User> users= new ArrayList<User>();
 			switch (option) {
 				case 1:
 					role= userManager.getRole("surgeon");
@@ -491,6 +491,7 @@ public class Menu {
 		List<Nurse> nurses= avaliableNurses(date);
 		List<Surgeon> surgeons= avaliableSurgeons(date);		
 		if(nurses.size()>0 && surgeons.size()>0) {
+			createteam:
 			do {
 				Integer nurseId;
 				do {				
@@ -531,13 +532,20 @@ public class Menu {
 				worksWithManager.assign(nurseId, surgeonId, date);
 				nurses.removeAll(nurseManager.getNursesAssignedThisDay(date));
 				surgeons.removeAll(surgeonManager.getSurgeonsAssignedThisDay(date));
-				System.out.print("\nDo you want to create another team (Y/N): ");
-				String confirmation = reader.readLine();
-				if(confirmation.equalsIgnoreCase("y") && nurses.size()>0 && surgeons.size()>0) {
-				} else {
-					System.out.println("No more surgeons or nurses avaliable\n");
-					break;
+				while(true) {
+					System.out.print("\nDo you want to create another team (Y/N): ");
+					String confirmation = reader.readLine();
+					if(confirmation.equalsIgnoreCase("y") && nurses.size()>0 && surgeons.size()>0) {
+						break createteam;
+					} else if (confirmation.equalsIgnoreCase("y")){
+						System.out.println("No more surgeons or nurses avaliable\n");
+						break createteam;
+					} else if (confirmation.equalsIgnoreCase("n")){
+						break createteam;
+					} else {
+					}
 				}
+				
 			}while(true);
 		} else {
 			System.out.println("No surgeons or nurses avaliable\n");
@@ -707,7 +715,7 @@ public class Menu {
 		}
 	}
 	
-	public static void createPatient() throws phoneException{
+	public static void createPatient() throws phoneException, Exception{
 		try {
 			System.out.println("Type the name of the patient:");
 			String name =  reader.readLine();
@@ -720,7 +728,7 @@ public class Menu {
 			System.out.println("Patient created successfully\n");
 		}
 		catch (Exception e) {
-			System.out.println("The phone number is incorrect, introduce the patient again:");
+			System.out.println("Error while creating the patient");
 			createPatient();
 		}
 	}
@@ -900,19 +908,26 @@ public class Menu {
 	
 	private static void createSchedule() {
 		try {
-			System.out.println();
-			//Esto depende de si decidimos que siempre va a ser mañana 
-			System.out.println("Type the date for which you want to create the schedule: "); 
-			Date date = getDate(); //si es siempre "mañana" date= tomorrow
-			List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
-			createTeams(date);//Hacer Surgeon-Nurse
-			chooseActiveRooms();			
-			for(int surgeriesCount = 0;surgeriesCount<surgeries.size();surgeriesCount++) {//Mientras haya SURGERIES que hacer
-				manageSurgery(surgeries.get(surgeriesCount).getSurgeryId(),date);
-				//Mostrar SCHEDULE
-				showSchedule();
-				//surgeries.get(surgeriesCount).setDone(true);//Ya se han realizado
+			System.out.println(surgeryManager.getListOfSurgeriesNotDone());
+			if(surgeryManager.getListOfSurgeriesNotDone().size()!=0) {
+				System.out.println();
+				//Esto depende de si decidimos que siempre va a ser mañana 
+				System.out.println("Type the date for which you want to create the schedule: "); 
+				Date date = getDate(); //si es siempre "mañana" date= tomorrow
+				List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
+				System.out.println("Choose the surgeon-nurse who are going to work together the whole day");
+				createTeams(date);//Hacer Surgeon-Nurse
+				chooseActiveRooms();		
+				for(int surgeriesCount = 0;surgeriesCount<surgeries.size();surgeriesCount++) {//Mientras haya SURGERIES que hacer
+					manageSurgery(surgeries.get(surgeriesCount).getSurgeryId(),date);
+					//Mostrar SCHEDULE
+					showSchedule();
+					//surgeries.get(surgeriesCount).setDone(true);//Ya se han realizado
+				}
+			} else {
+				System.out.println("No surgeries in the bata base");
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -939,20 +954,42 @@ public class Menu {
 						case 1:
 							List<OperatingRoom> rooms= operatingRoomManager.getListOfOperatingRoom();
 							rooms.removeAll(operatingRoomManager.getListOfActiveOperatingRoom());
+							update:
+							do {
+							if(rooms.size()==0) {
+									System.out.println("All rooms are activated");
+									break;
+							}
 							for (OperatingRoom oR: rooms) {
 								System.out.println(oR);
 							}
 							System.out.print("Activate room: ");
 							int roomId = Integer.parseInt(reader.readLine());
-							operatingRoomManager.updateActivity(roomId, true);
+							for(OperatingRoom  r: rooms) {
+								if(r.getRoomId()==roomId) {
+									operatingRoomManager.updateActivity(roomId, true);
+									break update;
+								}
+							}
+							System.out.println("Incorrect Id");
+							} while(true);
 							break;
 						case 2: 
+							update:
+							do {
 							for (OperatingRoom oR: operatingRoomManager.getListOfActiveOperatingRoom()) {
 								System.out.println(oR);
 							}
 							System.out.print("Disable room: ");
 							int rId = Integer.parseInt(reader.readLine());
-							operatingRoomManager.updateActivity(rId, false);
+							for(OperatingRoom r: operatingRoomManager.getListOfActiveOperatingRoom()) {
+								if(r.getRoomId()==rId) {
+									operatingRoomManager.updateActivity(rId, false);
+									break update;
+								}
+							}
+							System.out.println("Incorrect Id");							
+							} while(true);
 							break;
 						case 3: 
 							break;
@@ -967,14 +1004,24 @@ public class Menu {
 				List<OperatingRoom> rooms= operatingRoomManager.getListOfOperatingRoom();
 				while(true) {
 					rooms.removeAll(operatingRoomManager.getListOfActiveOperatingRoom());
-					for (OperatingRoom oR: rooms) {
-						System.out.println(oR);
-					}
-					System.out.print("Activate room: ");
-					int roomId = Integer.parseInt(reader.readLine());
-					operatingRoomManager.updateActivity(roomId, true);
+					update:
+					do {
+						for (OperatingRoom oR: rooms) {
+							System.out.println(oR);
+						}
+						System.out.print("Activate room: ");
+						int roomId = Integer.parseInt(reader.readLine());
+						for(OperatingRoom  r: rooms) {
+							if(r.getRoomId()==roomId) {
+								operatingRoomManager.updateActivity(roomId, true);
+								break update;
+							}									
+						}
+						System.out.println("Incorrect Id");
+					} while(true);
 					System.out.print("Do you want to activate another room (Y/N): ");
 					String confirmation = reader.readLine();
+					System.out.println(operatingRoomManager.getListOfActiveOperatingRoom());
 					if(confirmation.equalsIgnoreCase("y")) {
 					} else {
 						break;
