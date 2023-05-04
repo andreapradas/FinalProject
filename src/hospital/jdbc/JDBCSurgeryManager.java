@@ -10,31 +10,29 @@ import java.util.List;
 import hospital.ifaces.SurgeryManager;
 import hospital.pojos.Surgery;
 
+public class JDBCSurgeryManager implements SurgeryManager {
 
-public class JDBCSurgeryManager implements SurgeryManager{
-	
 	private JDBCManager manager;
-	
-	public JDBCSurgeryManager(JDBCManager m)
-	{
+
+	public JDBCSurgeryManager(JDBCManager m) {
 		this.manager = m;
 	}
-	
+
 	public void addSurgery(Surgery s) {
-		try{
+		try {
 			String sql = "INSERT INTO surgery (surgeryType, patientId) VALUES (?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, s.getSurgeryType());
 			prep.setInt(2, s.getPatientId());
-			prep.executeUpdate();			
-		}catch(Exception e) {
+			prep.executeUpdate();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	@Override 
+
+	@Override
 	public void createSurgery(Surgery s) {
-		try{
+		try {
 			String sql = "INSERT INTO surgery (surgeryId, surgeryType, surgeryDate, startHour,"
 					+ "done, patientId, surgeonId, roomId ) VALUES (?,?,?,?,?,?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
@@ -46,13 +44,13 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setInt(6, s.getPatientId());
 			prep.setInt(7, s.getSurgeonId());
 			prep.setInt(8, s.getRoomId());
-			prep.executeUpdate();			
-					
-		}catch(Exception e) {
+			prep.executeUpdate();
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 //	@Override
 //	public void modifySurgery(int surgeryId, String parameterChange, String newParameter) {
 //		Surgery s = getSurgeryById(surgeryId);
@@ -78,7 +76,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 //			e.printStackTrace();
 //		}
 //	}
-	
+
 	@Override
 	public void deleteSurgery(int surgeryId) {
 		try {
@@ -87,19 +85,19 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setInt(1, surgeryId);
 			prep.executeUpdate();
 			prep.close();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	@Override 
-	public List<Surgery> getListOfSurgeries(){
+
+	@Override
+	public List<Surgery> getListOfSurgeries() {
 		List<Surgery> surgeries = new ArrayList<Surgery>();
 		try {
 			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM surgery";
 			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()){
+			while (rs.next()) {
 				int surgeryId = rs.getInt("surgeryId");
 				String surgeryType = rs.getString("surgeryType");
 				Date surgeryDate = rs.getDate("surgeryDate");
@@ -108,22 +106,21 @@ public class JDBCSurgeryManager implements SurgeryManager{
 				int patientId = rs.getInt("patientId");
 				int surgeonId = rs.getInt("surgeonId");
 				int roomId = rs.getInt("roomId");
-				Surgery s = new Surgery(surgeryId,surgeryType,surgeryDate, startHour, done, patientId, surgeonId, roomId);
+				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,
+						roomId);
 				surgeries.add(s);
 			}
-			
+
 			rs.close();
-			stmt.close();	
-			
-		}
-		catch(Exception e) {
+			stmt.close();
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return surgeries;
 	}
-	
-	
+
 	@Override
 	public List<Surgery> getListOfSurgeriesNotDone() {
 		List<Surgery> surgeriesDone = new ArrayList<Surgery>();
@@ -132,8 +129,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, false);
 			ResultSet rs = prep.executeQuery();
-			while(rs.next())
-			{
+			while (rs.next()) {
 				Integer surgeryId = rs.getInt("surgeryId");
 				String surgeryType = rs.getString("surgeryType");
 				Date surgeryDate = rs.getDate("surgeryDate");
@@ -142,18 +138,18 @@ public class JDBCSurgeryManager implements SurgeryManager{
 				int patientId = rs.getInt("patientId");
 				int surgeonId = rs.getInt("surgeonId");
 				int roomId = rs.getInt("roomId");
-				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour,done, patientId,surgeonId, roomId);
+				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,
+						roomId);
 				surgeriesDone.add(s);
 			}
 			rs.close();
-			prep.close();	
-		}
-		catch(Exception e) {
+			prep.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return surgeriesDone;
 	}
-	
+
 	@Override
 	public Surgery getSurgeryById(int surgeryId) {
 		Surgery s = null;
@@ -161,7 +157,7 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM surgery WHERE id=" + surgeryId;
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			surgeryId = rs.getInt("surgeryId");
 			String surgeryType = rs.getString("surgeryType");
 			Date surgeryDate = rs.getDate("day");
@@ -170,12 +166,12 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			Integer patientId = rs.getInt("patientId");
 			Integer surgeonId = rs.getInt("surgeonId");
 			Integer roomId = rs.getInt("roomId");
-			
+
 			s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId, roomId);
-			
+
 			rs.close();
 			stmt.close();
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return s;
