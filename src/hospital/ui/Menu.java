@@ -880,6 +880,7 @@ public class Menu {
 		}else {
 			s.setSurgeonId(assignSurgeon(surgeryId, date));
 		}
+		surgeryManager.programTheSurgey(surgeryId, date, null, s.getSurgeonId(), s.getRoomId());
 	}
 
 	//	private static void modifySurgery() {

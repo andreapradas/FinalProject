@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +48,27 @@ public class JDBCSurgeryManager implements SurgeryManager{
 			prep.setInt(6, s.getPatientId());
 			prep.setInt(7, s.getSurgeonId());
 			prep.setInt(8, s.getRoomId());
-			prep.executeUpdate();			
+			prep.executeUpdate();
+			prep.close();
 					
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void programTheSurgey(int surgeryId, Date date, Time time, int surgeonId, int roomId) {
+		try{
+			String sql = "UPDATE Surgery SET surgeryDate=?, startHour=?, "
+					+ " surgeonId=?, roomId=?, done=? WHERE surgeryId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setDate(1, date);
+			prep.setTime(2, time);
+			prep.setInt(3, surgeonId);
+			prep.setInt(4, roomId);
+			prep.setBoolean(5, true);
+			prep.executeUpdate();	
+			prep.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
