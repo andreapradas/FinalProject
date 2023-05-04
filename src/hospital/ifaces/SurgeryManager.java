@@ -10,6 +10,9 @@ public interface SurgeryManager {
 	
 	//Get the list of surgeries
 	public List<Surgery> getListOfSurgeries();
+	
+	//Get the list of surgeries DONE
+	public List<Surgery> getListOfSurgeriesNotDone();
 
 	//Get a surgery by the id
 	public Surgery getSurgeryById(int id);
@@ -22,6 +25,5 @@ public interface SurgeryManager {
 	
 	//Delete a surgery
 	public void deleteSurgery(int surgeryId);
-	//Assign a surgery to a surgeon
-	//public void assign (int surgeonID, int surgeryID);
+
 }

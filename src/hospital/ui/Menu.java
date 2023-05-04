@@ -808,14 +808,18 @@ public class Menu {
 				} while (true);
 				System.out.println("Type the type of the surgery: ");
 				String surgeryType =  reader.readLine();
-				s= new Surgery(surgeryType, patientId);
+				System.out.println("Type the date of the surgery: ");
+				Date surgeryDate = getDate();
+				s= new Surgery(surgeryType, surgeryDate, patientId);
 				break;
 			}else {//Si solo hay un paciente con ese nombre
 				Patient p= patientManager.getPatientByName(patientName);
 				int patientId = p.getPatientId();
 				System.out.println("Type the type of the surgery: ");
 				String surgeryType =  reader.readLine();
-				s= new Surgery(surgeryType, patientId);
+				System.out.println("Type the date of the surgery: ");
+				Date surgeryDate = getDate();
+				s= new Surgery(surgeryType, surgeryDate, patientId);
 				break;
 			}
 		}while(true);
@@ -844,17 +848,17 @@ public class Menu {
 	private static int assignSurgeon(int surgeryId, Date date) {//La fecha para buscar en la lista de WORKS WITH
 		List<WorksWith> teamSurgeonNurse = new ArrayList<WorksWith>();
 		teamSurgeonNurse = worksWithManager.getListOfWorksWith(date);
-		int teamId;
+		int surgeonId;
 		for(int i=0; i<teamSurgeonNurse.size();i++) {//Recorrer toda la lista disponible
 			for(int j=0; j<4; j++) {
 				if(teamSurgeonNurse.get(i).getHoursAvailable().get(j) == true) {
-					teamId = teamSurgeonNurse.get(i).getTeamID();
+					surgeonId = teamSurgeonNurse.get(i).getSurgeonID();
 					teamSurgeonNurse.get(i).changeHoursAvailable(j);
-					return teamId;
+					return surgeonId;
 				}
 			}
 		}
-		return -1;
+		return -1;//No se han encontrado HUECOS LIBRES en los SURGEON
 	}
 	
 	private static void manageSurgery(int surgeryId, Date date) {//La fecha me ralla
@@ -863,14 +867,12 @@ public class Menu {
 		int roomId = assignRoom(surgeryId);
 		if(roomId==-1) {//No hay huecos disponibles
 			System.out.println("There are not empty spaces in the rooms for today.");
-			//No seguir 
 		}else {
 			s.setRoomId(roomId);
 		}
 		//Asignarle un surgeon
 		if(assignSurgeon(surgeryId, date)==-1) {//NO hay huecos disponibles
 			System.out.println("No more available teams for today.");
-
 		}else {
 			s.setSurgeonId(assignSurgeon(surgeryId, date));
 		}
@@ -905,13 +907,23 @@ public class Menu {
 			System.out.println();
 			//Esto depende de si decidimos que siempre va a ser mañana 
 			System.out.println("Type the date for which you want to create the schedule: "); 
-			Date date= getDate(); //si es siempre "mañana" date= tomorrow
-			chooseActiveRooms();
-			createTeams(date);
-			
+			Date date = getDate(); //si es siempre "mañana" date= tomorrow
+			List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
+			createTeams(date);//Hacer Surgeon-Nurse
+			chooseActiveRooms();			
+			for(int surgeriesCount = 0;surgeriesCount<surgeries.size();surgeriesCount++) {//Mientras haya SURGERIES que hacer
+				manageSurgery(surgeries.get(surgeriesCount).getSurgeryId(),date);
+				//Mostrar SCHEDULE
+				showSchedule();
+				surgeries.get(surgeriesCount).setDone(true);//Ya se han realizado
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	private static void showSchedule() {
 		
 	}
 	
