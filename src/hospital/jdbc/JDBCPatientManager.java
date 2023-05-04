@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hospital.ifaces.PatientManager;
-import hospital.pojos.OperatingRoom;
 import hospital.pojos.Patient;
 
 public class JDBCPatientManager implements PatientManager{
@@ -150,8 +149,7 @@ public class JDBCPatientManager implements PatientManager{
 	
 	@Override
 	public List<Patient> getPatientBySurname(String patientSurname, String patientName) {
-		Patient p = null;
-		List<Patient> patients = null;
+		List<Patient> patients = new ArrayList<Patient>();
 		try {
 			String sql = "SELECT * FROM patient WHERE UPPER(patientName)=UPPER(?)"
 					+ " AND UPPER(patientSurname)=UPPER(?) ORDER BY patientName, patientSurname";
@@ -165,7 +163,7 @@ public class JDBCPatientManager implements PatientManager{
 				Integer patientId = rs.getInt("patientId");
 				String surname = rs.getString("patientSurname");
 				Integer phoneNumber = rs.getInt("phoneNumber");
-				p = new Patient(patientId, name, surname, phoneNumber);
+				Patient p = new Patient(patientId, name, surname, phoneNumber);
 				patients.add(p);
 			}		
 			rs.close();

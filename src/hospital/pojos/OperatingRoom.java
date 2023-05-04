@@ -46,11 +46,11 @@ public class OperatingRoom implements Serializable{
 		return hoursAvailable;
 	}
 	
-	public void changeHoursAvailable(int hourRange) {
+	public void changeHoursAvailable(int hourRange) {//Cambia el hueco que le pasa a OCUPADO
 		this.hoursAvailable.set(hourRange, false);
 	}
 	
-	public int getStartHour(int space) {
+	public int getStartHour(int space) {//Teniendo el hueco se sabe la hora de la CIRUGÍA 
 		switch(space) {
 		case 0:
 			return 8;

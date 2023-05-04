@@ -830,68 +830,76 @@ public class Menu {
 		Surgery s = surgeryManager.getSurgeryById(surgeryId);
 		for(int i=0; i<rooms.size();i++) {
 			for(int j =0; j<4; j++) {
-				if(rooms.get(i).getHoursAvailable().get(j)== true) {
-					//Ya se encontró un hueco disponible
+				if(rooms.get(i).getHoursAvailable().get(j) == true) {
+					//Ya se encontró un hueco disponible en una hab
 					roomId = rooms.get(i).getRoomId();
 					rooms.get(i).changeHoursAvailable(j);//Cambiar el hueco a OCUPADO
-					s.setStartHour(rooms.get(i).getStartHour(j));//Obtener la hora de la surgery
+					s.setStartHour(rooms.get(i).getStartHour(j));//Obtener la hora de la SURGERY
 					return roomId;
+				}
+			}
+		}
+		return -1;//NO se han encontrado HUECOS LIBRES y NO hay más ROOMS
+	}
+	
+	private static int assignSurgeon(int surgeryId, Date date) {//La fecha para buscar en la lista de WORKS WITH
+		List<WorksWith> teamSurgeonNurse = new ArrayList<WorksWith>();
+		teamSurgeonNurse = worksWithManager.getListOfWorksWith(date);
+		int teamId;
+		for(int i=0; i<teamSurgeonNurse.size();i++) {//Recorrer toda la lista disponible
+			for(int j=0; j<4; j++) {
+				if(teamSurgeonNurse.get(i).getHoursAvailable().get(j) == true) {
+					teamId = teamSurgeonNurse.get(i).getTeamID();
+					teamSurgeonNurse.get(i).changeHoursAvailable(j);
+					return teamId;
 				}
 			}
 		}
 		return -1;
 	}
 	
-	private static int assignSurgeon(int surgeryId) {
-		List<Surgeon> surgeons = new ArrayList<Surgeon>();
-		surgeons = surgeonManager.getListOfSurgeons();
-		int surgeonId;
-		Surgery s = surgeryManager.getSurgeryById(surgeryId);
-		for(int i=0; i<surgeons.size();i++) {
-			for(int j=0; j<4; j++) {
-				
-			}
-		}
-		return -1;
-	}
-	
-	private static void manageSurgery(int surgeryId) {
+	private static void manageSurgery(int surgeryId, Date date) {//La fecha me ralla
 		//Asignarle una room
 		Surgery s = surgeryManager.getSurgeryById(surgeryId);
 		int roomId = assignRoom(surgeryId);
 		if(roomId==-1) {//No hay huecos disponibles
-			System.out.println("There are not empty spaces");
+			System.out.println("There are not empty spaces in the rooms for today.");
 			//No seguir 
+		}else {
+			s.setRoomId(roomId);
 		}
-		s.setRoomId(roomId);
 		//Asignarle un surgeon
-		s.setSurgeonId(assignSurgeon(surgeryId));
-	}
-//Metodos para modificar la hab. y la cirugia 
-	
-	private static void modifySurgery() {
-		try {
-			System.out.println("Type the surgeryId you want to change: ");
-			int surgeryId = Integer.parseInt(reader.readLine());
-			System.out.println("Type the atribute you want to change(surgeryType, surgeryDate, startHour): ");
-			String parameterChange = reader.readLine();
-			System.out.println("Introduce the new value: ");
-			if(parameterChange.equalsIgnoreCase("surgeryType")) {
-				System.out.println("Type the new surgeryType: ");
-			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
-				System.out.println("Type the new surgeryDate: ");
-				/*System.out.println("Day: ");
-				System.out.println("Month: ");
-				System.out.println("Year: ");*/
-			}else {
-				System.out.println("Type the new startHour: ");
-			}
-			String newAtribute = reader.readLine();
-			surgeryManager.modifySurgery(surgeryId, parameterChange, newAtribute);
-		}catch(Exception e) {
-			e.printStackTrace();
+		if(assignSurgeon(surgeryId, date)==-1) {//NO hay huecos disponibles
+			System.out.println("No more available teams for today.");
+
+		}else {
+			s.setSurgeonId(assignSurgeon(surgeryId, date));
 		}
 	}
+
+	//	private static void modifySurgery() {
+//		try {
+//			System.out.println("Type the surgeryId you want to change: ");
+//			int surgeryId = Integer.parseInt(reader.readLine());
+//			System.out.println("Type the atribute you want to change(surgeryType, surgeryDate, startHour): ");
+//			String parameterChange = reader.readLine();
+//			System.out.println("Introduce the new value: ");
+//			if(parameterChange.equalsIgnoreCase("surgeryType")) {
+//				System.out.println("Type the new surgeryType: ");
+//			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
+//				System.out.println("Type the new surgeryDate: ");
+//				/*System.out.println("Day: ");
+//				System.out.println("Month: ");
+//				System.out.println("Year: ");*/
+//			}else {
+//				System.out.println("Type the new startHour: ");
+//			}
+//			String newAtribute = reader.readLine();
+//			surgeryManager.modifySurgery(surgeryId, parameterChange, newAtribute);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	private static void createSchedule() {
 		try {
@@ -981,24 +989,24 @@ public class Menu {
 		operatingRoomManager.addOperatingRoom(r);
 	}
 	
-	private static void modifyOperatingRoom() {
-		try {
-			System.out.println("Type the roomId you want to change: ");
-			int roomId = Integer.parseInt(reader.readLine());
-			System.out.println("Type the atribute you want to change(roomNumber, roomFloor): ");
-			String parameterChange = reader.readLine();
-			System.out.println("Introduce the new value: ");
-			if(parameterChange.equalsIgnoreCase("roomNumber")) {
-				System.out.println("Type the new roomNumber: ");
-			}else {
-				System.out.println("Type the new roomFloor: ");
-			}
-			String newParameter = reader.readLine();
-			operatingRoomManager.modifyOperatingRoom(roomId, parameterChange, newParameter);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	private static void modifyOperatingRoom() {
+//		try {
+//			System.out.println("Type the roomId you want to change: ");
+//			int roomId = Integer.parseInt(reader.readLine());
+//			System.out.println("Type the atribute you want to change(roomNumber, roomFloor): ");
+//			String parameterChange = reader.readLine();
+//			System.out.println("Introduce the new value: ");
+//			if(parameterChange.equalsIgnoreCase("roomNumber")) {
+//				System.out.println("Type the new roomNumber: ");
+//			}else {
+//				System.out.println("Type the new roomFloor: ");
+//			}
+//			String newParameter = reader.readLine();
+//			operatingRoomManager.modifyOperatingRoom(roomId, parameterChange, newParameter);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	public static void createVacation(String role) throws Exception
 	{

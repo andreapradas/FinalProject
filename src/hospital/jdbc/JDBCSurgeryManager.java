@@ -90,31 +90,31 @@ public class JDBCSurgeryManager implements SurgeryManager{
 		}
 	}
 	
-	@Override
-	public void modifySurgery(int surgeryId, String parameterChange, String newParameter) {
-		Surgery s = getSurgeryById(surgeryId);
-		try {
-			String sql;
-			PreparedStatement prep;
-			Date surgeryDate = null;
-			int startHour = 0;
-			if(parameterChange.equalsIgnoreCase("surgeryType")) {
-				s.setSurgeryType(newParameter);
-				sql = "UPDATE surgery SET " + parameterChange + " = ? WHERE surgeryId = " + surgeryId;
-			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
-				surgeryDate= Date.valueOf(newParameter);
-				s.setSurgeryDate(surgeryDate);
-				sql = "UPDATE surgery SET" + surgeryDate + " = ? WHERE surgeryId = " + surgeryId;
-			}else {
-				startHour = Integer.valueOf(parameterChange);
-				s.setStartHour(startHour);
-				sql = "UPDATE surgery SET startHour= ? WHERE surgeryId=?;";
-				prep = manager.getConnection().prepareStatement(sql);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	@Override
+//	public void modifySurgery(int surgeryId, String parameterChange, String newParameter) {
+//		Surgery s = getSurgeryById(surgeryId);
+//		try {
+//			String sql;
+//			PreparedStatement prep;
+//			Date surgeryDate = null;
+//			int startHour = 0;
+//			if(parameterChange.equalsIgnoreCase("surgeryType")) {
+//				s.setSurgeryType(newParameter);
+//				sql = "UPDATE surgery SET " + parameterChange + " = ? WHERE surgeryId = " + surgeryId;
+//			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
+//				surgeryDate= Date.valueOf(newParameter);
+//				s.setSurgeryDate(surgeryDate);
+//				sql = "UPDATE surgery SET" + surgeryDate + " = ? WHERE surgeryId = " + surgeryId;
+//			}else {
+//				startHour = Integer.valueOf(parameterChange);
+//				s.setStartHour(startHour);
+//				sql = "UPDATE surgery SET startHour= ? WHERE surgeryId=?;";
+//				prep = manager.getConnection().prepareStatement(sql);
+//			}
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	@Override
 	public void deleteSurgery(int surgeryId) {

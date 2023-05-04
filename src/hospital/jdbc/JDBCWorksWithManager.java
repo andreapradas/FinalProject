@@ -38,7 +38,6 @@ public class JDBCWorksWithManager implements WorksWithManager {
 
 	@Override
 	public List<WorksWith> getListOfWorksWith() {
-		// TODO Auto-generated method stub
 		List<WorksWith> ListOfWW = new ArrayList<WorksWith>();
 		try {
 			Statement stmt = manager.getConnection().createStatement();
@@ -50,6 +49,32 @@ public class JDBCWorksWithManager implements WorksWithManager {
 				Integer surgeonID = rs.getInt("surgeonID");
 				Integer nurseID = rs.getInt("nurseID");
 				Date date = rs.getDate("dateOfWork");
+				WorksWith ww = new WorksWith(teamID, surgeonID, nurseID, date);
+				ListOfWW.add(ww);
+			}
+			rs.close();
+			stmt.close();	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ListOfWW;
+	}
+	
+	
+	@Override
+	public List<WorksWith> getListOfWorksWith(Date date) {//Metodo empleado al crear una SURGERY 
+		List<WorksWith> ListOfWW = new ArrayList<WorksWith>();
+		try {
+			Statement stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM worksWith WHERE dateOfWork="+date;
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next())
+			{
+				Integer teamID = rs.getInt("teamID");
+				Integer surgeonID = rs.getInt("surgeonID");
+				Integer nurseID = rs.getInt("nurseID");
 				WorksWith ww = new WorksWith(teamID, surgeonID, nurseID, date);
 				ListOfWW.add(ww);
 			}

@@ -15,7 +15,9 @@ public interface WorksWithManager {
 	
 	public void deleteWorksWithByID (int ID);
 
-	void assign(int nurseId, int surgeonID, Date date);
+	public void assign(int nurseId, int surgeonID, Date date);
+
+	public List<WorksWith> getListOfWorksWith(Date date);
 
 	//void assign(int nurseId, int surgeonID);
 	

@@ -1,6 +1,7 @@
 package hospital.pojos;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ public class WorksWith {
 	private Integer surgeonID;
 	private Integer nurseID;
 	private Date date;
-	private List<Boolean> hourAvailability;
+	private List<Boolean> hoursAvailable;
 	
 	
 	public WorksWith() {
@@ -22,18 +23,40 @@ public class WorksWith {
 		this.surgeonID = surgeonID;
 		this.nurseID = nurseID;
 		this.date = date;	
+		this.hoursAvailable = createHoursRange(4);
 	}
 	
 	public WorksWith(Integer surgeonID, Integer nurseID) {
 		super();
 		this.surgeonID = surgeonID;
 		this.nurseID = nurseID;
+		this.hoursAvailable = createHoursRange(4);
+	}
+	
+	private List<Boolean> createHoursRange(int rangeAmount){
+		List<Boolean> hoursAvailable = new ArrayList<Boolean>();
+		for(int i=0; i<rangeAmount; i++) {
+			hoursAvailable.add(true); 
+		}
+		return hoursAvailable;
+	}
+	
+	public void changeHoursAvailable(int hourRange) {//Cambia el hueco que le pasa a OCUPADO
+		this.hoursAvailable.set(hourRange, false);
 	}
 	
 	@Override
 	public String toString() {
 		return 
 				"WorksWith [teamID=" + teamID + ", surgeonID=" + surgeonID + ", nurseID=" + nurseID + ", date=" + date + "]";
+	}
+
+	public List<Boolean> getHoursAvailable() {
+		return hoursAvailable;
+	}
+
+	public void setHoursAvailable(List<Boolean> hoursAvailable) {
+		this.hoursAvailable = hoursAvailable;
 	}
 
 	public Integer getTeamID() {
