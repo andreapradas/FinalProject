@@ -10,7 +10,6 @@ import java.util.List;
 import hospital.ifaces.NurseVacationManager;
 import hospital.pojos.Nurse;
 import hospital.pojos.NurseVacation;
-import hospital.pojos.SurgeonVacation;
 
 public class JDBCNurseVacationManager implements NurseVacationManager{
 	private JDBCManager manager;
