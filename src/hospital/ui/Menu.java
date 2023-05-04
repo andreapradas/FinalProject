@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -987,6 +986,7 @@ public class Menu {
 		Integer roomFloor =  Integer.parseInt(reader.readLine());
 		OperatingRoom r= new OperatingRoom(roomNumber, roomFloor);
 		operatingRoomManager.addOperatingRoom(r);
+		System.out.println("OperatingRoom added successfully\n");
 	}
 	
 //	private static void modifyOperatingRoom() {
