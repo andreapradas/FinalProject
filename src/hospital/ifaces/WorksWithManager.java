@@ -19,6 +19,8 @@ public interface WorksWithManager {
 
 	public List<WorksWith> getListOfWorksWith(Date date);
 
+	int getNurseIdAssignedSurgeonDate(int sId, Date date) throws Exception;
+
 	//void assign(int nurseId, int surgeonID);
 	
 }

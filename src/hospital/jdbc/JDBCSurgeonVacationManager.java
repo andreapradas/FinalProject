@@ -140,6 +140,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			e.printStackTrace();
 		}
 	}
+
 	
 //	@Override
 //	public int getSurgeonVacationId(int surgeonId, java.sql.Date start, java.sql.Date end) {

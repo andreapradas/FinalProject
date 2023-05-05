@@ -52,18 +52,80 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		}
 	}
 
+//	@Override
+//	public void programTheSurgery(int surgeryId, Date surgeryDate, Time startHour, int surgeonId, int roomId) {
+//		try {
+//			String sql = "UPDATE Surgery SET surgeryDate=?, startHour=?, "
+//					+ " surgeonId=?, roomId=?, done=? WHERE surgeryId=?";
+//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+//			prep.setDate(1, surgeryDate);
+//			prep.setTime(2, startHour);
+//			prep.setInt(3, surgeonId);
+//			prep.setInt(4, roomId);
+//			prep.setBoolean(5, true);
+//			prep.setInt(5, surgeryId);
+//			prep.executeUpdate();
+//			prep.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+	//}
+	
 	@Override
-	public void programTheSurgery(int surgeryId, Date surgeryDate, Time startHour, int surgeonId, int roomId) {
+	public void updateDone(int surgeryId) {
+		try {
+			String sql = "UPDATE Surgery SET done=? WHERE surgeryId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setBoolean(1, true);
+			prep.setInt(2, surgeryId);
+			prep.executeUpdate();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void updateRoomHourDate(int surgeryId, Date surgeryDate, Time startHour, int roomId) {
 		try {
 			String sql = "UPDATE Surgery SET surgeryDate=?, startHour=?, "
-					+ " surgeonId=?, roomId=?, done=? WHERE surgeryId=?";
+					+ "roomId=? WHERE surgeryId=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, surgeryDate);
 			prep.setTime(2, startHour);
-			prep.setInt(3, surgeonId);
-			prep.setInt(4, roomId);
-			prep.setBoolean(5, true);
-			prep.setInt(5, surgeryId);
+			prep.setInt(3, roomId);
+			prep.setInt(4, surgeryId);
+			prep.executeUpdate();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void deleteRoomHourDate(int surgeryId) {
+		try {
+			String sql = "UPDATE Surgery SET surgeryDate=?, startHour=?, "
+					+ "roomId=? WHERE surgeryId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setDate(1, null);
+			prep.setTime(2, null);
+			prep.setNull(3, 0);
+			prep.setInt(4, surgeryId);
+			prep.executeUpdate();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void updateSurgeonId(int surgeryId, int surgeonId) {
+		try {
+			String sql = "UPDATE Surgery SET surgeonId=? WHERE surgeryId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, surgeonId);
+			prep.setInt(2, surgeryId);
 			prep.executeUpdate();
 			prep.close();
 		} catch (Exception e) {
@@ -71,31 +133,6 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		}
 	}
 
-//	@Override
-//	public void modifySurgery(int surgeryId, String parameterChange, String newParameter) {
-//		Surgery s = getSurgeryById(surgeryId);
-//		try {
-//			String sql;
-//			PreparedStatement prep;
-//			Date surgeryDate = null;
-//			int startHour = 0;
-//			if(parameterChange.equalsIgnoreCase("surgeryType")) {
-//				s.setSurgeryType(newParameter);
-//				sql = "UPDATE surgery SET " + parameterChange + " = ? WHERE surgeryId = " + surgeryId;
-//			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
-//				surgeryDate= Date.valueOf(newParameter);
-//				s.setSurgeryDate(surgeryDate);
-//				sql = "UPDATE surgery SET" + surgeryDate + " = ? WHERE surgeryId = " + surgeryId;
-//			}else {
-//				startHour = Integer.valueOf(parameterChange);
-//				s.setStartHour(startHour);
-//				sql = "UPDATE surgery SET startHour= ? WHERE surgeryId=?;";
-//				prep = manager.getConnection().prepareStatement(sql);
-//			}
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	@Override
 	public void deleteSurgery(int surgeryId) {
@@ -139,7 +176,38 @@ public class JDBCSurgeryManager implements SurgeryManager {
 
 		return surgeries;
 	}
+	
+	@Override
+	public List<Surgery> getListOfSurgeries(Date date) {
+		List<Surgery> surgeries = new ArrayList<Surgery>();
+		try {
+			String sql = "SELECT * FROM Surgery WHERE surgeryDate=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setDate(1, date);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				int surgeryId = rs.getInt("surgeryId");
+				String surgeryType = rs.getString("surgeryType");
+				Date surgeryDate = rs.getDate("surgeryDate");
+				Time startHour = rs.getTime("startHour");
+				Boolean done = rs.getBoolean("done");
+				int patientId = rs.getInt("patientId");
+				int surgeonId = rs.getInt("surgeonId");
+				int roomId = rs.getInt("roomId");
+				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,roomId);
+				surgeries.add(s);
+			}
 
+			rs.close();
+			prep.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return surgeries;
+	}
+	
 	@Override
 	public List<Surgery> getListOfSurgeriesNotDone() {
 		List<Surgery> surgeriesNotDone = new ArrayList<Surgery>();

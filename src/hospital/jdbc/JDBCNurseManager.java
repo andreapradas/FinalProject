@@ -160,10 +160,9 @@ public class JDBCNurseManager implements NurseManager {
 	
 	@Override
 	public List<Nurse> getNursesAssignedThisDay(Date date) {
-		// TODO Auto-generated method stub
 		List<Nurse> nurses = new ArrayList<Nurse>();
 		try {
-			String sql = "SELECT Nurse.*, dateOfWork FROM worksWith INNER JOIN Nurse ON "
+			String sql = "SELECT Nurse.* FROM worksWith INNER JOIN Nurse ON "
 					+ "Nurse.nurseId= worksWith.nurseId "
 					+ "WHERE dateOfWork= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
@@ -186,5 +185,4 @@ public class JDBCNurseManager implements NurseManager {
 		}
 		return nurses;
 	}
-	
 }

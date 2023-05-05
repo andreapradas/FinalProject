@@ -98,7 +98,7 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 	public List<Nurse> getNursesOnVacation(Date start, Date end){
 		List<Nurse> nurses= new ArrayList<Nurse>();
 		try {
-			String sql = "SELECT Nurse.* FROM nurseVacation INNER JOIN Nurse "
+			String sql = "SELECT DISTINCT Nurse.* FROM nurseVacation INNER JOIN Nurse "
 					+ "ON Nurse.nurseId=nurseVacation.nurseId "
 					+ "WHERE (starts >=? AND starts <=?) OR (ends >=? AND ends <=?) OR (starts <=? AND ends >=?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);

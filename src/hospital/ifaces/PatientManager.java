@@ -15,6 +15,7 @@ public interface PatientManager {
 	public Patient getPatientByName(String patientName);
 	public List<Patient> getPatientBySurname(String patientSurname, String patientName);
 	Patient getPatientById(int id);
+	String getPatCompleteNametById(int id);
 
 	
 }

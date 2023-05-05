@@ -140,6 +140,26 @@ public class JDBCPatientManager implements PatientManager{
 	}
 	
 	@Override
+	public String getPatCompleteNametById(int id) {
+		try {
+			Patient p = null;
+			String sql = "SELECT patientName, patientSurname FROM patient WHERE patientId=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery();
+			String name = rs.getString("patientName");
+			String surname = rs.getString("patientSurname");
+			String completeName= name + " " + surname;
+			rs.close();
+			prep.close();
+			return completeName;
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
 	public List<Patient> getPatientBySurname(String patientSurname, String patientName) {
 		List<Patient> patients = new ArrayList<Patient>();
 		try {

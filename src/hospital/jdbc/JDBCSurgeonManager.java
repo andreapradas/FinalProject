@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hospital.ifaces.SurgeonManager;
+import hospital.pojos.Nurse;
 import hospital.pojos.Surgeon;
 
 public class JDBCSurgeonManager implements SurgeonManager{
@@ -36,7 +37,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	
 	@Override
 	public void deleteSurgeonByID(int id) {
-		// TODO Auto-generated method stub
 		try {
 			String sql = "DELETE FROM Surgeon WHERE surgeonId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
@@ -68,7 +68,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	
 	@Override
 	public Surgeon getSurgeonById(int Id) {
-		// TODO Auto-generated method stub
 		Surgeon s = null;
 		try {
 			String sql = "SELECT * FROM Surgeon WHERE surgeonId=?";
@@ -156,7 +155,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 
 	@Override
 	public Surgeon getChiefSurgeon() {
-		// TODO Auto-generated method stub
 		Surgeon s = null;
 		try {
 			
@@ -173,7 +171,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			rs.close();
 			prep.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return s;
@@ -181,7 +178,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 
 	@Override
 	public void changeChief(int id) {
-		// TODO Auto-generated method stub
 		try{
 			String sql = "UPDATE Surgeon SET chief= ? WHERE chief= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
@@ -219,12 +215,41 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	}
 	
 
+//	@Override
+//	public List<Surgeon> getSurgeonsAssignedThisDay(Date date) {
+//		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+//		try {
+//			String sql = "SELECT Surgeon.* FROM worksWith "
+//					+ "INNER JOIN Surgeon ON Surgeon.surgeonId= worksWith.surgeonId "
+//					+ "WHERE dateOfWork= ?";
+//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+//			prep.setDate(1, date);
+//			ResultSet rs = prep.executeQuery();
+//			while(rs.next())
+//			{
+//				Integer surgeonId = rs.getInt("surgeonId");
+//				String name = rs.getString("surgeonName");
+//				String surname = rs.getString("surgeonSurname");
+//				String email = rs.getString("surgeonEmail");
+//				Boolean chief = rs.getBoolean("chief");
+//				Surgeon s = new Surgeon(surgeonId, name, surname, email, chief);
+//				surgeons.add(s);
+//			}	
+//			rs.close();
+//			prep.close();	
+//		}
+//		catch(Exception e) {
+//		}
+//		return surgeons;
+//	}
+	
+	
 	@Override
 	public List<Surgeon> getSurgeonsAssignedThisDay(Date date) {
-		// TODO Auto-generated method stub
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
-			String sql = "SELECT surgeon.* FROM worksWith INNER JOIN surgeon ON surgeon.surgeonId= worksWith.surgeonId"
+			String sql = "SELECT Surgeon.* FROM worksWith INNER JOIN Surgeon ON "
+					+ "Surgeon.surgeonId= worksWith.surgeonId "
 					+ "WHERE dateOfWork= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, date);
@@ -235,7 +260,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 				String name = rs.getString("surgeonName");
 				String surname = rs.getString("surgeonSurname");
 				String email = rs.getString("surgeonEmail");
-				Boolean chief = rs.getBoolean("chief");
+				boolean chief = rs.getBoolean("chief");
 				Surgeon s = new Surgeon(surgeonId, name, surname, email, chief);
 				surgeons.add(s);
 			}
@@ -243,6 +268,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			prep.close();	
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 		}
 		return surgeons;
 	}

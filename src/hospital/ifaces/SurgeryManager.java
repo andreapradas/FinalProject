@@ -28,6 +28,16 @@ public interface SurgeryManager {
 	//Delete a surgery
 	public void deleteSurgery(int surgeryId);
 
-	void programTheSurgery(int surgeryId, Date date, Time time, int sugeonId, int roomId);
+	//void programTheSurgery(int surgeryId, Date date, Time time, int sugeonId, int roomId);
+
+	void updateRoomHourDate(int surgeryId, Date surgeryDate, Time startHour, int roomId);
+
+	void updateSurgeonId(int surgeryId, int surgeonId);
+
+	void updateDone(int surgeryId);
+
+	void deleteRoomHourDate(int surgeryId);
+
+	List<Surgery> getListOfSurgeries(Date date);
 
 }
