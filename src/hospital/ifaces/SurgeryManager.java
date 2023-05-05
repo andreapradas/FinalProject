@@ -1,5 +1,7 @@
 package hospital.ifaces;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 import hospital.pojos.Surgery;
 
@@ -25,5 +27,7 @@ public interface SurgeryManager {
 	
 	//Delete a surgery
 	public void deleteSurgery(int surgeryId);
+
+	void programTheSurgery(int surgeryId, Date date, Time time, int sugeonId, int roomId);
 
 }

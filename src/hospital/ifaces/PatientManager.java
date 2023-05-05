@@ -6,7 +6,7 @@ import hospital.pojos.Patient;
 
 public interface PatientManager {
 
-	public void addPatient(Patient p);
+	public void addPatient(Patient p) throws Exception;
 	public void updatePhoneNumber(int pat_id, int phoneNumber);
 	public List<Patient> getListOfPatients();
 	//List of Patients with the same name

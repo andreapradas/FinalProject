@@ -2,6 +2,7 @@ package hospital.pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Objects;
 
 
@@ -12,7 +13,7 @@ public class Surgery implements Serializable{
 	private int surgeryId;
 	private String surgeryType;
 	private Date surgeryDate;
-	private int startHour;//Se limita a 4 franjas horarias que ya tienen estipuladas las horas
+	private Time startHour;
 	private Boolean done;
 	//Foreign keys
 	private int patientId; //Many to one relationship
@@ -25,14 +26,14 @@ public class Surgery implements Serializable{
 		super();
 	}
 	
-	public Surgery(Integer surgeryId, String surgeryType, Date day, int startHour,  
+	public Surgery(Integer surgeryId, String surgeryType, Date day, Time startHour,  
 			Integer patientId, Integer surgeonId, Integer roomId) {
 		super();
 		this.surgeryId = surgeryId; 
 		this.surgeryType = surgeryType;
 		this.surgeryDate = day;
 		this.startHour = startHour;//Se crea al meter la cirugia 
-		this.done = false; //Cambiar cuando se realice a true ??
+		this.done = false; 
 		
 		//Foreign keys
 		this.patientId = patientId;
@@ -40,7 +41,7 @@ public class Surgery implements Serializable{
 		this.roomId = roomId;
 	}
 	
-	public Surgery(Integer surgeryId, String surgeryType, Date day, int startHour, Boolean done,  
+	public Surgery(Integer surgeryId, String surgeryType, Date day, Time startHour, Boolean done,  
 			Integer patientId, Integer surgeonId, Integer roomId) {
 		super();
 		this.surgeryId = surgeryId; 
@@ -80,10 +81,10 @@ public class Surgery implements Serializable{
 	public void setSurgeryDate(Date day) {
 		this.surgeryDate = day;
 	}
-	public int getStartHour() {
+	public Time getStartHour() {
 		return startHour;
 	}
-	public void setStartHour(int startHour) {
+	public void setStartHour(Time startHour) {
 		this.startHour = startHour;
 	}
 	public Boolean getDone() {

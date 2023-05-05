@@ -19,18 +19,13 @@ public class JDBCPatientManager implements PatientManager{
 	}
 	
 	@Override
-	public void addPatient(Patient p) {
-		try{
-			String sql = "INSERT INTO Patient (patientName, patientSurname,phoneNumber) VALUES (?,?,?)";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setString(1, p.getPatientName());
-			prep.setString(2, p.getPatientSurname());
-			prep.setInt(3, p.getPhoneNumber());
-			prep.executeUpdate();			
-					
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void addPatient(Patient p) throws Exception{
+		String sql = "INSERT INTO Patient (patientName, patientSurname,phoneNumber) VALUES (?,?,?)";
+		PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+		prep.setString(1, p.getPatientName());
+		prep.setString(2, p.getPatientSurname());
+		prep.setInt(3, p.getPhoneNumber());
+		prep.executeUpdate();	
 	}
 	
 	@Override

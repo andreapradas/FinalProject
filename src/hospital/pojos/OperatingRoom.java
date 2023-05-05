@@ -1,6 +1,7 @@
 package hospital.pojos;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -50,18 +51,23 @@ public class OperatingRoom implements Serializable{
 		this.hoursAvailable.set(hourRange, false);
 	}
 	
-	public int getStartHour(int space) {//Teniendo el hueco se sabe la hora de la CIRUGÍA 
+	@SuppressWarnings("deprecation")
+	public Time getStartHour(int space) {//Teniendo el hueco se sabe la hora de la CIRUGÍA 
 		switch(space) {
 		case 0:
-			return 8;
+			Time startHour1=new Time(8,0,0);
+			return startHour1;
 		case 1:
-			return 10;
+			Time startHour2 = new Time(10,0,0);
+			return startHour2;
 		case 2:
-			return 12;
+			Time startHour3 = new Time(12,0,0);
+			return startHour3;
 		case 3:
-			return 14;
+			Time startHour4 = new Time(14,0,0);
+			return startHour4;
 		}
-		return -1;
+		return null;
 	}
 	
 	//Getters and Setters

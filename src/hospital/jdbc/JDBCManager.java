@@ -65,14 +65,13 @@ public class JDBCManager {
 				"surgeryType TEXT NOT NULL," +
 				"surgeryDate DATE DEFAULT NULL," +
 				"startHour TIME DEFAULT NULL," +
-				"endHour	TIME DEFAULT NULL," +
-				"done BOOLEAN,"	+
+				"done BOOLEAN DEFAULT FALSE,"	+
 				"surgeonID INTEGER DEFAULT NULL," +
 				"patientId INTEGER DEFAULT NULL," +
 				"roomId INTEGER DEFAULT NULL," +
 				"FOREIGN KEY(patientId) REFERENCES Patient(patientId) ON DELETE SET NULL ON UPDATE CASCADE," +
 				"FOREIGN KEY(roomId) REFERENCES operatingRoom(roomId) ON DELETE SET NULL ON UPDATE CASCADE," +
-				"FOREIGN KEY(surgeonId) REFERENCES Surgeon(surgeonID) ON DELETE SET NULL ON UPDATE CASCADE" +
+				"FOREIGN KEY(surgeonId) REFERENCES Surgeon(surgeonId) ON DELETE SET NULL ON UPDATE CASCADE" +
 			");"; 	
 			stmt.executeUpdate(sql);
 			
@@ -89,7 +88,7 @@ public class JDBCManager {
 					"roomId	INTEGER AUTOINCREMENT," +
 					"roomNumber	INTEGER NOT NULL," +
 					"roomFloor	INTEGER NOT NULL," +
-					"active	BOOLEAN," +
+					"active	BOOLEAN DEFAULT TRUE," +
 					"PRIMARY KEY (roomId AUTOINCREMENT)," +
 					"UNIQUE(roomNumber, roomFloor)" +
 				");";			
