@@ -96,10 +96,18 @@ public class Patient implements Serializable{
 	}
 	
 	public void setPhoneNumber(int number) throws phoneException {
-		if(Integer.toString(phoneNumber).length()!= 9){
+		if(Integer.toString(number).length()!= 9){
 			throw new phoneException();			
 		}
 		this.phoneNumber= number;
+	}
+	
+	public boolean checkPhoneNumber(int number) throws phoneException {
+		if(Integer.toString(number).length()!= 9){
+			throw new phoneException();	
+		} else {
+			return true;
+		}
 	}
 
 	public int getPatientId() {

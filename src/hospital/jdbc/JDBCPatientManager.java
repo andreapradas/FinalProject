@@ -3,6 +3,7 @@ package hospital.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,17 +85,13 @@ public class JDBCPatientManager implements PatientManager{
 	}
 	
 	@Override
-	public void updatePhoneNumber(int pat_id, int phoneNumber) {
-		try {
-			String sql = "UPDATE Patient SET phoneNumber=? WHERE id=?;";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, phoneNumber);
-			prep.setInt(2, pat_id);
-			prep.executeUpdate();
-			prep.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void updatePhoneNumber(int pat_id, int phoneNumber) throws Exception {
+		String sql = "UPDATE Patient SET phoneNumber=? WHERE patientId=?;";
+		PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+		prep.setInt(1, phoneNumber);
+		prep.setInt(2, pat_id);
+		prep.executeUpdate();
+		prep.close();
 	}
 	
 	

@@ -117,6 +117,7 @@ public class Menu {
 				System.out.println("15. Get list of surgeries");
 				System.out.println("16. Create schedule");
 				System.out.println("17. Get my vacations");
+				System.out.println("18. Modify patient phone number");
 
 				System.out.println("18. Log out");
 				System.out.println(" 0. exit");
@@ -177,6 +178,10 @@ public class Menu {
 					getMyVacations();
 					break;
 				case 18:
+					updatePhoneNumber();
+					break;
+					
+				case 19:
 					main(null);
 					break;
 
@@ -192,6 +197,7 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
+
 
 	private static void surgeonMenu() throws Exception {
 		try {
@@ -346,6 +352,70 @@ public class Menu {
 		}
 	}
 
+
+	private static void updatePhoneNumber() throws Exception, phoneException {
+		try {
+			patientManager.getListOfPatients();
+		} catch (Exception e) {
+			System.out.println("No patients in the data base");
+		}
+		System.out.println("Type the name of the patient: ");
+		Surgery s = null;
+		int patientId;
+		do {
+			String patientName = reader.readLine();
+			// Prove that exits and there is only one
+			List<Patient> patients = new ArrayList<Patient>();
+			patients = patientManager.getListPatientByName(patientName);
+			if (patients.size() == 0) {// Si no existe ese nombre entre los pacientes
+				System.out.println("There no such a patient with that name. Please enter another name: ");
+				System.out.println("These are the patients\n");
+				System.out.format("%-10s %-15s\n", "Name", "Surname");
+				System.out.println("-----------------------");
+				for (Patient p : patientManager.getListOfPatients()) {
+					System.out.format("%-10s %-15s\n", p.getPatientName(), p.getPatientSurname());
+				}
+			} else if (patients.size() > 1) {// quiere decir que hay dos o mas pacientes con el mismo nombre
+				System.out.println("\nSeems that there are 2 patients or more with the same name ");
+				System.out.println("Do you mean (type the Id)...");
+				
+				do {
+					System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
+					System.out.println("-----------------------------");
+					for (Patient p : patients) {
+						System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(),
+								p.getPatientId());
+					}
+					patientId = Integer.parseInt(reader.readLine());
+					if (patientManager.getListOfPatients().contains(patientManager.getPatientById(patientId))) {
+						break;
+					} else {
+						System.out.println("Incorrect id, type id again: ");
+					}
+				} while (true);
+			} else {// Si solo hay un paciente con ese nombre
+				Patient p = patientManager.getPatientByName(patientName);
+				patientId = p.getPatientId();
+				break;
+			}
+		} while (true);
+		do {
+			try {
+				Patient patient= patientManager.getPatientById(patientId);
+				System.out.println("Type the phone number");
+				Integer phone = Integer.parseInt(reader.readLine());				
+				if(patient.checkPhoneNumber(phone)) {
+					patientManager.updatePhoneNumber(patientId, phone);
+					patient.setPhoneNumber(phone);
+					System.out.println("Patient updated successfully\n");
+					break;
+				};
+			} catch (Exception e) {
+				System.out.println("Error while updating the patient phone number");
+			}
+		} while(true);
+	}
+	
 	private static void modifyVacation(String role) throws Exception {
 		if (role.equals("surgeon")) {
 			do {
@@ -817,6 +887,7 @@ public class Menu {
 				String surgeryType = reader.readLine();
 				s = new Surgery(surgeryType, patientId);
 				break;
+			
 			} else {// Si solo hay un paciente con ese nombre
 				Patient p = patientManager.getPatientByName(patientName);
 				int patientId = p.getPatientId();
@@ -882,29 +953,6 @@ public class Menu {
 //		surgeryManager.programTheSurgery(surgeryId, date, null, s.getSurgeonId(), s.getRoomId());
 //	}
 
-	// private static void modifySurgery() {
-//		try {
-//			System.out.println("Type the surgeryId you want to change: ");
-//			int surgeryId = Integer.parseInt(reader.readLine());
-//			System.out.println("Type the atribute you want to change(surgeryType, surgeryDate, startHour): ");
-//			String parameterChange = reader.readLine();
-//			System.out.println("Introduce the new value: ");
-//			if(parameterChange.equalsIgnoreCase("surgeryType")) {
-//				System.out.println("Type the new surgeryType: ");
-//			}else if(parameterChange.equalsIgnoreCase("surgeryDate")) {
-//				System.out.println("Type the new surgeryDate: ");
-//				/*System.out.println("Day: ");
-//				System.out.println("Month: ");
-//				System.out.println("Year: ");*/
-//			}else {
-//				System.out.println("Type the new startHour: ");
-//			}
-//			String newAtribute = reader.readLine();
-//			surgeryManager.modifySurgery(surgeryId, parameterChange, newAtribute);
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	private static void createSchedule() {
 		try {
@@ -1166,6 +1214,32 @@ public class Menu {
 			int i;
 			for (i = 0; i < surgeons.size(); i++) {
 				System.out.println("Name: " + surgeons.get(i).getName() + " Id: " + surgeons.get(i).getSurgeonId());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void getNursesOnVacation() throws Exception {
+		System.out.println("Show all nurses on vacation during any of these days");
+		System.out.println("Type the start date:");
+		Date start = getDate();
+		System.out.println("Type the end date:");
+		Date end = getDate();
+		List<Nurse> nurses = new ArrayList<Nurse>();
+		try {
+			if (start.compareTo(end) > 0) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			System.out.println("End date cannot be after start date");
+			e.printStackTrace();
+		}
+		try {
+			nurses = nurseVacationManager.getNursesOnVacation(start, end);
+			int i;
+			for (i = 0; i < nurses.size(); i++) {
+				System.out.println("Name: " + nurses.get(i).getNurseName() + " Id: " + nurses.get(i).getNurseId());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
