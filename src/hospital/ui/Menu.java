@@ -931,7 +931,7 @@ public class Menu {
 						surgeonId = assignSurgeon(surgeries.get(surgeriesCount).getSurgeryId(),date);
 						surgeries.get(surgeriesCount).setSurgeonId(surgeonId);
 						surgeryManager.programTheSurgery(surgeries.get(surgeriesCount).getSurgeryId(), date, surgeries.get(surgeriesCount).getStartHour(), roomId, surgeonId);
-						// surgeries.get(surgeriesCount).setDone(true);//Ya se han realizado
+						surgeries.get(surgeriesCount).setDone(true);//Ya se han realizado
 					}
 				}
 				// Mostrar SCHEDULE
