@@ -112,14 +112,15 @@ public class Menu {
 				System.out.println("10. Add new operating room");
 				System.out.println("11. Change chief surgeon");
 				System.out.println("12. Get surgeons on vacation any day of the given period");
-				System.out.println("13. Delete account");
-				System.out.println("14. Create surgery");
-				System.out.println("15. Get list of surgeries");
-				System.out.println("16. Create schedule");
-				System.out.println("17. Get my vacations");
-				System.out.println("18. Modify patient phone number");
+				System.out.println("13. Get nurses on vacation any day of the given period");
+				System.out.println("14. Delete account");
+				System.out.println("15. Create surgery");
+				System.out.println("16. Get list of surgeries");
+				System.out.println("17. Create schedule");
+				System.out.println("18. Get my vacations");
+				System.out.println("19. Modify patient phone number");
 
-				System.out.println("18. Log out");
+				System.out.println("20. Log out");
 				System.out.println(" 0. exit");
 
 				int choice = Integer.parseInt(reader.readLine());
@@ -163,25 +164,28 @@ public class Menu {
 					getSurgeonsOnVacation();
 					break;
 				case 13:
+					getNursesOnVacation();
+					break;
+				case 14:
 					deletAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
-				case 14:
+				case 15:
 					createSurgery();
 					break;
-				case 15:
+				case 16:
 					getAllSurgeries();
 					break;
-				case 16:
+				case 17:
 					createSchedule();
 					break;
-				case 17:
+				case 18:
 					getMyVacations();
 					break;
-				case 18:
+				case 19:
 					updatePhoneNumber();
 					break;
 					
-				case 19:
+				case 20:
 					main(null);
 					break;
 
@@ -216,8 +220,9 @@ public class Menu {
 				System.out.println("11. Create surgery");
 				System.out.println("12. Get list of surgeries");
 				System.out.println("13. Get my vacations");
+				System.out.println("14. Modify patient phone number");
 
-				System.out.println("14. Log out");
+				System.out.println("15. Log out");
 				System.out.println(" 0. exit");
 
 				int choice = Integer.parseInt(reader.readLine());
@@ -265,8 +270,11 @@ public class Menu {
 				case 13:
 					getMyVacations();
 					break;
-
 				case 14:
+					updatePhoneNumber();
+					break;
+
+				case 15:
 					main(null);
 					break;
 				case 0:
@@ -744,13 +752,16 @@ public class Menu {
 			sVacations = surgeonVacationManager.getAllVacations();
 			nVacations = nurseVacationManager.getAllVacations();
 			int i;
+			System.out.println("Surgeons:");
 			for (i = 0; i < sVacations.size(); i++) {
-				System.out.print(sVacations.get(i).toString());
-				System.out.println(" Surgeon name: " + surgeonManager.getNameById(sVacations.get(i).getSurgeonId()));
+				System.out.print(surgeonManager.getNameById(sVacations.get(i).getSurgeonId()) + 
+						": ");
+				System.out.println(sVacations.get(i).toString());
 			}
+			System.out.println("\nNurses:");
 			for (i = 0; i < nVacations.size(); i++) {
-				System.out.print(nVacations.get(i).toString());
-				System.out.println(" Nurse name: " + nurseManager.getNameById(nVacations.get(i).getNurseId()));
+				System.out.print(nurseManager.getNameById(nVacations.get(i).getNurseId()) + ": ");
+				System.out.println(nVacations.get(i).toString());
 			}
 		} catch (Exception e) {
 		}
@@ -1117,7 +1128,7 @@ public class Menu {
 			}
 		}
 		Date start = selectStartDate();
-		Date end = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 14));
+		Date end = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
 		if (role.equals("surgeon")) {
 			SurgeonVacation sVac = new SurgeonVacation(start, end, surgId);
 			surgeonVacationManager.addVacation(sVac);
@@ -1239,7 +1250,7 @@ public class Menu {
 			nurses = nurseVacationManager.getNursesOnVacation(start, end);
 			int i;
 			for (i = 0; i < nurses.size(); i++) {
-				System.out.println("Name: " + nurses.get(i).getNurseName() + " Id: " + nurses.get(i).getNurseId());
+				System.out.println("Name: " + nurses.get(i).getNurseName() + " Vacations: " + nurses.get(i).getNurseId());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

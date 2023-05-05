@@ -54,8 +54,9 @@ public class NurseVacation implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Nurse vacation [start date= " + starts + ", end date= " + ends + "] (vacId: "+ vacationId
-				+ " nurseId: " + nurseId +")";
+		return starts.getDate() + "/" + (starts.getMonth()+1) + "/" + (starts.getYear()+1900)
+				+ " to " + ends.getDate() + "/" + (ends.getMonth()+1) + "/" + (ends.getYear()+1900)
+				+ " (vacId: "+ vacationId + " nurseId: " + nurseId +")";
 	}
 
 	public Date getStartDate() {
