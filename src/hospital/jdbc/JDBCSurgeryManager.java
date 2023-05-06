@@ -236,6 +236,8 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		}
 		return surgeriesNotDone;
 	}
+	
+	
 
 	@Override
 	public Surgery getSurgeryById(int surgeryId) {

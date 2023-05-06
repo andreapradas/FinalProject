@@ -760,6 +760,7 @@ public class Menu {
 		try {
 			//Listar todas las SURGERIES que puede borrar, que NO se hayan hecho y que NO se hayan programado aun
 			List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
+			System.out.println(surgeries);
 			boolean checkId=false;//Para comprobar si existe o no el id introducido entre las cirugias
 			if(surgeries.size()<1) {
 				for (Surgery s : surgeries) {
