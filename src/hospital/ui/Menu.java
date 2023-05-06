@@ -119,12 +119,13 @@ public class Menu {
 				System.out.println("14. Delete account");
 				System.out.println("15. Create surgery");
 				System.out.println("16. Get list of surgeries");
-				System.out.println("17. Create schedule");
-				System.out.println("18. Get my vacations");
-				System.out.println("19. Modify patient phone number");
-				System.out.println("20. Show schedule");
+				System.out.println("17. Delete surgery");
+				System.out.println("18. Create schedule");
+				System.out.println("19. Get my vacations");
+				System.out.println("20. Modify patient phone number");
+				System.out.println("21. Show schedule");
 
-				System.out.println("21. Log out");
+				System.out.println("22. Log out");
 				System.out.println(" 0. exit");
 
 				int choice = Integer.parseInt(reader.readLine());
@@ -180,20 +181,23 @@ public class Menu {
 					getAllSurgeries();
 					break;
 				case 17:
-					createSchedule();
+					deleteSurgery();
 					break;
 				case 18:
-					getMyVacations();
+					createSchedule();
 					break;
 				case 19:
-					updatePhoneNumber();
+					getMyVacations();
 					break;
 				case 20:
+					updatePhoneNumber();
+					break;
+				case 21:
 					Date date = getDate();
 					showSchedule(date);
 					break;
 
-				case 21:
+				case 22:
 					main(null);
 					break;
 
