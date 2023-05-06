@@ -343,7 +343,6 @@ public class Menu {
 					break;
 				case 7:
 					getAllNurses();
-					;
 					break;
 				case 8:
 					getUsers();
@@ -771,7 +770,7 @@ public class Menu {
 							patientManager.getPatientById(s.getPatientId()).getPatientSurname(), s.getPatientId(),
 							s.getSurgeryType(), s.getSurgeryId());
 				}
-				System.out.println("Type the id of the surgery you want to delete");
+				System.out.println("\nType the id of the surgery you want to delete");
 				int surgeryId = Integer.parseInt(reader.readLine());
 				for(int i=0;i<surgeries.size();i++) {
 					if(surgeryId == surgeries.get(i).getSurgeryId()) {//Es que está entre las listadas
@@ -911,7 +910,7 @@ public class Menu {
 		}
 		//Listar los pacientes antes
 		getPatients();
-		System.out.println("Type the name of the patient: ");
+		System.out.println("\nType the name of the patient: ");
 		Surgery s = null;
 		do {
 			String patientName = reader.readLine();
@@ -928,7 +927,7 @@ public class Menu {
 				}
 			} else if (patients.size() > 1) {// quiere decir que hay dos o mas pacientes con el mismo nombre
 				System.out.println("\nSeems that there are 2 patients or more with the same name ");
-				System.out.println("Do you mean (type the Id)...");
+				System.out.println("\nDo you mean (type the Id)...");
 				int patientId;
 				do {
 					System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
@@ -944,7 +943,7 @@ public class Menu {
 						System.out.println("Incorrect id, type id again: ");
 					}
 				} while (true);
-				System.out.println("Type the type of the surgery: ");
+				System.out.println("\nType the type of the surgery: ");
 				String surgeryType = reader.readLine();
 				s = new Surgery(surgeryType, patientId);
 				break;
@@ -952,7 +951,7 @@ public class Menu {
 			} else {// Si solo hay un paciente con ese nombre
 				Patient p = patientManager.getPatientByName(patientName);
 				int patientId = p.getPatientId();
-				System.out.println("Type the type of the surgery: ");
+				System.out.println("\nType the type of the surgery: ");
 				String surgeryType = reader.readLine();
 				s = new Surgery(surgeryType, patientId);
 				break;
@@ -1079,8 +1078,7 @@ public class Menu {
 				Date date;
 				int surgeriesCount;
 				do {
-					System.out.println();
-					System.out.println("Escoge la fecha para la que realizar la programación: ");
+					System.out.println("\nChoose the date you want to do the schedule: ");
 					date = getDate();
 					Date today = Date.valueOf(LocalDate.now());
 					if (date.compareTo(today) < 0) {
@@ -1153,7 +1151,7 @@ public class Menu {
 					showSchedule(date);
 				}
 			} else {
-				System.out.println("No surgeries in the bata base");
+				System.out.println("No surgeries in the data base, you must create surgeries before");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
