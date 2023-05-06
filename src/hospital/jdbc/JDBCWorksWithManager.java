@@ -59,9 +59,9 @@ public class JDBCWorksWithManager implements WorksWithManager {
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next())
 			{
-				Integer teamID = rs.getInt("teamID");
-				Integer surgeonID = rs.getInt("surgeonID");
-				Integer nurseID = rs.getInt("nurseID");
+				int teamID = rs.getInt("teamID");
+				int surgeonID = rs.getInt("surgeonID");
+				int nurseID = rs.getInt("nurseID");
 				Date date = rs.getDate("dateOfWork");
 				WorksWith ww = new WorksWith(teamID, surgeonID, nurseID, date);
 				ListOfWW.add(ww);
@@ -87,9 +87,9 @@ public class JDBCWorksWithManager implements WorksWithManager {
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
-				Integer teamID = rs.getInt("teamID");
-				Integer surgeonID = rs.getInt("surgeonID");
-				Integer nurseID = rs.getInt("nurseID");
+				int teamID = rs.getInt("teamID");
+				int surgeonID = rs.getInt("surgeonID");
+				int nurseID = rs.getInt("nurseID");
 				WorksWith ww = new WorksWith(teamID, surgeonID, nurseID, date);
 				ListOfWW.add(ww);
 			}
@@ -113,9 +113,9 @@ public class JDBCWorksWithManager implements WorksWithManager {
 			String sql = "SELECT * FROM WorksWith WHERE id=" + teamID;
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			Integer id = rs.getInt("teamID");
-			Integer surgeonID = rs.getInt("surgeonID");
-			Integer nurseID = rs.getInt("nurseID");
+			int id = rs.getInt("teamID");
+			int surgeonID = rs.getInt("surgeonID");
+			int nurseID = rs.getInt("nurseID");
 			Date date = rs.getDate("date");
 			ww = new WorksWith(id, surgeonID, nurseID, date);				
 			

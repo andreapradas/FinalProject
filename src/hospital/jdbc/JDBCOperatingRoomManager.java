@@ -44,9 +44,9 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			
 			while(rs.next())
 			{
-				Integer roomId = rs.getInt("roomId");
-				Integer roomNumber = rs.getInt("roomNumber");
-				Integer roomFloor = rs.getInt("roomFloor");
+				int roomId = rs.getInt("roomId");
+				int roomNumber = rs.getInt("roomNumber");
+				int roomFloor = rs.getInt("roomFloor");
 				Boolean active = rs.getBoolean("active");
 				
 				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
@@ -74,9 +74,9 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
-				Integer roomId = rs.getInt("roomId");
-				Integer roomNumber = rs.getInt("roomNumber");
-				Integer roomFloor = rs.getInt("roomFloor");
+				int roomId = rs.getInt("roomId");
+				int roomNumber = rs.getInt("roomNumber");
+				int roomFloor = rs.getInt("roomFloor");
 				Boolean active = rs.getBoolean("active");
 				
 				OperatingRoom o = new OperatingRoom(roomId,roomNumber, roomFloor, active);
@@ -158,8 +158,8 @@ public class JDBCOperatingRoomManager implements OperatingRoomManager {
 			String sql = "SELECT * FROM operatingRoom WHERE roomId=" + roomId;
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			Integer roomNumber = rs.getInt("roomNumber");
-			Integer roomFloor = rs.getInt("roomFloor");
+			int roomNumber = rs.getInt("roomNumber");
+			int roomFloor = rs.getInt("roomFloor");
 			Boolean active = rs.getBoolean("active");
 			o = new OperatingRoom(roomId, roomNumber, roomFloor, active);				
 			

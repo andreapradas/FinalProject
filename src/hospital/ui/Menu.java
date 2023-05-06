@@ -420,7 +420,7 @@ public class Menu {
 			try {
 				Patient patient = patientManager.getPatientById(patientId);
 				System.out.println("Type the phone number");
-				Integer phone = Integer.parseInt(reader.readLine());
+				int phone = Integer.parseInt(reader.readLine());
 				if (patient.checkPhoneNumber(phone)) {
 					patientManager.updatePhoneNumber(patientId, phone);
 					patient.setPhoneNumber(phone);
@@ -445,7 +445,7 @@ public class Menu {
 				}
 				System.out.println(surgVac);
 				System.out.println("Select the id of the vacation you want to modify");
-				Integer vacId = Integer.parseInt(reader.readLine());
+				int vacId = Integer.parseInt(reader.readLine());
 				if (surgVac.get(0).getVacationId() == vacId || surgVac.get(1).getVacationId() == vacId) {
 					System.out.println("Select the new vacation dates");
 					Date start = selectStartDate();
@@ -466,7 +466,7 @@ public class Menu {
 				}
 				System.out.println(nurseVac);
 				System.out.println("Select the id of the vacation you want to modify");
-				Integer vacId = Integer.parseInt(reader.readLine());
+				int vacId = Integer.parseInt(reader.readLine());
 				if (nurseVac.get(0).getVacationId() == vacId || nurseVac.get(1).getVacationId() == vacId) {
 					System.out.println("Select the new vacation dates");
 					Date start = selectStartDate();
@@ -506,7 +506,7 @@ public class Menu {
 			System.out.println("1. Surgeon");
 			System.out.println("2. Nurse");
 			System.out.println("3. Chief surgeon");
-			Integer option = Integer.parseInt(reader.readLine());
+			int option = Integer.parseInt(reader.readLine());
 			Role role = null;
 			Boolean chief = null;
 			switch (option) {
@@ -581,7 +581,7 @@ public class Menu {
 		List<Surgeon> surgeons = avaliableSurgeons(date);
 		createteam: if (nurses.size() > 0 && surgeons.size() > 0) {
 			do {
-				Integer nurseId;
+				int nurseId;
 				do {
 					System.out.println("\nThese are the avaliable nurses:");
 					System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
@@ -598,7 +598,7 @@ public class Menu {
 						break;
 					}
 				} while (true);
-				Integer surgeonId;
+				int surgeonId;
 				do {
 					System.out.println("\nThese are the avaliable surgeons:");
 					System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
@@ -693,7 +693,7 @@ public class Menu {
 					}
 					System.out.println(surgVac);
 					System.out.println("Type the vacation id");
-					Integer vacId = Integer.parseInt(reader.readLine());
+					int vacId = Integer.parseInt(reader.readLine());
 					if (surgVac.get(0).getVacationId() == vacId || surgVac.get(1).getVacationId() == vacId) {
 						surgeonVacationManager.deleteSurgeonVacationById(vacId);
 						break;
@@ -711,7 +711,7 @@ public class Menu {
 					}
 					System.out.println(nurseVac);
 					System.out.println("Type the vacation id");
-					Integer vacId = Integer.parseInt(reader.readLine());
+					int vacId = Integer.parseInt(reader.readLine());
 					if (nurseVac.get(0).getVacationId() == vacId || nurseVac.get(1).getVacationId() == vacId) {
 						nurseVacationManager.deleteNurseVacationById(vacId);
 						break;
@@ -848,7 +848,7 @@ public class Menu {
 			System.out.println("Type the surname of the patient:");
 			String surname = reader.readLine();
 			System.out.println("Type the phone number");
-			Integer phone = Integer.parseInt(reader.readLine());
+			int phone = Integer.parseInt(reader.readLine());
 			Patient patient = new Patient(name, surname, phone);
 			patientManager.addPatient(patient);
 			System.out.println("Patient created successfully\n");
@@ -1284,9 +1284,9 @@ public class Menu {
 
 	private static void newOperatingRoom() throws Exception {
 		System.out.println("Type the room number: ");
-		Integer roomNumber = Integer.parseInt(reader.readLine());
+		int roomNumber = Integer.parseInt(reader.readLine());
 		System.out.println("Type the room floor: ");
-		Integer roomFloor = Integer.parseInt(reader.readLine());
+		int roomFloor = Integer.parseInt(reader.readLine());
 		OperatingRoom r = new OperatingRoom(roomNumber, roomFloor);
 		operatingRoomManager.addOperatingRoom(r);
 		System.out.println("OperatingRoom added successfully\n");
@@ -1331,7 +1331,7 @@ public class Menu {
 			}
 			System.out.println("Not valid year");
 		}
-		Integer option;
+		int option;
 		do {
 			System.out.println("These are the vacation periods, please choose one of them:");
 			System.out.println("1) 1 june to 15 june");

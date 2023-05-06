@@ -27,10 +27,10 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next())
 			{
-				Integer vacId = rs.getInt("vacationId");
+				int vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
-				Integer surgId = rs.getInt("surgeonId");
+				int surgId = rs.getInt("surgeonId");
 				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
 				surgeonVacations.add(vac);
 			}
@@ -55,10 +55,10 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
-				Integer vacId = rs.getInt("vacationId");
+				int vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
-				Integer surgId = rs.getInt("surgeonId");
+				int surgId = rs.getInt("surgeonId");
 				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
 				surgeonVacations.add(vac);
 			}
@@ -106,7 +106,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			{
 				String name = rs.getString("surgeonName");
 				String surname = rs.getString("surgeonSurname"); 
-				Integer surgId = rs.getInt("surgeonId");
+				int surgId = rs.getInt("surgeonId");
 				String email = rs.getString("surgeonEmail");
 				Boolean chief = rs.getBoolean("chief");
 				Surgeon s= new Surgeon(surgId, name, surname ,email, chief);
@@ -144,7 +144,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 	
 //	@Override
 //	public int getSurgeonVacationId(int surgeonId, java.sql.Date start, java.sql.Date end) {
-//		Integer vacId= null;
+//		int vacId= null;
 //		try {
 //			Statement stmt = manager.getConnection().createStatement();
 //			String sql = "SELECT vacationId FROM surgeonVacation WHERE surgeonId= surgeonId"
@@ -230,10 +230,10 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
-				Integer vacId = rs.getInt("vacationId");
+				int vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
-				Integer surgId = rs.getInt("surgeonId");
+				int surgId = rs.getInt("surgeonId");
 				SurgeonVacation vac= new SurgeonVacation(vacId, starts, ends, surgId);
 				surgeonVacations.add(vac);
 			}

@@ -26,8 +26,8 @@ public class Surgery implements Serializable{
 		super();
 	}
 	
-	public Surgery(Integer surgeryId, String surgeryType, Date day, Time startHour,  
-			Integer patientId, Integer surgeonId, Integer roomId) {
+	public Surgery(int surgeryId, String surgeryType, Date day, Time startHour,  
+			int patientId, int surgeonId, int roomId) {
 		super();
 		this.surgeryId = surgeryId; 
 		this.surgeryType = surgeryType;
@@ -41,8 +41,8 @@ public class Surgery implements Serializable{
 		this.roomId = roomId;
 	}
 	
-	public Surgery(Integer surgeryId, String surgeryType, Date day, Time startHour, Boolean done,  
-			Integer patientId, Integer surgeonId, Integer roomId) {
+	public Surgery(int surgeryId, String surgeryType, Date day, Time startHour, Boolean done,  
+			int patientId, int surgeonId, int roomId) {
 		super();
 		this.surgeryId = surgeryId; 
 		this.surgeryType = surgeryType;
@@ -63,10 +63,10 @@ public class Surgery implements Serializable{
 	
 	//Getters and Setters
 
-	public Integer getSurgeryId() {
+	public int getSurgeryId() {
 		return surgeryId;
 	}
-	public void setSurgeryId(Integer surgeryId) {
+	public void setSurgeryId(int surgeryId) {
 		this.surgeryId = surgeryId;
 	}
 	public String getSurgeryType() {
@@ -135,7 +135,6 @@ public class Surgery implements Serializable{
 		
 		return Objects.equals(surgeryId, other.surgeryId);
 	}
-	
 	//ToString
 	
 	@Override

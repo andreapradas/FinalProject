@@ -69,8 +69,8 @@ public class JDBCSurgeryManager implements SurgeryManager {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-	//}
-	
+	// }
+
 	@Override
 	public void updateDone(int surgeryId) {
 		try {
@@ -84,12 +84,11 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void updateRoomHourDate(int surgeryId, Date surgeryDate, Time startHour, int roomId) {
 		try {
-			String sql = "UPDATE Surgery SET surgeryDate=?, startHour=?, "
-					+ "roomId=? WHERE surgeryId=?";
+			String sql = "UPDATE Surgery SET surgeryDate=?, startHour=?, " + "roomId=? WHERE surgeryId=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, surgeryDate);
 			prep.setTime(2, startHour);
@@ -101,12 +100,11 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void deleteRoomHourDate(int surgeryId) {
 		try {
-			String sql = "UPDATE Surgery SET surgeryDate=?, startHour=?, "
-					+ "roomId=? WHERE surgeryId=?";
+			String sql = "UPDATE Surgery SET surgeryDate=?, startHour=?, " + "roomId=? WHERE surgeryId=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, null);
 			prep.setTime(2, null);
@@ -118,7 +116,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void updateSurgeonId(int surgeryId, int surgeonId) {
 		try {
@@ -132,7 +130,6 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			e.printStackTrace();
 		}
 	}
-
 
 	@Override
 	public void deleteSurgery(int surgeryId) {
@@ -163,7 +160,8 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				int patientId = rs.getInt("patientId");
 				int surgeonId = rs.getInt("surgeonId");
 				int roomId = rs.getInt("roomId");
-				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,roomId);
+				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,
+						roomId);
 				surgeries.add(s);
 			}
 
@@ -176,7 +174,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 
 		return surgeries;
 	}
-	
+
 	@Override
 	public List<Surgery> getListOfSurgeries(Date date) {
 		List<Surgery> surgeries = new ArrayList<Surgery>();
@@ -194,7 +192,8 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				int patientId = rs.getInt("patientId");
 				int surgeonId = rs.getInt("surgeonId");
 				int roomId = rs.getInt("roomId");
-				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,roomId);
+				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,
+						roomId);
 				surgeries.add(s);
 			}
 
@@ -207,7 +206,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 
 		return surgeries;
 	}
-	
+
 	@Override
 	public List<Surgery> getListOfSurgeriesNotDone() {
 		List<Surgery> surgeriesNotDone = new ArrayList<Surgery>();
@@ -217,7 +216,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			prep.setBoolean(1, false);
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
-				Integer surgeryId = rs.getInt("surgeryId");
+				int surgeryId = rs.getInt("surgeryId");
 				String surgeryType = rs.getString("surgeryType");
 				Date surgeryDate = rs.getDate("surgeryDate");
 				Time startHour = rs.getTime("startHour");
@@ -226,7 +225,8 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				int surgeonId = rs.getInt("surgeonId");
 				int roomId = rs.getInt("roomId");
 
-				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,roomId);
+				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,
+						roomId);
 				surgeriesNotDone.add(s);
 			}
 			rs.close();
@@ -236,8 +236,6 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		}
 		return surgeriesNotDone;
 	}
-	
-	
 
 	@Override
 	public Surgery getSurgeryById(int surgeryId) {
@@ -252,9 +250,9 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			Date surgeryDate = rs.getDate("surgeryDate");
 			Time startHour = rs.getTime("startHour");
 			Boolean done = rs.getBoolean("done");
-			Integer patientId = rs.getInt("patientId");
-			Integer surgeonId = rs.getInt("surgeonId");
-			Integer roomId = rs.getInt("roomId");
+			int patientId = rs.getInt("patientId");
+			int surgeonId = rs.getInt("surgeonId");
+			int roomId = rs.getInt("roomId");
 
 			s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId, roomId);
 

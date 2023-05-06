@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Surgeon implements Serializable{
 	private static final long serialVersionUID = 5459002349058385563L;
 	
-	private Integer surgeonId;
+	private int surgeonId;
 	private String email;
 	private String name;
 	private String surname;
@@ -15,10 +15,6 @@ public class Surgeon implements Serializable{
 	
 	public Surgeon() {
 		super();
-	}
-
-	public void setSurgeonId(Integer surgeonId) {
-		this.surgeonId = surgeonId;
 	}
 
 	public void setChief(Boolean chief) {
@@ -33,7 +29,7 @@ public class Surgeon implements Serializable{
 		this.chief= chief;
 	}
 	
-	public Surgeon(String name, Integer id){
+	public Surgeon(String name, int id){
 		super();
 		this.name= name;
 		this.surgeonId= id;

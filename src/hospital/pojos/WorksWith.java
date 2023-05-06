@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class WorksWith {
-	private Integer teamID;
-	private Integer surgeonID;
-	private Integer nurseID;
+	private int teamID;
+	private int surgeonID;
+	private int nurseID;
 	private Date date;
 	private List<Boolean> hoursAvailable;
 	
@@ -17,7 +17,7 @@ public class WorksWith {
 		super();
 	}
 	
-	public WorksWith(Integer teamID, Integer surgeonID, Integer nurseID, Date date) {
+	public WorksWith(int teamID, int surgeonID, int nurseID, Date date) {
 		super();
 		this.teamID = teamID;
 		this.surgeonID = surgeonID;
@@ -26,7 +26,7 @@ public class WorksWith {
 		this.hoursAvailable = createHoursRange(4);
 	}
 	
-	public WorksWith(Integer surgeonID, Integer nurseID) {
+	public WorksWith(int surgeonID, int nurseID) {
 		super();
 		this.surgeonID = surgeonID;
 		this.nurseID = nurseID;
@@ -59,27 +59,27 @@ public class WorksWith {
 		this.hoursAvailable = hoursAvailable;
 	}
 
-	public Integer getTeamID() {
+	public int getTeamID() {
 		return teamID;
 	}
 
-	public void setTeamID(Integer teamID) {
+	public void setTeamID(int teamID) {
 		this.teamID = teamID;
 	}
 	
-	public Integer getSurgeonID() {
+	public int getSurgeonID() {
 		return surgeonID;
 	}
 
-	public void setSurgeonID(Integer surgeonID) {
+	public void setSurgeonID(int surgeonID) {
 		this.surgeonID = surgeonID;
 	}
 	
-	public Integer getNurseID() {
+	public int getNurseID() {
 		return nurseID;
 	}
 
-	public void setNurseID(Integer nurseID) {
+	public void setNurseID(int nurseID) {
 		this.nurseID = nurseID;
 	}
 	

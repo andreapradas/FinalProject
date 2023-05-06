@@ -50,7 +50,7 @@ public class JDBCNurseManager implements NurseManager {
 			
 			while(rs.next())
 			{
-				Integer id = rs.getInt("nurseId");
+				int id = rs.getInt("nurseId");
 				String name = rs.getString("nurseName");
 				String surname = rs.getString("nurseSurname");
 				String email = rs.getString("nurseEmail");
@@ -128,7 +128,7 @@ public class JDBCNurseManager implements NurseManager {
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1,nurseId);
 			ResultSet rs = prep.executeQuery();
-			Integer id = rs.getInt("nurseId");
+			int id = rs.getInt("nurseId");
 			String name = rs.getString("nurseName");
 			String surname = rs.getString("nurseSurname");
 			String email = rs.getString("nurseEmail");
@@ -170,7 +170,7 @@ public class JDBCNurseManager implements NurseManager {
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
-				Integer nurseId = rs.getInt("nurseId");
+				int nurseId = rs.getInt("nurseId");
 				String name = rs.getString("nurseName");
 				String surname = rs.getString("nurseSurname");
 				String email = rs.getString("nurseEmail");
