@@ -189,10 +189,10 @@ public class Menu {
 					updatePhoneNumber();
 					break;
 				case 20:
-					Date date= getDate();
+					Date date = getDate();
 					showSchedule(date);
 					break;
-					
+
 				case 21:
 					main(null);
 					break;
@@ -576,8 +576,7 @@ public class Menu {
 	private static void createTeams(Date date) throws Exception {
 		List<Nurse> nurses = avaliableNurses(date);
 		List<Surgeon> surgeons = avaliableSurgeons(date);
-		createteam:
-		if (nurses.size() > 0 && surgeons.size() > 0) {
+		createteam: if (nurses.size() > 0 && surgeons.size() > 0) {
 			do {
 				Integer nurseId;
 				do {
@@ -623,17 +622,17 @@ public class Menu {
 						createTeams(date);
 					} else if (confirmation.equalsIgnoreCase("n")) {
 						break createteam;
-					} else if (confirmation.equalsIgnoreCase("y") && (nurses.size()==0 || surgeons.size()==0)){
+					} else if (confirmation.equalsIgnoreCase("y") && (nurses.size() == 0 || surgeons.size() == 0)) {
 						System.out.println("No surgeons or nurses avaliable\n");
 						break createteam;
-					}else {
+					} else {
 						continue;
 					}
 					break createteam;
 				}
 			} while (true);
-		} 
-		
+		}
+
 	}
 
 	private static void getAllNurses() throws Exception {
@@ -750,6 +749,40 @@ public class Menu {
 
 			}
 		} catch (Exception e) {
+		}
+	}
+
+	private static void deleteSurgery() {
+		try {
+			//Listar todas las SURGERIES que puede borrar, que NO se hayan hecho y que NO se hayan programado aun
+			List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
+			boolean checkId=false;//Para comprobar si existe o no el id introducido entre las cirugias
+			if(surgeries.size()<1) {
+				for (Surgery s : surgeries) {
+					System.out.format("%-15s %-18s %-13d %-15s %d\n",
+							patientManager.getPatientById(s.getPatientId()).getPatientName(),
+							patientManager.getPatientById(s.getPatientId()).getPatientSurname(), s.getPatientId(),
+							s.getSurgeryType(), s.getSurgeryId());
+				}
+				System.out.println("Type the id of the surgery you want to delete");
+				int surgeryId = Integer.parseInt(reader.readLine());
+				for(int i=0;i<surgeries.size();i++) {
+					if(surgeryId == surgeries.get(i).getSurgeryId()) {//Es que está entre las listadas
+						surgeryManager.deleteSurgery(surgeryId);
+						checkId = true;
+						break;
+					}
+				}
+				if(checkId == false) {
+					System.out.println("Wrong id, please enter it again.");
+					deleteSurgery();
+				}
+			}else {
+				System.out.println("No surgeries added yet");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -1038,59 +1071,61 @@ public class Menu {
 				do {
 					System.out.println();
 					System.out.println("Escoge la fecha para la que realizar la programación: ");
-					date= getDate();
-					Date today=  Date.valueOf(LocalDate.now());
-					if(date.compareTo(today) <0) {
+					date = getDate();
+					Date today = Date.valueOf(LocalDate.now());
+					if (date.compareTo(today) < 0) {
 						System.out.println("You cannot create a schedule for a passed day");
-					} else if(date.compareTo(today) ==0) {
+					} else if (date.compareTo(today) == 0) {
 						System.out.println("You cannot create a schedule for today");
 					} else {
 						break;
 					}
-				}while(true);
-				if(surgeryManager.getListOfSurgeries(date).size()!=0) {
+				} while (true);
+				if (surgeryManager.getListOfSurgeries(date).size() != 0) {
 					System.out.println("Surgery already programmed for that day");
 				} else {
 					System.out.println("Choose the surgeon-nurse who are going to work together the whole day");
 					createTeams(date);// Hacer Surgeon-Nurse
 					chooseActiveRooms();
-					List<OperatingRoom> rooms= operatingRoomManager.getListOfActiveOperatingRoom();
-					List<WorksWith> ww= worksWithManager.getListOfWorksWith(date);
-					for(Surgery s: surgeries) {
+					List<OperatingRoom> rooms = operatingRoomManager.getListOfActiveOperatingRoom();
+					List<WorksWith> ww = worksWithManager.getListOfWorksWith(date);
+					for (Surgery s : surgeries) {
 						s.setRoomId(-1);
 					}
-					for(Surgery s: surgeries) {
+					for (Surgery s : surgeries) {
 						s.setSurgeonId(-1);
 					}
 					for (surgeriesCount = 0; surgeriesCount < surgeries.size(); surgeriesCount++) {
-						for(OperatingRoom room: rooms) {
-							for(int i=0; i< room.getHoursAvailable().size(); i++) {
+						for (OperatingRoom room : rooms) {
+							for (int i = 0; i < room.getHoursAvailable().size(); i++) {
 								System.out.println(i);
-								if(room.getHoursAvailable().get(i)== true) {
+								if (room.getHoursAvailable().get(i) == true) {
 									room.changeHoursAvailable(i);
 									surgeries.get(surgeriesCount).setRoomId(room.getRoomId());
 									surgeries.get(surgeriesCount).setStartHour(room.getStartHour(i));
-									surgeryManager.updateRoomHourDate(surgeries.get(surgeriesCount).getSurgeryId(), date, room.getStartHour(i), room.getRoomId());
+									surgeryManager.updateRoomHourDate(surgeries.get(surgeriesCount).getSurgeryId(),
+											date, room.getStartHour(i), room.getRoomId());
 									break;
 								}
 							}
 						}
-						if(surgeries.get(surgeriesCount).getRoomId()==-1) {
+						if (surgeries.get(surgeriesCount).getRoomId() == -1) {
 							System.out.println("No rooms");
 							break;
 						}
-						for(WorksWith team: ww) {
-							for(int i=0; i< team.getHoursAvailable().size(); i++) {
+						for (WorksWith team : ww) {
+							for (int i = 0; i < team.getHoursAvailable().size(); i++) {
 								System.out.println(team.getHoursAvailable());
-								if(team.getHoursAvailable().get(i)== true) {
+								if (team.getHoursAvailable().get(i) == true) {
 									surgeries.get(surgeriesCount).setSurgeonId(team.getSurgeonID());
 									team.changeHoursAvailable(i);
-									surgeryManager.updateSurgeonId(surgeries.get(surgeriesCount).getSurgeryId(), team.getSurgeonID());
+									surgeryManager.updateSurgeonId(surgeries.get(surgeriesCount).getSurgeryId(),
+											team.getSurgeonID());
 									break;
 								}
 							}
 						}
-						if(surgeries.get(surgeriesCount).getSurgeonId()==-1) {
+						if (surgeries.get(surgeriesCount).getSurgeonId() == -1) {
 							System.out.println("No teams");
 							surgeryManager.deleteRoomHourDate(surgeries.get(surgeriesCount).getSurgeryId());
 							break;
@@ -1098,38 +1133,45 @@ public class Menu {
 						surgeryManager.updateDone(surgeries.get(surgeriesCount).getSurgeryId());
 					}
 					// Mostrar SCHEDULE
-					if(surgeries.size()-surgeriesCount==0) {
+					if (surgeries.size() - surgeriesCount == 0) {
 						System.out.println("All surgeries are programmed");
-					}else {
-						System.out.println("Note: " + (surgeries.size()-surgeriesCount) + " surgeries could not be programmed for this day, will pass for the next");
+					} else {
+						System.out.println("Note: " + (surgeries.size() - surgeriesCount)
+								+ " surgeries could not be programmed for this day, will pass for the next");
 					}
-					
+
 					showSchedule(date);
 				}
 			} else {
 				System.out.println("No surgeries in the bata base");
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private static void showSchedule(Date date) {
-		if(surgeryManager.getListOfSurgeries(date).size()!=0) {
-			List<Surgery> surgeries= surgeryManager.getListOfSurgeries(date);		
-			System.out.format("%-5s %-18s %-15s %-15s %-15s %-15s %-15s %-15s %-5s\n", "Id", "Patient", "Date", "StartHour", "Surgery Type" ,"Surgeon", "Nurse", "Room Number", "Room Floor");
-			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
+		if (surgeryManager.getListOfSurgeries(date).size() != 0) {
+			List<Surgery> surgeries = surgeryManager.getListOfSurgeries(date);
+			System.out.format("%-5s %-18s %-15s %-15s %-15s %-15s %-15s %-15s %-5s\n", "Id", "Patient", "Date",
+					"StartHour", "Surgery Type", "Surgeon", "Nurse", "Room Number", "Room Floor");
+			System.out.println(
+					"-------------------------------------------------------------------------------------------------------------------------------------");
 			try {
-				
-				for (Surgery s: surgeries) {
-					String sCompleteName= surgeonManager.getSurgeonById(s.getSurgeonId()).getName() + " " + surgeonManager.getSurgeonById(s.getSurgeonId()).getSurname();
-					int nurseId= worksWithManager.getNurseIdAssignedSurgeonDate(s.getSurgeonId(), date);
-					String nCompleteName= nurseManager.getNurseById(nurseId).getNurseName() + " " + nurseManager.getNurseById(nurseId).getNurseSurname();
-					
-					System.out.format("%-5d %-18s %-15s %-15s %-15s %-15s %-15s %-15d %-15d\n",
-							 s.getSurgeryId(), patientManager.getPatCompleteNametById(s.getPatientId()), new SimpleDateFormat("dd-MM-yyyy").format(s.getSurgeryDate()),
-							 s.getStartHour(), s.getSurgeryType(), sCompleteName, nCompleteName, operatingRoomManager.getRoomById(s.getRoomId()).getRoomNumber(),
-							 operatingRoomManager.getRoomById(s.getRoomId()).getRoomFloor());
+
+				for (Surgery s : surgeries) {
+					String sCompleteName = surgeonManager.getSurgeonById(s.getSurgeonId()).getName() + " "
+							+ surgeonManager.getSurgeonById(s.getSurgeonId()).getSurname();
+					int nurseId = worksWithManager.getNurseIdAssignedSurgeonDate(s.getSurgeonId(), date);
+					String nCompleteName = nurseManager.getNurseById(nurseId).getNurseName() + " "
+							+ nurseManager.getNurseById(nurseId).getNurseSurname();
+
+					System.out.format("%-5d %-18s %-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", s.getSurgeryId(),
+							patientManager.getPatCompleteNametById(s.getPatientId()),
+							new SimpleDateFormat("dd-MM-yyyy").format(s.getSurgeryDate()), s.getStartHour(),
+							s.getSurgeryType(), sCompleteName, nCompleteName,
+							operatingRoomManager.getRoomById(s.getRoomId()).getRoomNumber(),
+							operatingRoomManager.getRoomById(s.getRoomId()).getRoomFloor());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1137,7 +1179,7 @@ public class Menu {
 		} else {
 			System.out.println("No surgeries programmed for that date");
 		}
-		
+
 	}
 
 	private static void chooseActiveRooms() {
@@ -1313,8 +1355,8 @@ public class Menu {
 				break;
 			}
 		} while (option < 1 || option > 6);
-		Date today=  Date.valueOf(LocalDate.now());
-		if(start.compareTo(today)<0) {
+		Date today = Date.valueOf(LocalDate.now());
+		if (start.compareTo(today) < 0) {
 			System.out.println("You cannot add a vacation for a passed day");
 			selectStartDate();
 		}
