@@ -64,7 +64,16 @@ public class Menu {
 				System.out.println("2. Log in");
 				System.out.println("3. List of users");
 				System.out.println("0. exit");
-				int choice = Integer.parseInt(reader.readLine());
+				int choice;
+				do {
+					try {
+					choice = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
+			
 				switch (choice) {
 				case 1:
 					signIn();
@@ -127,8 +136,15 @@ public class Menu {
 
 				System.out.println("22. Log out");
 				System.out.println(" 0. exit");
-
-				int choice = Integer.parseInt(reader.readLine());
+				int choice;
+				do {
+					try {
+					choice = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
 				switch (choice) {
 				case 1:
 					createPatient();
@@ -172,7 +188,7 @@ public class Menu {
 					getNursesOnVacation();
 					break;
 				case 14:
-					deletAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
+					deleteAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
 				case 15:
 					createSurgery();
@@ -235,8 +251,15 @@ public class Menu {
 
 				System.out.println("15. Log out");
 				System.out.println(" 0. exit");
-
-				int choice = Integer.parseInt(reader.readLine());
+				int choice;
+				do {
+					try {
+					choice = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
 				switch (choice) {
 				case 1:
 					createPatient();
@@ -269,7 +292,7 @@ public class Menu {
 					getUsers();
 					break;
 				case 10:
-					deletAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
+					deleteAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
 					break;
 				case 11:
@@ -318,8 +341,16 @@ public class Menu {
 
 				System.out.println("11. Log out");
 				System.out.println(" 0. exit");
-				//
-				int choice = Integer.parseInt(reader.readLine());
+				int choice;
+				do {
+					try {
+					choice = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
+				
 				switch (choice) {
 				case 1:
 					getPatients();
@@ -348,7 +379,7 @@ public class Menu {
 					getUsers();
 					break;
 				case 9:
-					deletAccount("nurse", nurseManager.getIdByEmail(u.getEmail()), u.getEmail());
+					deleteAccount("nurse", nurseManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
 					break;
 				case 10:
@@ -403,7 +434,14 @@ public class Menu {
 						System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(),
 								p.getPatientId());
 					}
-					patientId = Integer.parseInt(reader.readLine());
+					do {
+						try {
+						patientId = Integer.parseInt(reader.readLine());
+						break;
+						}catch(Exception e){
+							System.out.println("Not valid input");
+						}
+					} while(true);
 					if (patientManager.getListOfPatients().contains(patientManager.getPatientById(patientId))) {
 						break;
 					} else {
@@ -420,7 +458,15 @@ public class Menu {
 			try {
 				Patient patient = patientManager.getPatientById(patientId);
 				System.out.println("Type the phone number");
-				int phone = Integer.parseInt(reader.readLine());
+				int phone;
+				do {
+					try {
+					phone = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
 				if (patient.checkPhoneNumber(phone)) {
 					patientManager.updatePhoneNumber(patientId, phone);
 					patient.setPhoneNumber(phone);
@@ -437,15 +483,22 @@ public class Menu {
 	private static void modifyVacation(String role) throws Exception {
 		if (role.equals("surgeon")) {
 			do {
-				List<SurgeonVacation> surgVac = surgeonVacationManager
-						.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
+				List<SurgeonVacation> surgVac = surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
 				if (surgVac.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 					break;
 				}
-				System.out.println(surgVac);
-				System.out.println("Select the id of the vacation you want to modify");
-				int vacId = Integer.parseInt(reader.readLine());
+				int vacId;
+				do {
+					try {
+					System.out.println(surgVac);
+					System.out.println("Select the id of the vacation you want to modify");
+					vacId = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
 				if (surgVac.get(0).getVacationId() == vacId || surgVac.get(1).getVacationId() == vacId) {
 					System.out.println("Select the new vacation dates");
 					Date start = selectStartDate();
@@ -458,15 +511,23 @@ public class Menu {
 			} while (true);
 		} else if (role.equals("nurse")) {
 			do {
-				List<NurseVacation> nurseVac = nurseVacationManager
-						.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
+				List<NurseVacation> nurseVac = nurseVacationManager.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
 				if (nurseVac.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 					break;
 				}
 				System.out.println(nurseVac);
 				System.out.println("Select the id of the vacation you want to modify");
-				int vacId = Integer.parseInt(reader.readLine());
+				int vacId;
+				do {
+					try {
+					vacId = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
+				
 				if (nurseVac.get(0).getVacationId() == vacId || nurseVac.get(1).getVacationId() == vacId) {
 					System.out.println("Select the new vacation dates");
 					Date start = selectStartDate();
@@ -506,7 +567,16 @@ public class Menu {
 			System.out.println("1. Surgeon");
 			System.out.println("2. Nurse");
 			System.out.println("3. Chief surgeon");
-			int option = Integer.parseInt(reader.readLine());
+			int option;
+			do {
+				try {
+				option = Integer.parseInt(reader.readLine());
+				break;
+				}catch(Exception e){
+					System.out.println("Not valid input");
+				}
+			} while(true);
+			
 			Role role = null;
 			Boolean chief = null;
 			switch (option) {
@@ -558,7 +628,7 @@ public class Menu {
 		}
 	}
 
-	private static void deletAccount(String role, int id, String email) {
+	private static void deleteAccount(String role, int id, String email) {
 		try {
 			userManager.deletUser(email);
 			if (role.equals("surgeon") || role.equals("chiefSurgeon")) {
@@ -591,7 +661,14 @@ public class Menu {
 						System.out.format("%-10s %-15s %-3d\n", n.getNurseName(), n.getNurseSurname(), n.getNurseId());
 					}
 					System.out.print("\nPlease enter the nurse ID to assign: ");
-					nurseId = Integer.parseInt(reader.readLine());
+					do {
+						try {
+						nurseId = Integer.parseInt(reader.readLine());
+						break;
+						}catch(Exception e){
+							System.out.println("Not valid input");
+						}
+					} while(true);					
 					if (!avaliableNurses(date).contains(nurseManager.getNurseById(nurseId))) {
 						System.out.println("That nurse is not avaliable\n");
 					} else {
@@ -608,7 +685,14 @@ public class Menu {
 						System.out.format("%-10s %-15s %-3d\n", s.getName(), s.getSurname(), s.getSurgeonId());
 					}
 					System.out.print("\nPlease enter the surgeon ID to assign: ");
-					surgeonId = Integer.parseInt(reader.readLine());
+					do {
+						try {
+						surgeonId = Integer.parseInt(reader.readLine());
+						break;
+						}catch(Exception e){
+							System.out.println("Not valid input");
+						}
+					} while(true);
 					if (!avaliableSurgeons(date).contains(surgeonManager.getSurgeonById(surgeonId))) {
 						System.out.println("That surgeon is not avaliable");
 					} else {
@@ -662,11 +746,14 @@ public class Menu {
 		}
 		System.out.println("\nType the new chief id");
 		Integer newChiefId = null;
-		try {
+		do {
+			try {
 			newChiefId = Integer.parseInt(reader.readLine());
-		} catch (NumberFormatException | IOException e) {
-			e.printStackTrace();
-		}
+			break;
+			}catch(Exception e){
+				System.out.println("Not valid input");
+			}
+		} while(true);
 		if (userManager.getChief().getEmail().equals(surgeonManager.getEmailById(newChiefId))) {
 			System.out.println("That's the actual chief, no changes done\n");
 
@@ -693,7 +780,15 @@ public class Menu {
 					}
 					System.out.println(surgVac);
 					System.out.println("Type the vacation id");
-					int vacId = Integer.parseInt(reader.readLine());
+					int vacId;
+					do {
+						try {
+						vacId = Integer.parseInt(reader.readLine());
+						break;
+						}catch(Exception e){
+							System.out.println("Not valid input");
+						}
+					} while(true);
 					if (surgVac.get(0).getVacationId() == vacId || surgVac.get(1).getVacationId() == vacId) {
 						surgeonVacationManager.deleteSurgeonVacationById(vacId);
 						break;
@@ -711,7 +806,15 @@ public class Menu {
 					}
 					System.out.println(nurseVac);
 					System.out.println("Type the vacation id");
-					int vacId = Integer.parseInt(reader.readLine());
+					int vacId;
+					do {
+						try {
+						vacId = Integer.parseInt(reader.readLine());
+						break;
+						}catch(Exception e){
+							System.out.println("Not valid input");
+						}
+					} while(true);
 					if (nurseVac.get(0).getVacationId() == vacId || nurseVac.get(1).getVacationId() == vacId) {
 						nurseVacationManager.deleteNurseVacationById(vacId);
 						break;
@@ -771,7 +874,15 @@ public class Menu {
 							s.getSurgeryType(), s.getSurgeryId());
 				}
 				System.out.println("\nType the id of the surgery you want to delete");
-				int surgeryId = Integer.parseInt(reader.readLine());
+				int surgeryId;
+				do {
+					try {
+					surgeryId = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
 				for(int i=0;i<surgeries.size();i++) {
 					if(surgeryId == surgeries.get(i).getSurgeryId()) {//Es que está entre las listadas
 						surgeryManager.deleteSurgery(surgeryId);
@@ -936,7 +1047,14 @@ public class Menu {
 						System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(),
 								p.getPatientId());
 					}
-					patientId = Integer.parseInt(reader.readLine());
+					do {
+						try {
+						patientId = Integer.parseInt(reader.readLine());
+						break;
+						}catch(Exception e){
+							System.out.println("Not valid input");
+						}
+					} while(true);
 					if (patientManager.getListOfPatients().contains(patientManager.getPatientById(patientId))) {
 						break;
 					} else {
@@ -1201,7 +1319,15 @@ public class Menu {
 					System.out.println("1. Activate new room");
 					System.out.println("2. Disable a room");
 					System.out.println("3. No more modifications");
-					int option = Integer.parseInt(reader.readLine());
+					int option;
+					do {
+						try {
+						option = Integer.parseInt(reader.readLine());
+						break;
+						}catch(Exception e){
+							System.out.println("Not valid input");
+						}
+					} while(true);
 					switch (option) {
 					case 1:
 						List<OperatingRoom> rooms = operatingRoomManager.getListOfOperatingRoom();
@@ -1215,7 +1341,15 @@ public class Menu {
 								System.out.println(oR);
 							}
 							System.out.print("Activate room: ");
-							int roomId = Integer.parseInt(reader.readLine());
+							int roomId;
+							do {
+								try {
+								roomId = Integer.parseInt(reader.readLine());
+								break;
+								}catch(Exception e){
+									System.out.println("Not valid input");
+								}
+							} while(true);
 							for (OperatingRoom r : rooms) {
 								if (r.getRoomId() == roomId) {
 									operatingRoomManager.updateActivity(roomId, true);
@@ -1231,7 +1365,15 @@ public class Menu {
 								System.out.println(oR);
 							}
 							System.out.print("Disable room: ");
-							int rId = Integer.parseInt(reader.readLine());
+							int rId;
+							do {
+								try {
+								rId = Integer.parseInt(reader.readLine());
+								break;
+								}catch(Exception e){
+									System.out.println("Not valid input");
+								}
+							} while(true);
 							for (OperatingRoom r : operatingRoomManager.getListOfActiveOperatingRoom()) {
 								if (r.getRoomId() == rId) {
 									operatingRoomManager.updateActivity(rId, false);
@@ -1258,7 +1400,15 @@ public class Menu {
 							System.out.println(oR);
 						}
 						System.out.print("Activate room: ");
-						int roomId = Integer.parseInt(reader.readLine());
+						int roomId;
+						do {
+							try {
+							roomId = Integer.parseInt(reader.readLine());
+							break;
+							}catch(Exception e){
+								System.out.println("Not valid input");
+							}
+						} while(true);
 						for (OperatingRoom r : rooms) {
 							if (r.getRoomId() == roomId) {
 								operatingRoomManager.updateActivity(roomId, true);
@@ -1284,9 +1434,25 @@ public class Menu {
 
 	private static void newOperatingRoom() throws Exception {
 		System.out.println("Type the room number: ");
-		int roomNumber = Integer.parseInt(reader.readLine());
+		int roomNumber;
+		do {
+			try {
+			roomNumber = Integer.parseInt(reader.readLine());
+			break;
+			}catch(Exception e){
+				System.out.println("Not valid input");
+			}
+		} while(true);
 		System.out.println("Type the room floor: ");
-		int roomFloor = Integer.parseInt(reader.readLine());
+		int roomFloor;
+		do {
+			try {
+			roomFloor = Integer.parseInt(reader.readLine());
+			break;
+			}catch(Exception e){
+				System.out.println("Not valid input");
+			}
+		} while(true);
 		OperatingRoom r = new OperatingRoom(roomNumber, roomFloor);
 		operatingRoomManager.addOperatingRoom(r);
 		System.out.println("OperatingRoom added successfully\n");
@@ -1321,15 +1487,26 @@ public class Menu {
 	}
 
 	public static Date selectStartDate() throws Exception {
-		java.sql.Date start = null;
+		Date start = null;
 		Integer year;
 		while (true) {
-			System.out.println("Type the year:");
-			year = Integer.parseInt(reader.readLine());
-			if (year.toString().length() == 4) {
-				break;
+			try {
+				System.out.println("Type the year:");
+				do {
+					try {
+					year = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
+				if (year.toString().length() == 4) {
+					break;
+				}
+				System.out.println("Not valid year");
+			}catch(Exception e){
+				System.out.println("Not valid input");
 			}
-			System.out.println("Not valid year");
 		}
 		int option;
 		do {
@@ -1340,7 +1517,14 @@ public class Menu {
 			System.out.println("4) 16 july to 30 july");
 			System.out.println("5) 1 august to 15 august");
 			System.out.println("6) 16 august to 30 august");
-			option = Integer.parseInt(reader.readLine());
+			do {
+				try {
+				option = Integer.parseInt(reader.readLine());
+				break;
+				}catch(Exception e){
+					System.out.println("Not valid input");
+				}
+			} while(true);			
 			year = year - 1900;
 			switch (option) {
 			case 1:
@@ -1377,15 +1561,37 @@ public class Menu {
 		Integer Day;
 		do {
 			System.out.println("Type the year:");
-			Year = Integer.parseInt(reader.readLine());
+			do {
+				try {
+				Year = Integer.parseInt(reader.readLine());
+				break;
+				}catch(Exception e){
+					System.out.println("Not valid input");
+				}
+			} while(true);
+			
 		} while (Year.toString().length() != 4);
 		do {
 			System.out.println("Type the month [1-12]:");
-			Month = Integer.parseInt(reader.readLine());
+			do {
+				try {
+				Month = Integer.parseInt(reader.readLine());
+				break;
+				}catch(Exception e){
+					System.out.println("Not valid input");
+				}
+			} while(true);
 		} while (Month < 1 || Month > 12);
 		do {
 			System.out.println("Type the day:");
-			Day = Integer.parseInt(reader.readLine());
+			do {
+				try {
+				Day = Integer.parseInt(reader.readLine());
+				break;
+				}catch(Exception e){
+					System.out.println("Not valid input");
+				}
+			} while(true);
 		} while (Day < 1 || Month > 31);
 		Date date = new Date(Year - 1900, Month - 1, Day);
 		return date;

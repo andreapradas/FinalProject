@@ -80,7 +80,7 @@ public class JDBCManager {
 				"starts	DATE NOT NULL," +
 				"ends DATE NOT NULL," +
 				"nurseId INTEGER,"	+
-				"FOREIGN KEY(nurseId) REFERENCES Nurse(nurseId) ON DELETE SET NULL ON UPDATE CASCADE" +
+				"FOREIGN KEY(nurseId) REFERENCES Nurse(nurseId) ON DELETE CASCADE ON UPDATE CASCADE" +
 			");";
 			stmt.executeUpdate(sql);
 			
@@ -99,7 +99,7 @@ public class JDBCManager {
 				"starts DATE NOT NULL," +
 				"ends DATE NOT NULL," +
 				"surgeonId INTEGER," +
-				"FOREIGN KEY(surgeonId) REFERENCES Surgeon(surgeonId) ON DELETE SET NULL ON UPDATE CASCADE" +
+				"FOREIGN KEY(surgeonId) REFERENCES Surgeon(surgeonId) ON DELETE CASCADE ON UPDATE CASCADE" +
 			");";
 			stmt.executeUpdate(sql);
 			

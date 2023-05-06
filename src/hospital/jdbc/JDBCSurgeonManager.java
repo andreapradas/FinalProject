@@ -28,7 +28,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			prep.setString(2, surg.getSurname());
 			prep.setString(3, surg.getEmail());
 			prep.setBoolean(4, surg.getChief());
-			prep.executeUpdate();			
+			prep.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
