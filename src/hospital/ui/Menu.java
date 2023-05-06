@@ -1115,24 +1115,29 @@ public class Menu {
 	}
 
 	private static void showSchedule(Date date) {
-		List<Surgery> surgeries= surgeryManager.getListOfSurgeries(date);		
-		System.out.format("%-5s %-18s %-15s %-15s %-15s %-15s %-15s %-15s %-5s\n", "Id", "Patient", "Date", "StartHour", "Surgery Type" ,"Surgeon", "Nurse", "Room Number", "Room Floor");
-		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
-		try {
-			
-			for (Surgery s: surgeries) {
-				String sCompleteName= surgeonManager.getSurgeonById(s.getSurgeonId()).getName() + " " + surgeonManager.getSurgeonById(s.getSurgeonId()).getSurname();
-				int nurseId= worksWithManager.getNurseIdAssignedSurgeonDate(s.getSurgeonId(), date);
-				String nCompleteName= nurseManager.getNurseById(nurseId).getNurseName() + " " + nurseManager.getNurseById(nurseId).getNurseSurname();
+		if(surgeryManager.getListOfSurgeries(date).size()!=0) {
+			List<Surgery> surgeries= surgeryManager.getListOfSurgeries(date);		
+			System.out.format("%-5s %-18s %-15s %-15s %-15s %-15s %-15s %-15s %-5s\n", "Id", "Patient", "Date", "StartHour", "Surgery Type" ,"Surgeon", "Nurse", "Room Number", "Room Floor");
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
+			try {
 				
-				System.out.format("%-5d %-18s %-15s %-15s %-15s %-15s %-15s %-15d %-15d\n",
-						 s.getSurgeryId(), patientManager.getPatCompleteNametById(s.getPatientId()), new SimpleDateFormat("dd-MM-yyyy").format(s.getSurgeryDate()),
-						 s.getStartHour(), s.getSurgeryType(), sCompleteName, nCompleteName, operatingRoomManager.getRoomById(s.getRoomId()).getRoomNumber(),
-						 operatingRoomManager.getRoomById(s.getRoomId()).getRoomFloor());
+				for (Surgery s: surgeries) {
+					String sCompleteName= surgeonManager.getSurgeonById(s.getSurgeonId()).getName() + " " + surgeonManager.getSurgeonById(s.getSurgeonId()).getSurname();
+					int nurseId= worksWithManager.getNurseIdAssignedSurgeonDate(s.getSurgeonId(), date);
+					String nCompleteName= nurseManager.getNurseById(nurseId).getNurseName() + " " + nurseManager.getNurseById(nurseId).getNurseSurname();
+					
+					System.out.format("%-5d %-18s %-15s %-15s %-15s %-15s %-15s %-15d %-15d\n",
+							 s.getSurgeryId(), patientManager.getPatCompleteNametById(s.getPatientId()), new SimpleDateFormat("dd-MM-yyyy").format(s.getSurgeryDate()),
+							 s.getStartHour(), s.getSurgeryType(), sCompleteName, nCompleteName, operatingRoomManager.getRoomById(s.getRoomId()).getRoomNumber(),
+							 operatingRoomManager.getRoomById(s.getRoomId()).getRoomFloor());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else {
+			System.out.println("No surgeries programmed for that date");
 		}
+		
 	}
 
 	private static void chooseActiveRooms() {
