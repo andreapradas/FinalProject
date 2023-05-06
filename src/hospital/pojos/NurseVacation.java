@@ -9,8 +9,8 @@ public class NurseVacation implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -3514210278458069620L;
-	private Integer vacationId;
-	private Integer nurseId;
+	private int vacationId;
+	private int nurseId;
 	private Date starts;
 	private Date ends;
 	
@@ -19,7 +19,7 @@ public class NurseVacation implements Serializable{
 		super();
 	}
 	
-	public NurseVacation(Date starts, Date ends, Integer nurseID) {
+	public NurseVacation(Date starts, Date ends, int nurseID) {
 		super();
 		this.starts= starts;
 		this.ends= ends;
@@ -27,7 +27,7 @@ public class NurseVacation implements Serializable{
 	}
 	
 	
-	public NurseVacation(Integer vacationID, Date starts, Date ends, Integer nurseID) {
+	public NurseVacation(int vacationID, Date starts, Date ends, int nurseID) {
 		super();
 		this.vacationId = vacationID;
 		this.nurseId = nurseID;

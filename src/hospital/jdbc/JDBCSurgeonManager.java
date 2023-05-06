@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hospital.ifaces.SurgeonManager;
-import hospital.pojos.Nurse;
 import hospital.pojos.Surgeon;
 
 public class JDBCSurgeonManager implements SurgeonManager{
@@ -74,7 +73,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, Id);
 			ResultSet rs = prep.executeQuery();
-			Integer id = rs.getInt("surgeonId");
+			int id = rs.getInt("surgeonId");
 			String name = rs.getString("surgeonName");
 			String surname = rs.getString("surgeonSurname");
 			String email = rs.getString("surgeonEmail");
@@ -136,7 +135,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			
 			while(rs.next())
 			{
-				Integer id = rs.getInt("surgeonId");
+				int id = rs.getInt("surgeonId");
 				String name = rs.getString("surgeonName");
 				String surname = rs.getString("surgeonSurname");
 				String email = rs.getString("surgeonEmail");
@@ -162,7 +161,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			PreparedStatement prep= manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, true);
 			ResultSet rs = prep.executeQuery();
-			Integer id = rs.getInt("surgeonId");
+			int id = rs.getInt("surgeonId");
 			String name = rs.getString("surgeonName");
 			String surname = rs.getString("surgeonSurname");
 			String email = rs.getString("surgeonEmail");
@@ -227,7 +226,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 //			ResultSet rs = prep.executeQuery();
 //			while(rs.next())
 //			{
-//				Integer surgeonId = rs.getInt("surgeonId");
+//				int surgeonId = rs.getInt("surgeonId");
 //				String name = rs.getString("surgeonName");
 //				String surname = rs.getString("surgeonSurname");
 //				String email = rs.getString("surgeonEmail");
@@ -256,7 +255,7 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
-				Integer surgeonId = rs.getInt("surgeonId");
+				int surgeonId = rs.getInt("surgeonId");
 				String name = rs.getString("surgeonName");
 				String surname = rs.getString("surgeonSurname");
 				String email = rs.getString("surgeonEmail");

@@ -26,7 +26,7 @@ public class Role implements Serializable{
 	@GeneratedValue(generator= "roles")
 	@TableGenerator(name="roles", table="sqlite_sequence",
     pkColumnName="name", valueColumnName="seq", pkColumnValue="roles")
-	private Integer id;
+	private int id;
 	
 	@Override
 	public String toString() {
@@ -60,10 +60,10 @@ public class Role implements Serializable{
 		}
 	}
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {

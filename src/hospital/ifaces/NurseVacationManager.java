@@ -5,7 +5,6 @@ import java.util.List;
 
 import hospital.pojos.Nurse;
 import hospital.pojos.NurseVacation;
-import hospital.pojos.SurgeonVacation;
 
 public interface NurseVacationManager {
 	List<NurseVacation> getNurseReservedVacation (int id);

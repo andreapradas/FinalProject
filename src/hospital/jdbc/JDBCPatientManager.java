@@ -3,7 +3,6 @@ package hospital.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +38,10 @@ public class JDBCPatientManager implements PatientManager{
 				
 				while(rs.next())
 				{
-					Integer id = rs.getInt("patientId");
+					int id = rs.getInt("patientId");
 					String name = rs.getString("patientName");
 					String surname = rs.getString("patientSurname");
-					Integer phoneNumber = rs.getInt("phoneNumber");
+					int phoneNumber = rs.getInt("phoneNumber");
 					Patient pat = new Patient(id, name, surname,phoneNumber);
 					patients.add(pat);
 				}
@@ -70,8 +69,8 @@ public class JDBCPatientManager implements PatientManager{
 			{
 				String name = rs.getString("patientName");
 				String surname = rs.getString("patientSurname");
-				Integer phoneNumber = rs.getInt("phoneNumber");
-				Integer id = rs.getInt("patientId");
+				int phoneNumber = rs.getInt("phoneNumber");
+				int id = rs.getInt("patientId");
 				Patient pat = new Patient(id, name, surname,phoneNumber);
 				patients.add(pat);
 			}
@@ -103,10 +102,11 @@ public class JDBCPatientManager implements PatientManager{
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, patientName);
 			ResultSet rs = prep.executeQuery();
+			
 			String name = rs.getString("patientName");
-			Integer patientId = rs.getInt("patientId");
+			int patientId = rs.getInt("patientId");
 			String patientSurname = rs.getString("patientSurname");
-			Integer phoneNumber = rs.getInt("phoneNumber");
+			int phoneNumber = rs.getInt("phoneNumber");
 			p = new Patient(patientId, name, patientSurname, phoneNumber);	
 			rs.close();
 			prep.close();
@@ -126,9 +126,9 @@ public class JDBCPatientManager implements PatientManager{
 			prep.setInt(1, id);
 			ResultSet rs = prep.executeQuery();
 			String name = rs.getString("patientName");
-			Integer patientId = rs.getInt("patientId");
+			int patientId = rs.getInt("patientId");
 			String patientSurname = rs.getString("patientSurname");
-			Integer phoneNumber = rs.getInt("phoneNumber");
+			int phoneNumber = rs.getInt("phoneNumber");
 			p = new Patient(patientId, name, patientSurname, phoneNumber);	
 			rs.close();
 			prep.close();
@@ -142,7 +142,6 @@ public class JDBCPatientManager implements PatientManager{
 	@Override
 	public String getPatCompleteNametById(int id) {
 		try {
-			Patient p = null;
 			String sql = "SELECT patientName, patientSurname FROM patient WHERE patientId=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);
@@ -172,9 +171,9 @@ public class JDBCPatientManager implements PatientManager{
 			while(rs.next())
 			{
 				String name = rs.getString("patientName");
-				Integer patientId = rs.getInt("patientId");
+				int patientId = rs.getInt("patientId");
 				String surname = rs.getString("patientSurname");
-				Integer phoneNumber = rs.getInt("phoneNumber");
+				int phoneNumber = rs.getInt("phoneNumber");
 				Patient p = new Patient(patientId, name, surname, phoneNumber);
 				patients.add(p);
 			}		

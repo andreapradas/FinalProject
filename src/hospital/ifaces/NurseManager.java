@@ -12,8 +12,8 @@ public interface NurseManager {
 	//public void assign(int nurseID, int surgeonID); //Assign a nurse to a surgeon
 	public void deleteNurseByID (int ID);
 	int getIdByEmail(String email);
-	String getNameById(int id);
-	Nurse getNurseById(int nurseId);
-	List<Nurse> getNursesAssignedThisDay(Date date);
+	public String getNameById(int id);
+	public Nurse getNurseById(int nurseId);
+	public List<Nurse> getNursesAssignedThisDay(Date date);
 
 }

@@ -29,10 +29,10 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			
 			while(rs.next())
 			{
-				Integer vacId = rs.getInt("vacationId");
+				int vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
-				Integer nurseId = rs.getInt("nurseId");
+				int nurseId = rs.getInt("nurseId");
 			
 				NurseVacation vac= new NurseVacation(vacId, starts, ends, nurseId);
 				nurseVacations.add(vac);
@@ -60,10 +60,10 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			
 			while(rs.next())
 			{
-				Integer vacId = rs.getInt("vacationId");
+				int vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
-				Integer nurseId = rs.getInt("nurseId");
+				int nurseId = rs.getInt("nurseId");
 			
 				NurseVacation vac= new NurseVacation(vacId, starts, ends, nurseId);
 				nurseVacations.add(vac);
@@ -114,7 +114,7 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			{
 				String name = rs.getString("nurseName");
 				String surname = rs.getString("nurseSurname");
-				Integer nurseId = rs.getInt("nurseId");
+				int nurseId = rs.getInt("nurseId");
 				String email = rs.getString("nurseEmail");
 				Nurse n= new Nurse(nurseId, name, surname ,email);
 				nurses.add(n);
@@ -223,10 +223,10 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
-				Integer vacId = rs.getInt("vacationId");
+				int vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
-				Integer surgId = rs.getInt("nurseId");
+				int surgId = rs.getInt("nurseId");
 				NurseVacation vac= new NurseVacation(vacId, starts, ends, surgId);
 				nurseVacations.add(vac);
 			}

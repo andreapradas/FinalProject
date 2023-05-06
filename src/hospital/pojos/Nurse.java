@@ -9,7 +9,7 @@ public class Nurse implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer nurseId;
+	private int nurseId;
 	private String nurseName;
 	private String nurseSurname;
 	private String email;
@@ -18,7 +18,7 @@ public class Nurse implements Serializable{
 		super();
 	}
 	
-	public Nurse(Integer nurseId, String nurseName, String nurseSurname, String email) {
+	public Nurse(int nurseId, String nurseName, String nurseSurname, String email) {
 		super();
 		this.nurseId = nurseId;
 		this.nurseName = nurseName;
@@ -59,11 +59,11 @@ public class Nurse implements Serializable{
 		this.nurseSurname = nurseSurname;
 	}
 
-	public Integer getNurseId() {
+	public int getNurseId() {
 		return nurseId;
 	}
 
-	public void setNurseId(Integer nurseId) {
+	public void setNurseId(int nurseId) {
 		this.nurseId = nurseId;
 	}
 	
