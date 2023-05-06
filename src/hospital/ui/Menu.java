@@ -760,9 +760,11 @@ public class Menu {
 		try {
 			//Listar todas las SURGERIES que puede borrar, que NO se hayan hecho y que NO se hayan programado aun
 			List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
-			System.out.println(surgeries);
 			boolean checkId=false;//Para comprobar si existe o no el id introducido entre las cirugias
-			if(surgeries.size()<1) {
+			if(surgeries.size()>0) {
+				System.out.format("%-15s %-18s %-13s %-15s %s\n", "Patient name", "Patient surname", "Patient id",
+						"Surgery type", "Surgery Id");
+				System.out.println("-------------------------------------------------------------------------");
 				for (Surgery s : surgeries) {
 					System.out.format("%-15s %-18s %-13d %-15s %d\n",
 							patientManager.getPatientById(s.getPatientId()).getPatientName(),
@@ -775,6 +777,7 @@ public class Menu {
 					if(surgeryId == surgeries.get(i).getSurgeryId()) {//Es que está entre las listadas
 						surgeryManager.deleteSurgery(surgeryId);
 						checkId = true;
+						System.out.println("Surgery deleted succesfully!");
 						break;
 					}
 				}
@@ -906,6 +909,8 @@ public class Menu {
 		} catch (Exception e) {
 			System.out.println("No patients in the data base");
 		}
+		//Listar los pacientes antes
+		getPatients();
 		System.out.println("Type the name of the patient: ");
 		Surgery s = null;
 		do {
