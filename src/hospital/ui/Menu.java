@@ -632,11 +632,9 @@ public class Menu {
 		try {
 			userManager.deletUser(email);
 			if (role.equals("surgeon") || role.equals("chiefSurgeon")) {
-				deleteVacAutom(role);
 				userManager.getRole(role).getUsers().remove(surgeonManager.getSurgeonById(id));
 				surgeonManager.deleteSurgeonByID(id);
 			} else if (role.equals("nurse")) {
-				deleteVacAutom(role);
 				userManager.getRole(role).getUsers().remove(nurseManager.getNurseById(id));
 				nurseManager.deleteNurseByID(id);
 			}
@@ -819,36 +817,6 @@ public class Menu {
 						break;
 					} else {
 						System.out.println("Incorrect vacationId\n");
-					}
-				} while (true);
-
-			}
-		} catch (Exception e) {
-		}
-	}
-
-	private static void deleteVacAutom(String role) throws Exception {
-		try {
-			if (role.equals("surgeon")) {
-				do {
-					List<SurgeonVacation> surgVac = surgeonVacationManager
-							.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
-					if (surgVac.size() < 1) {
-						break;
-					} else {
-						surgeonVacationManager.deleteSurgeonVacations(surgeonManager.getIdByEmail(u.getEmail()));
-						break;
-					}
-				} while (true);
-			} else if (role.equals("nurse")) {
-				do {
-					List<NurseVacation> nurseVac = nurseVacationManager
-							.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
-					if (nurseVac.size() < 1) {
-						break;
-					} else {
-						nurseVacationManager.deleteNurseVacations(nurseManager.getIdByEmail(u.getEmail()));
-						break;
 					}
 				} while (true);
 
