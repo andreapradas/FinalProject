@@ -173,19 +173,6 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			e.printStackTrace();
 		}
 	}
-	
-	@Override
-	public void deleteSurgeonVacations(int sId) {
-		try {			
-			String sql = "DELETE FROM surgeonVacation WHERE surgeonId=?;";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, sId);
-			prep.executeUpdate();
-			prep.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public int countSurgeonVacations(int id) {

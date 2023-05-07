@@ -152,20 +152,6 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			e.printStackTrace();
 		}
 	}
-	
-	@Override
-	public void deleteNurseVacations(int nId) {
-		try {
-			
-			String sql = "DELETE FROM nurseVacation WHERE nurseId=?;";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, nId);
-			prep.executeUpdate();
-			prep.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public int countNurseVacations(int id) {
