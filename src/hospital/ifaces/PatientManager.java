@@ -16,6 +16,7 @@ public interface PatientManager {
 	public List<Patient> getPatientBySurname(String patientSurname, String patientName);
 	Patient getPatientById(int id);
 	String getPatCompleteNametById(int id);
+	void addPatient(Patient p, String fileName) throws Exception;
 
 	
 }

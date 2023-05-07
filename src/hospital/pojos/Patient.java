@@ -1,8 +1,6 @@
 package hospital.pojos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Patient implements Serializable {
@@ -13,12 +11,7 @@ public class Patient implements Serializable {
 	private int phoneNumber;
 	private String patientName;
 	private String patientSurname;
-	private List<Surgery> surgeries;
-
-	public Patient() {
-		super();
-		surgeries = new ArrayList<Surgery>();
-	}
+	private byte[] photo;
 
 	public Patient(String name, String surname, int phoneNumber) throws phoneException {
 		super();
@@ -28,13 +21,29 @@ public class Patient implements Serializable {
 			throw new phoneException();
 		}
 		this.phoneNumber = phoneNumber;
-		surgeries = new ArrayList<Surgery>();
 	}
-
-	public Patient(String name, String surname) throws phoneException {
+	
+	public Patient(String name, String surname, int phoneNumber, byte[] photo) throws phoneException {
 		super();
 		this.patientName = name;
 		this.patientSurname = surname;
+		if (Integer.toString(phoneNumber).length() != 9) {
+			throw new phoneException();
+		}
+		this.phoneNumber = phoneNumber;
+		this.photo= photo;
+	}
+	
+	public Patient(int id, String name, String surname, int phoneNumber, byte[] photo) throws phoneException {
+		super();
+		this.patientId= id;
+		this.patientName = name;
+		this.patientSurname = surname;
+		if (Integer.toString(phoneNumber).length() != 9) {
+			throw new phoneException();
+		}
+		this.phoneNumber = phoneNumber;
+		this.photo= photo;
 	}
 
 	public Patient(int patientId, String name, String surname, int phoneNumber) throws phoneException {
@@ -46,17 +55,6 @@ public class Patient implements Serializable {
 			throw new phoneException();
 		}
 		this.phoneNumber = phoneNumber;
-		surgeries = new ArrayList<Surgery>();
-	}
-
-	public Patient(String name, int phoneNumber) throws phoneException {
-		super();
-		this.patientName = name;
-		if (Integer.toString(phoneNumber).length() != 8) {
-			throw new phoneException();
-		}
-		this.phoneNumber = phoneNumber;
-		surgeries = new ArrayList<Surgery>();
 	}
 
 	@Override
@@ -124,12 +122,11 @@ public class Patient implements Serializable {
 		this.patientSurname = patientSurname;
 	}
 
-	public List<Surgery> getSurgeries() {
-		return surgeries;
+	public byte[] getPhoto() {
+		return photo;
 	}
 
-	public void setSurgeries(List<Surgery> surgeries) {
-		this.surgeries = surgeries;
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
-
 }

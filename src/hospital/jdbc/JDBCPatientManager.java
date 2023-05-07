@@ -1,6 +1,9 @@
 package hospital.jdbc;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -26,7 +29,25 @@ public class JDBCPatientManager implements PatientManager{
 		prep.setString(2, p.getPatientSurname());
 		prep.setInt(3, p.getPhoneNumber());
 		prep.executeUpdate();	
+		prep.close();
 	}
+	
+	@Override
+	public void addPatient(Patient p, String fileName) throws Exception{
+		String sql = "INSERT INTO Patient (patientName, patientSurname,phoneNumber, photo) VALUES (?,?,?,?)";
+		PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+		prep.setString(1, p.getPatientName());
+		prep.setString(2, p.getPatientSurname());
+		prep.setInt(3, p.getPhoneNumber());
+		File photo = new File(".\\photos\\" + fileName);
+		InputStream streamBlob = new FileInputStream(photo);
+		byte[] bytesBlob = new byte[streamBlob.available()];
+		streamBlob.read(bytesBlob);
+		streamBlob.close();
+		prep.setBytes(4, bytesBlob);
+		prep.executeUpdate();
+		prep.close();
+	}	
 	
 	@Override
 	public List<Patient> getListOfPatients(){
@@ -42,7 +63,8 @@ public class JDBCPatientManager implements PatientManager{
 					String name = rs.getString("patientName");
 					String surname = rs.getString("patientSurname");
 					int phoneNumber = rs.getInt("phoneNumber");
-					Patient pat = new Patient(id, name, surname,phoneNumber);
+					byte[] photo = rs.getBytes("photo");
+					Patient pat = new Patient(id, name, surname,phoneNumber, photo);
 					patients.add(pat);
 				}
 				rs.close();

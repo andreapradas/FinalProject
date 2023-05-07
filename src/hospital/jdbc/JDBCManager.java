@@ -48,7 +48,8 @@ public class JDBCManager {
 				"patientId	INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"patientName TEXT NOT NULL," + 
 				"patientSurname TEXT NOT NULL," + 
-				"phoneNumber INTEGER NOT NULL UNIQUE" +
+				"phoneNumber INTEGER NOT NULL UNIQUE," +
+				" photo	BLOB" +
 			");";
 			stmt.executeUpdate(sql);
 			

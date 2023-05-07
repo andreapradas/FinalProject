@@ -1,6 +1,9 @@
 package hospital.ui;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.sql.Date;
@@ -956,10 +959,31 @@ public class Menu {
 			String surname = reader.readLine();
 			System.out.println("Type the phone number");
 			int phone = Integer.parseInt(reader.readLine());
-			Patient patient = new Patient(name, surname, phone);
-			patientManager.addPatient(patient);
-			System.out.println("Patient created successfully\n");
+			System.out.print("Do you want to add a photo? (Y/N): ");
+			do {	
+				String yesNo = reader.readLine();
+				if (yesNo.equalsIgnoreCase("N")) {
+					Patient patient = new Patient(name, surname, phone);
+					patientManager.addPatient(patient);
+					System.out.println("Patient created successfully\n");
+					break;
+				}else if(yesNo.equalsIgnoreCase("Y")) {
+						System.out.print("Type the file name as it appears in folder /photos, including extension: ");
+						String fileName = reader.readLine();
+		                File photo = new File(".\\photos\\" + fileName);
+						InputStream streamBlob = new FileInputStream(photo);
+						byte[] bytesBlob = new byte[streamBlob.available()];
+						streamBlob.read(bytesBlob);
+						streamBlob.close();
+						Patient patient = new Patient(name, surname, phone, bytesBlob);
+						patientManager.addPatient(patient, fileName);
+						System.out.println("Patient created successfully\n");
+						break;
+				}
+				System.out.println("Write a valid input please (Y/N)");
+			}while(true);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Error while creating the patient");
 			createPatient();
 		}
