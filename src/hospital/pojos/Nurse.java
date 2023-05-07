@@ -5,9 +5,6 @@ import java.util.Objects;
 
 
 public class Nurse implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int nurseId;
 	private String nurseName;

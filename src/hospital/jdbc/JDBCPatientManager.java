@@ -45,10 +45,8 @@ public class JDBCPatientManager implements PatientManager{
 					Patient pat = new Patient(id, name, surname,phoneNumber);
 					patients.add(pat);
 				}
-				
 				rs.close();
 				stmt.close();	
-				
 			}
 			catch(Exception e) {
 				e.printStackTrace();

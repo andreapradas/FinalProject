@@ -48,6 +48,7 @@ public class SurgeonVacation implements Serializable{
 		return Objects.equals(this.vacationId, other.vacationId);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public String toString() {
 		return starts.getDate() + "/" + (starts.getMonth()+1) + "/" + (starts.getYear()+1900)

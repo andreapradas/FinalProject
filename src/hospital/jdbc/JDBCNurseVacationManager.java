@@ -26,20 +26,17 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM nurseVacation";
 			ResultSet rs = stmt.executeQuery(sql);
-			
 			while(rs.next())
 			{
 				int vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
 				int nurseId = rs.getInt("nurseId");
-			
 				NurseVacation vac= new NurseVacation(vacId, starts, ends, nurseId);
 				nurseVacations.add(vac);
 			}
 			rs.close();
 			stmt.close();	
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -57,25 +54,21 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);	
 			ResultSet rs = prep.executeQuery();
-			
 			while(rs.next())
 			{
 				int vacId = rs.getInt("vacationId");
 				java.sql.Date starts = rs.getDate("starts");
 				java.sql.Date ends = rs.getDate("ends");
 				int nurseId = rs.getInt("nurseId");
-			
 				NurseVacation vac= new NurseVacation(vacId, starts, ends, nurseId);
 				nurseVacations.add(vac);
 			}
 			rs.close();
 			prep.close();	
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return nurseVacations;	
 	}
 	
@@ -109,7 +102,6 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			prep.setDate(5, start);
 			prep.setDate(6, end);
 			ResultSet rs = prep.executeQuery();
-			
 			while(rs.next())
 			{
 				String name = rs.getString("nurseName");
@@ -151,7 +143,6 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 	@Override
 	public void deleteNurseVacationById(int vacationId) {
 		try {
-			
 			String sql = "DELETE FROM nurseVacation WHERE vacationId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, vacationId);
@@ -178,7 +169,6 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 
 	@Override
 	public int countNurseVacations(int id) {
-		// TODO Auto-generated method stub
 		int countVac = 0;
 		try {
 			String sql = "SELECT COUNT(vacationId) AS count FROM nurseVacation WHERE nurseId= ?";
@@ -188,7 +178,6 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 			countVac= rs.getInt("count");
 			rs.close();
 			prep.close();
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

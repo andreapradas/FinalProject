@@ -17,7 +17,6 @@ public class OperatingRoom implements Serializable{
 	private List<Boolean> hoursAvailable; //Huecos del horario, crear funcion que te ponga tantos huecos como hab disponibles
 	
 	//Constructors
-	
 	public OperatingRoom() {
 		super();
 	}
@@ -71,7 +70,6 @@ public class OperatingRoom implements Serializable{
 	}
 	
 	//Getters and Setters
-
 	public int getRoomId() {
 		return roomId;
 	}
@@ -113,7 +111,6 @@ public class OperatingRoom implements Serializable{
 
 	
 	//HashCode and Equals
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(roomId);
@@ -132,7 +129,6 @@ public class OperatingRoom implements Serializable{
 	}
 	
 	//ToString
-
 	@Override
 	public String toString() {
 		return "OperatingRoom [roomId=" + roomId + ", roomNumber=" + roomNumber + ", roomFloor=" + roomFloor + "]";

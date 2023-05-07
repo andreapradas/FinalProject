@@ -1,7 +1,6 @@
 package hospital.ui;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.sql.Date;
@@ -10,7 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import hospital.ifaces.*;
 import hospital.jdbc.*;
 import hospital.pojos.Nurse;
@@ -408,7 +406,6 @@ public class Menu {
 			System.out.println("No patients in the data base");
 		}
 		System.out.println("Type the name of the patient: ");
-		Surgery s = null;
 		int patientId;
 		do {
 			String patientName = reader.readLine();
@@ -719,7 +716,6 @@ public class Menu {
 				}
 			} while (true);
 		}
-
 	}
 
 	private static void getAllNurses() throws Exception {
@@ -1265,7 +1261,6 @@ public class Menu {
 						System.out.println("Note: " + (surgeries.size() - surgeriesCount)
 								+ " surgeries could not be programmed for this day, will pass for the next");
 					}
-
 					showSchedule(date);
 				}
 			} else {
@@ -1486,6 +1481,7 @@ public class Menu {
 		System.out.println("Vacation successfully saved!\n");
 	}
 
+	@SuppressWarnings("deprecation")
 	public static Date selectStartDate() throws Exception {
 		Date start = null;
 		Integer year;
@@ -1593,6 +1589,7 @@ public class Menu {
 				}
 			} while(true);
 		} while (Day < 1 || Month > 31);
+		@SuppressWarnings("deprecation")
 		Date date = new Date(Year - 1900, Month - 1, Day);
 		return date;
 	}

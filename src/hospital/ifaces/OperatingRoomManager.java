@@ -22,8 +22,8 @@ public interface OperatingRoomManager {
 	public void updateActivity(int roomId, Boolean active);
 	
 	//Modify
-	public void modifyOperatingRoom(int roomId, String parameterChange, String newParameter);
+	//public void modifyOperatingRoom(int roomId, String parameterChange, String newParameter);
 
 	//Delete
-	public void deleteOperatingRoom(int roomId);
+	//public void deleteOperatingRoom(int roomId);
 }

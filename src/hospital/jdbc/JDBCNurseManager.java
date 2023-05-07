@@ -22,14 +22,12 @@ public class JDBCNurseManager implements NurseManager {
 
 	@Override
 	public void addNurse(Nurse n) {
-		// TODO Auto-generated method stub
 		try{
 			String sql = "INSERT INTO Nurse (nurseName, nurseSurname, nurseEmail) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, n.getNurseName());
 			prep.setString(2, n.getNurseSurname());
 			prep.setString(3, n.getEmail());
-			
 			prep.executeUpdate();			
 			prep.close();	
 		}catch(Exception e) {
@@ -40,14 +38,12 @@ public class JDBCNurseManager implements NurseManager {
 
 	@Override
 	public List<Nurse> getListOfNurses() {
-		// TODO Auto-generated method stub
 		List<Nurse> ListOfNurses = new ArrayList<Nurse>();
 		
 		try {
 			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM Nurse";
 			ResultSet rs = stmt.executeQuery(sql);
-			
 			while(rs.next())
 			{
 				int id = rs.getInt("nurseId");
@@ -57,35 +53,15 @@ public class JDBCNurseManager implements NurseManager {
 				Nurse n = new Nurse(id, name, surname, email);
 				ListOfNurses.add(n);
 			}
-			
 			rs.close();
 			stmt.close();	
-			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return ListOfNurses;
 	}
 
-//	@Override
-//	public void assign(int nurseId, int surgeonID) {
-//		// TODO Auto-generated method stub
-//		try{
-//			String sql = "INSERT INTO WorksWith (nurseId,surgeonID) VALUES (?,?)";
-//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-//			prep.setInt(1, nurseId);
-//			prep.setInt(2, surgeonID);		
-//			
-//			prep.executeUpdate();			
-//					
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
-	
 	@Override
 	public String getNameById(int id) {
 		String name= null;
@@ -106,14 +82,12 @@ public class JDBCNurseManager implements NurseManager {
 
 	@Override
 	public void deleteNurseByID(int nurseId) {
-		// TODO Auto-generated method stub
 		try {
 			String sql = "DELETE FROM Nurse WHERE nurseId=?;";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1,nurseId);
 			prep.executeUpdate();
 			prep.close();
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -121,7 +95,6 @@ public class JDBCNurseManager implements NurseManager {
 
 	@Override
 	public Nurse getNurseById(int nurseId) {
-		// TODO Auto-generated method stub
 		Nurse n = null;
 		try {
 			String sql = "SELECT * FROM Nurse WHERE nurseId=?";

@@ -2,7 +2,6 @@ package hospitalJPA;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.PreparedStatement;
 import java.util.List;
 
 
@@ -24,12 +23,10 @@ public class JPAUserManager implements UserManager{
 	}
 
 	public void connect() {
-		// TODO Auto-generated method stub
 		em = Persistence.createEntityManagerFactory("hospital-surgeries").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_key= ON").executeUpdate();
 		em.getTransaction().commit();
-		//System.out.println(this.getRoles().toString());
 		if(this.getRoles().isEmpty()) {
 			Role surgeon= new Role("surgeon");
 			Role nurse= new Role("nurse");
@@ -42,13 +39,11 @@ public class JPAUserManager implements UserManager{
 
 	@Override
 	public void disconnect() {
-		// TODO Auto-generated method stub
 		em.close();
 	}
 
 	@Override
 	public void newUser(User u) {
-		// TODO Auto-generated method stub
 		em.getTransaction().begin();
 		em.persist(u);
 		em.getTransaction().commit();
@@ -56,25 +51,13 @@ public class JPAUserManager implements UserManager{
 
 	@Override
 	public void newRole(Role r) {
-		// TODO Auto-generated method stub
 		em.getTransaction().begin();
 		em.persist(r);
 		em.getTransaction().commit();
 	}
-
-//	@Override
-//	public Role getRoleByEmail(String email) {
-//		// TODO Auto-generated method stub
-//		Query q = em.createNativeQuery("SELECT roles.* FROM users INNER JOIN "
-//				+ "roles ON roles.id= users.role_id WHERE users.EMAIL= ?", User.class);
-//		q.setParameter(1, email);
-//		Role r= (Role) q.getSingleResult();
-//		return r;
-//	}
 	
 	@Override
 	public void deletUser(String email) {
-		// TODO Auto-generated method stub
 		Query q = em.createNativeQuery("SELECT * FROM users WHERE users.EMAIL= ?", User.class);
 		q.setParameter(1, email);
 		User u= (User) q.getSingleResult();
@@ -85,7 +68,6 @@ public class JPAUserManager implements UserManager{
 	
 	@Override
 	public Role getRole(String roletype) {
-		// TODO Auto-generated method stub
 		Query q = em.createNativeQuery("SELECT * FROM roles WHERE NAME= ?", Role.class);
 		q.setParameter(1, roletype);
 		Role role= (Role) q.getSingleResult();
@@ -116,7 +98,6 @@ public class JPAUserManager implements UserManager{
 	
 	@Override
 	public void changeChief(String email) {
-		// TODO Auto-generated method stub
 		try{
 			em.getTransaction().begin();
 			User u= getUserByEmail(email);
@@ -133,7 +114,6 @@ public class JPAUserManager implements UserManager{
 
 	@Override
 	public List<Role> getRoles() {
-		// TODO Auto-generated method stub
 		Query q = em.createNativeQuery("SELECT * FROM roles", Role.class);
 		List<Role> roles = (List<Role>) q.getResultList();
 		return roles;
@@ -141,7 +121,6 @@ public class JPAUserManager implements UserManager{
 	
 	@Override
 	public List<User> getUsers() {
-		// TODO Auto-generated method stub
 		Query q = em.createNativeQuery("SELECT * FROM users ORDER BY email", User.class);
 		List<User> users = (List<User>) q.getResultList();
 		return users;
@@ -158,7 +137,6 @@ public class JPAUserManager implements UserManager{
 
 	@Override
 	public User checkPassword(String email, String password) {
-		// TODO Auto-generated method stub
 		User u= null;
 		Query q= em.createNativeQuery("SELECT * FROM users WHERE email=? AND password=?", User.class);
 		q.setParameter(1, email);

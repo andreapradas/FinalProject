@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import hospital.ifaces.SurgeonManager;
 import hospital.pojos.Surgeon;
 
@@ -125,7 +124,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 	
 	@Override
 	public List<Surgeon> getListOfSurgeons() {
-		// TODO Auto-generated method stub
 		List<Surgeon> ListOfSurgeons = new ArrayList<Surgeon>();
 		
 		try {
@@ -197,7 +195,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 
 	@Override
 	public void deleteChief() {
-		// TODO Auto-generated method stub
 		Surgeon s= getChiefSurgeon();
 		PreparedStatement prep;
 		try {
@@ -208,40 +205,9 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			rs.close();
 			prep.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-
-//	@Override
-//	public List<Surgeon> getSurgeonsAssignedThisDay(Date date) {
-//		List<Surgeon> surgeons = new ArrayList<Surgeon>();
-//		try {
-//			String sql = "SELECT Surgeon.* FROM worksWith "
-//					+ "INNER JOIN Surgeon ON Surgeon.surgeonId= worksWith.surgeonId "
-//					+ "WHERE dateOfWork= ?";
-//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-//			prep.setDate(1, date);
-//			ResultSet rs = prep.executeQuery();
-//			while(rs.next())
-//			{
-//				int surgeonId = rs.getInt("surgeonId");
-//				String name = rs.getString("surgeonName");
-//				String surname = rs.getString("surgeonSurname");
-//				String email = rs.getString("surgeonEmail");
-//				Boolean chief = rs.getBoolean("chief");
-//				Surgeon s = new Surgeon(surgeonId, name, surname, email, chief);
-//				surgeons.add(s);
-//			}	
-//			rs.close();
-//			prep.close();	
-//		}
-//		catch(Exception e) {
-//		}
-//		return surgeons;
-//	}
-	
 	
 	@Override
 	public List<Surgeon> getSurgeonsAssignedThisDay(Date date) {

@@ -5,9 +5,6 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class NurseVacation implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3514210278458069620L;
 	private int vacationId;
 	private int nurseId;
@@ -25,8 +22,7 @@ public class NurseVacation implements Serializable{
 		this.ends= ends;
 		this.nurseId= nurseID;
 	}
-	
-	
+
 	public NurseVacation(int vacationID, Date starts, Date ends, int nurseID) {
 		super();
 		this.vacationId = vacationID;
@@ -52,6 +48,7 @@ public class NurseVacation implements Serializable{
 		return Objects.equals(this.vacationId, other.vacationId);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public String toString() {
 		return starts.getDate() + "/" + (starts.getMonth()+1) + "/" + (starts.getYear()+1900)
@@ -110,5 +107,4 @@ public class NurseVacation implements Serializable{
 	public void setVacationId(int vacationId) {
 		this.vacationId = vacationId;
 	}
-	
 }

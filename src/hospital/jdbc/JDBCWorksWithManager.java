@@ -3,7 +3,6 @@ package hospital.jdbc;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,23 +18,6 @@ public class JDBCWorksWithManager implements WorksWithManager {
 	{
 		this.manager = m;
 	}
-
-//	@Override
-//	public void addWorksWith(WorksWith wW) {
-//		// TODO Auto-generated method stub
-//		try{
-//			String sql = "INSERT INTO worksWith (teamId, dateOfWork, surgeonID, nurseId) VALUES (?,?,?,?)";
-//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-//			prep.setInt(1, wW.getTeamID());
-//			prep.setDate(2, wW.getDate());
-//			prep.setInt(3, wW.getSurgeonID());
-//			prep.setInt(4, wW.getNurseID());
-//			prep.executeUpdate();			
-//					
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	@Override
 	public int getNurseIdAssignedSurgeonDate(int sId, Date date) throws Exception {
@@ -106,7 +88,6 @@ public class JDBCWorksWithManager implements WorksWithManager {
 
 	@Override
 	public WorksWith getWorksWithByID(int teamID) {
-		// TODO Auto-generated method stub
 		WorksWith ww = null;
 		try {
 			Statement stmt = manager.getConnection().createStatement();
@@ -131,7 +112,6 @@ public class JDBCWorksWithManager implements WorksWithManager {
 
 	@Override
 	public void deleteWorksWithByID(int teamID) {
-		// TODO Auto-generated method stub
 		try {
 			
 			String sql = "DELETE FROM ListOfWW WHERE id=?;";
@@ -145,24 +125,8 @@ public class JDBCWorksWithManager implements WorksWithManager {
 		
 	}
 	
-//	@Override
-//	public void assign(int nurseId, int surgeonID) {
-//		// TODO Auto-generated method stub
-//		try{
-//			String sql = "INSERT INTO WorksWith (nurseId,surgeonID) VALUES (?,?)";
-//			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-//			prep.setInt(1, nurseId);
-//			prep.setInt(2, surgeonID);		
-//			prep.executeUpdate();			
-//			prep.close();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
 	@Override
 	public void assign(int nurseId, int surgeonID, Date date) {
-		// TODO Auto-generated method stub
 		try{
 			String sql = "INSERT INTO WorksWith (nurseId,surgeonID,dateOfWork) VALUES (?,?,?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);

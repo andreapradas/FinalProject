@@ -164,10 +164,8 @@ public class JDBCSurgeryManager implements SurgeryManager {
 						roomId);
 				surgeries.add(s);
 			}
-
 			rs.close();
 			stmt.close();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -196,14 +194,12 @@ public class JDBCSurgeryManager implements SurgeryManager {
 						roomId);
 				surgeries.add(s);
 			}
-
 			rs.close();
 			prep.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return surgeries;
 	}
 
@@ -224,9 +220,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				int patientId = rs.getInt("patientId");
 				int surgeonId = rs.getInt("surgeonId");
 				int roomId = rs.getInt("roomId");
-
-				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId,
-						roomId);
+				Surgery s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId, roomId);
 				surgeriesNotDone.add(s);
 			}
 			rs.close();
@@ -244,7 +238,6 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			Statement stmt = manager.getConnection().createStatement();
 			String sql = "SELECT * FROM Surgery WHERE surgeryId=" + surgeryId;
 			ResultSet rs = stmt.executeQuery(sql);
-
 			surgeryId = rs.getInt("surgeryId");
 			String surgeryType = rs.getString("surgeryType");
 			Date surgeryDate = rs.getDate("surgeryDate");
@@ -253,9 +246,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			int patientId = rs.getInt("patientId");
 			int surgeonId = rs.getInt("surgeonId");
 			int roomId = rs.getInt("roomId");
-
 			s = new Surgery(surgeryId, surgeryType, surgeryDate, startHour, done, patientId, surgeonId, roomId);
-
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
