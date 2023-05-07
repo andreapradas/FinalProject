@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>photos</name>
+			<type>2</type>
+			<location>C:/Users/sabel/git/FinalProject/photos</location>
+		</link>
+	</linkedResources>
 </projectDescription>
