@@ -24,7 +24,7 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 		List<NurseVacation> nurseVacations= new ArrayList<NurseVacation>();
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM nurseVacation";
+			String sql = "SELECT * FROM nurseVacation ORDER BY starts";
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next())
 			{

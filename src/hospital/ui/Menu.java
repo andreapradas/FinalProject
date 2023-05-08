@@ -100,10 +100,10 @@ public class Menu {
 	}
 
 	private static void getUsers() {
-		System.out.format("%-20s %s\n", "Email", "Role");
+		System.out.format("%-30s %s\n", "Email", "Role");
 		System.out.println("------------------------------------");
 		for (User u : userManager.getUsers()) {
-			System.out.format("%-20s %s\n", u.getEmail(), u.getRole().getName());
+			System.out.format("%-30s %s\n", u.getEmail(), u.getRole().getName());
 		}
 		System.out.println();
 	}
@@ -112,29 +112,28 @@ public class Menu {
 		do {
 			try {
 				System.out.println("\nChoose an option");
-				System.out.println(" 1. Add new patient");
-				System.out.println(" 2. Get list of patients");
-				System.out.println(" 3. Add new vacation");
-				System.out.println(" 4. Modify vacation");
-				System.out.println(" 5. Delete vacation");
-				System.out.println(" 6. Get all employee vacations");
-				System.out.println(" 7. Get list of surgeons");
-				System.out.println(" 8. Get list of nurses");
-				System.out.println(" 9. Get list of all employees");
-				System.out.println("10. Add new operating room");
-				System.out.println("11. Change chief surgeon");
-				System.out.println("12. Get surgeons on vacation any day of the given period");
-				System.out.println("13. Get nurses on vacation any day of the given period");
-				System.out.println("14. Delete account");
+				System.out.println(" 1. Register patient");
+				System.out.println(" 2. Modify patient");
+				System.out.println(" 3. List of patients");
+				System.out.println(" 4. List of surgeons");
+				System.out.println(" 5. List of nurses");
+				System.out.println(" 6. List of all employees");
+				System.out.println(" 7. Request days off");
+				System.out.println(" 8. Modify vacation");
+				System.out.println(" 9. Delete vacation");
+				System.out.println("10. My vacations");
+				System.out.println("11. Surgeons on vacation (specific period)");
+				System.out.println("12. Nurses on vacation (specific period)");
+				System.out.println("13. All employee vacations");
+				System.out.println("14. Add new operating room");				
 				System.out.println("15. Create surgery");
-				System.out.println("16. Get list of surgeries");
-				System.out.println("17. Delete surgery");
-				System.out.println("18. Create schedule");
-				System.out.println("19. Get my vacations");
-				System.out.println("20. Modify patient phone number");
-				System.out.println("21. Show schedule");
-
-				System.out.println("22. Log out");
+				System.out.println("16. Delete surgery");
+				System.out.println("17. List of surgeries");
+				System.out.println("18. Change chief surgeon");
+				System.out.println("19. Create schedule");
+				System.out.println("20. Show schedule");
+				System.out.println("21. Log out");
+				System.out.println("22. Delete account");
 				System.out.println(" 0. exit");
 				int choice;
 				do {
@@ -150,73 +149,70 @@ public class Menu {
 					createPatient();
 					break;
 				case 2:
-					getPatients();
+					updatePhoneNumber();
 					break;
 				case 3:
+					getPatients();
+					break;
+				case 4:
+					getAllSurgeons();
+					break;
+				case 5:
+					getAllNurses();
+					break;
+				case 6:
+					getUsers();
+					break;
+				case 7:
 					createVacation("surgeon"); // estamos dentro del menu de chiefSurgeons por lo que el
 					// que este aqui metido va a ser un chief y solo podra añadir sus vacaciones
 					break;
-				case 4:
+				case 8:
 					modifyVacation("surgeon");
 					break;
-				case 5:
+				case 9:
 					deleteVacations("surgeon");
 					break;
-				case 6:
-					getAllVacations();
-					break;
-				case 7:
-					getAllSurgeons();
-					break;
-				case 8:
-					getAllNurses();
-					;
-					break;
-				case 9:
-					getUsers();
-					break;
 				case 10:
-					newOperatingRoom();
-					break;
-				case 11:
-					changeChiefSurg();
-					break;
-				case 12:
-					getSurgeonsOnVacation();
-					break;
-				case 13:
-					getNursesOnVacation();
-					break;
-				case 14:
-					deleteAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
-					main(null);
-				case 15:
-					createSurgery();
-					break;
-				case 16:
-					getAllSurgeries();
-					break;
-				case 17:
-					deleteSurgery();
-					break;
-				case 18:
-					createSchedule();
-					break;
-				case 19:
 					getMyVacations();
 					break;
-				case 20:
-					updatePhoneNumber();
+				case 11:
+					getSurgeonsOnVacation();
 					break;
-				case 21:
+				case 12:
+					getNursesOnVacation();
+					break;	
+				case 13:
+					getAllVacations();
+					break;
+				case 14:
+					newOperatingRoom();
+					break;
+				case 15:
+					createSurgery();
+					break;	
+				case 16:
+					deleteSurgery();
+					break;	
+				case 17:
+					getAllSurgeries();
+					break;
+				case 18:
+					changeChiefSurg();
+					break;
+				case 19:
+					createSchedule();
+					break;
+				case 20:
 					Date date = getDate();
 					showSchedule(date);
 					break;
-
-				case 22:
+				case 21:
 					main(null);
 					break;
-
+				case 22:
+					deleteAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
+					main(null);
 				case 0:
 					jdbcManager.disconnect();
 					userManager.disconnect();
@@ -234,22 +230,21 @@ public class Menu {
 		do {
 			try {
 				System.out.println("\nChoose an option");
-				System.out.println(" 1. Add new patient");
-				System.out.println(" 2. Get list of patients");
-				System.out.println(" 3. Add new vacation");
-				System.out.println(" 4. Modify vacation");
-				System.out.println(" 5. Delete vacation");
-				System.out.println(" 6. Get all employee vacations");
-				System.out.println(" 7. Get list of surgeons");
-				System.out.println(" 8. Get list of nurses");
-				System.out.println(" 9. Get list of all employees");
-				System.out.println("10. Delete account");
+				System.out.println(" 1. Register patient");
+				System.out.println(" 2. Modify patient");
+				System.out.println(" 3. List of patients");
+				System.out.println(" 4. List of surgeons");
+				System.out.println(" 5. List of all employees");
+				System.out.println(" 6. Request days off");
+				System.out.println(" 7. Modify vacation");
+				System.out.println(" 8. Delete vacation");
+				System.out.println(" 9. My vacations");
+				System.out.println("10. All employee vacations");				
 				System.out.println("11. Create surgery");
-				System.out.println("12. Get list of surgeries");
-				System.out.println("13. Get my vacations");
-				System.out.println("14. Modify patient phone number");
-
-				System.out.println("15. Log out");
+				System.out.println("12. List of surgeries");
+				System.out.println("13. Show schedule");
+				System.out.println("14. Log out");
+				System.out.println("15. Delete account");
 				System.out.println(" 0. exit");
 				int choice;
 				do {
@@ -265,35 +260,33 @@ public class Menu {
 					createPatient();
 					break;
 				case 2:
-					getPatients();
+					updatePhoneNumber();
 					break;
 				case 3:
+					getPatients();
+					break;
+				case 4:
+					getAllSurgeons();
+					break;
+				case 5:
+					getUsers();
+					break;
+				case 6:
 					createVacation("surgeon"); // estamos dentro del menu de Surgeons por lo que
 					// el que este aqui metido va a ser un surgeon y solo podra añadir sus
 					// vacaciones
 					break;
-				case 4:
+				case 7:
 					modifyVacation("surgeon");
 					break;
-				case 5:
+				case 8:
 					deleteVacations("surgeon");
 					break;
-				case 6:
-					getAllVacations();
-					break;
-				case 7:
-					getAllSurgeons();
-					break;
-				case 8:
-					getAllNurses();
-					;
-					break;
 				case 9:
-					getUsers();
+					getMyVacations();
 					break;
 				case 10:
-					deleteAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
-					main(null);
+					getAllVacations();
 					break;
 				case 11:
 					createSurgery();
@@ -302,13 +295,14 @@ public class Menu {
 					getAllSurgeries();
 					break;
 				case 13:
-					getMyVacations();
+					Date date = getDate();
+					showSchedule(date);
 					break;
 				case 14:
-					updatePhoneNumber();
+					main(null);
 					break;
-
 				case 15:
+					deleteAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
 					break;
 				case 0:
@@ -328,18 +322,18 @@ public class Menu {
 		do {
 			try {
 				System.out.println("\nChoose an option");
-				System.out.println(" 1. Get list of patients");
-				System.out.println(" 2. Add new vacation");
-				System.out.println(" 3. Modify vacation");
-				System.out.println(" 4. Delete vacation");
-				System.out.println(" 5. Get all employee vacations");
-				System.out.println(" 6. Get list of surgeons");
-				System.out.println(" 7. Get list of nurses");
-				System.out.println(" 8. Get list of all employees");
-				System.out.println(" 9. Delete account");
-				System.out.println("10. Get my vacations");
-
+				System.out.println(" 1. List of patients");
+				System.out.println(" 2. List of nurses");
+				System.out.println(" 3. List of all employees");
+				System.out.println(" 4. Request days off");
+				System.out.println(" 5. Modify vacation");
+				System.out.println(" 6. Delete vacation");
+				System.out.println(" 7. My vacations");
+				System.out.println(" 8. All employee vacations");
+				System.out.println(" 9. List of surgeries");
+				System.out.println("10. Show schedule");
 				System.out.println("11. Log out");
+				System.out.println("12. Delete account");
 				System.out.println(" 0. exit");
 				int choice;
 				do {
@@ -356,36 +350,40 @@ public class Menu {
 					getPatients();
 					break;
 				case 2:
+					getAllNurses();
+					break;
+				case 3:
+					getUsers();
+					break;
+				case 4:
 					createVacation("nurse"); // estamos dentro del menu de nurse
 					// por lo que el que este aqui metido va a ser un nurse y solo podra
 					// añadir sus vacaciones
 					break;
-				case 3:
+				case 5:
 					modifyVacation("nurse");
 					break;
-				case 4:
+				case 6:
 					deleteVacations("nurse");
 					break;
-				case 5:
-					getAllVacations();
-					break;
-				case 6:
-					getAllSurgeons();
-					break;
 				case 7:
-					getAllNurses();
-					break;
-				case 8:
-					getUsers();
-					break;
-				case 9:
-					deleteAccount("nurse", nurseManager.getIdByEmail(u.getEmail()), u.getEmail());
-					main(null);
-					break;
-				case 10:
 					getMyVacations();
 					break;
+				case 8:
+					getAllVacations();
+					break;
+				case 9:
+					getAllSurgeries();
+					break;
+				case 10:
+					Date date = getDate();
+					showSchedule(date);
+					break;
 				case 11:
+					main(null);
+					break;
+				case 12:
+					deleteAccount("nurse", nurseManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
 					break;
 				case 0:
@@ -629,15 +627,26 @@ public class Menu {
 
 	private static void deleteAccount(String role, int id, String email) {
 		try {
-			userManager.deletUser(email);
-			if (role.equals("surgeon") || role.equals("chiefSurgeon")) {
-				userManager.getRole(role).getUsers().remove(surgeonManager.getSurgeonById(id));
-				surgeonManager.deleteSurgeonByID(id);
-			} else if (role.equals("nurse")) {
-				userManager.getRole(role).getUsers().remove(nurseManager.getNurseById(id));
-				nurseManager.deleteNurseByID(id);
-			}
-			System.out.println("Your account has been deleted\n\n");
+			
+			do {
+				System.out.println("Are you sure you want to delete your account? (Y/N)");
+				String conf= reader.readLine();
+				if(conf.equalsIgnoreCase("Y")) {
+					userManager.deletUser(email);
+					if (role.equals("surgeon") || role.equals("chiefSurgeon")) {
+						userManager.getRole(role).getUsers().remove(surgeonManager.getSurgeonById(id));
+						surgeonManager.deleteSurgeonByID(id);
+					} else if (role.equals("nurse")) {
+						userManager.getRole(role).getUsers().remove(nurseManager.getNurseById(id));
+						nurseManager.deleteNurseByID(id);
+					}
+					System.out.println("ACCOUNT DELETED\n\n");
+					break;
+				} else if(conf.equalsIgnoreCase("N")){
+					System.out.println("ACCOUNT NOT DELETED\n\n");
+					break;
+				}
+			}while(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -719,11 +728,11 @@ public class Menu {
 	}
 
 	private static void getAllNurses() throws Exception {
-		System.out.format("%-10s %-15s %-20s %-3s\n", "Name", "Surname", "Email", "Id");
+		System.out.format("%-10s %-15s %-30s %-3s\n", "Name", "Surname", "Email", "Id");
 		System.out.println("----------------------------------------------------");
 		try {
 			for (Nurse n : nurseManager.getListOfNurses()) {
-				System.out.format("%-10s %-15s %-20s %-3d\n", n.getNurseName(), n.getNurseSurname(), n.getEmail(),
+				System.out.format("%-10s %-15s %-30s %-3d\n", n.getNurseName(), n.getNurseSurname(), n.getEmail(),
 						n.getNurseId());
 			}
 		} catch (Exception e) {
@@ -879,12 +888,14 @@ public class Menu {
 			int i;
 			System.out.println("Surgeons:");
 			for (i = 0; i < sVacations.size(); i++) {
-				System.out.print(surgeonManager.getNameById(sVacations.get(i).getSurgeonId()) + ": ");
+				System.out.format("%-20s" , surgeonManager.getNameById(sVacations.get(i).getSurgeonId()) +
+						" " + surgeonManager.getSurgeonById(sVacations.get(i).getSurgeonId()).getSurname() + ": ");
 				System.out.println(sVacations.get(i).toString());
 			}
 			System.out.println("\nNurses:");
 			for (i = 0; i < nVacations.size(); i++) {
-				System.out.print(nurseManager.getNameById(nVacations.get(i).getNurseId()) + ": ");
+				System.out.format("%-20s" ,nurseManager.getNameById(nVacations.get(i).getNurseId())+
+						" " + nurseManager.getNurseById(nVacations.get(i).getNurseId()).getNurseSurname() + ": ");
 				System.out.println(nVacations.get(i).toString());
 			}
 		} catch (Exception e) {
@@ -970,11 +981,11 @@ public class Menu {
 	}
 
 	public static void getAllSurgeons() throws Exception {
-		System.out.format("%-10s %-15s %-20s %-3s %s\n", "Name", "Surname", "Email", "Id", "Chief");
+		System.out.format("%-10s %-15s %-30s %-3s %s\n", "Name", "Surname", "Email", "Id", "Chief");
 		System.out.println("-----------------------------------------------------------");
 		try {
 			for (Surgeon s : surgeonManager.getListOfSurgeons()) {
-				System.out.format("%-10s %-15s %-20s %-3d %s\n", s.getName(), s.getSurname(), s.getEmail(),
+				System.out.format("%-10s %-15s %-30s %-3d %s\n", s.getName(), s.getSurname(), s.getEmail(),
 						s.getSurgeonId(), s.getChief());
 			}
 		} catch (Exception e) {
@@ -1064,117 +1075,6 @@ public class Menu {
 		} while (true);
 		surgeryManager.addSurgery(s);
 	}
-
-//	private static Surgery assignRoom(int surgeryId) {
-//		List<OperatingRoom> rooms = new ArrayList<OperatingRoom>();
-//		rooms = operatingRoomManager.getListOfActiveOperatingRoom();
-//		int roomId;
-//		Surgery s = surgeryManager.getSurgeryById(surgeryId);
-//		for (int i = 0; i < rooms.size(); i++) {
-//			for (int j = 0; j < 4; j++) {
-//				if (rooms.get(i).getHoursAvailable().get(j) == true) {
-//					// Ya se encontró un hueco disponible en una hab
-//					roomId = rooms.get(i).getRoomId();
-//					rooms.get(i).changeHoursAvailable(j);// Cambiar el hueco a OCUPADO
-//					s.setStartHour(rooms.get(i).getStartHour(j));// Obtener la hora de la SURGERY
-//					return s;
-//				}
-//			}
-//		}
-//		return null;// NO se han encontrado HUECOS LIBRES y NO hay más ROOMS
-//	}
-//
-//	private static int assignSurgeon(int surgeryId, Date date) {// La fecha para buscar en la lista de WORKS WITH
-//		List<WorksWith> teamSurgeonNurse = new ArrayList<WorksWith>();
-//		teamSurgeonNurse = worksWithManager.getListOfWorksWith(date);
-//		System.out.println(teamSurgeonNurse);
-//		int surgeonId;
-//		for (int i = 0; i < teamSurgeonNurse.size(); i++) {// Recorrer toda la lista disponible
-//			System.out.println(teamSurgeonNurse.get(i).getHoursAvailable());
-//			for (int j = 0; j < 4; j++) {
-//				if (teamSurgeonNurse.get(i).getHoursAvailable().get(j) == true) {
-//					surgeonId = teamSurgeonNurse.get(i).getSurgeonID();
-//					teamSurgeonNurse.get(i).changeHoursAvailable(j);
-//					return surgeonId;
-//				}
-//			}
-//		}
-//		return -1;// No se han encontrado HUECOS LIBRES en los SURGEON
-//	}
-//
-//	private static void createSchedule() {
-//		try {
-//			List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
-//			int surgeonId,countExtra = 0;
-//			if (surgeries.size() != 0) {
-//				Date date;
-//				do {
-//					System.out.println();
-//					System.out.println("Escoge la fecha para la que realizar la programación: ");
-//					date= getDate();
-//					Date today=  Date.valueOf(LocalDate.now());
-//					if(date.compareTo(today) <0) {
-//						System.out.println("You cannot create a schedule for a passed day");
-//					} else if(date.compareTo(today) ==0) {
-//						System.out.println("You cannot create a schedule for today");
-//					} else {
-//						break;
-//					}
-//				}while(true);
-//				System.out.println("Choose the surgeon-nurse who are going to work together the whole day");
-//				createTeams(date);// Hacer Surgeon-Nurse
-//				chooseActiveRooms();
-//				for (int surgeriesCount = 0; surgeriesCount < surgeries.size(); surgeriesCount++) {
-//					System.out.println(surgeries.get(surgeriesCount));
-//					//roomId = assignRoom(surgeries.get(surgeriesCount).getSurgeryId());
-//					Surgery s=assignRoom(surgeries.get(surgeriesCount).getSurgeryId());
-//					if (s.equals(null)) {// No hay huecos disponibles y hay más cirugías que poner
-//						// Las cirugías que no se han puesto se dejan para el próximo día
-//						countExtra++;// Contar las SURGERIES que se quedan fuera
-//					} else {
-//						// Asignarle la ROOM
-//						surgeries.get(surgeriesCount).setRoomId(s.getRoomId());
-//						surgeries.get(surgeriesCount).setStartHour(s.getStartHour());
-//						// Asignarle un surgeon
-//						surgeonId = assignSurgeon(surgeries.get(surgeriesCount).getSurgeryId(),date);
-//						
-//						System.out.println(surgeonId);
-//						System.out.println(surgeries.get(surgeriesCount).getRoomId());
-//						
-//						surgeries.get(surgeriesCount).setSurgeonId(surgeonId);
-//						surgeryManager.programTheSurgery(surgeries.get(surgeriesCount).getSurgeryId(), date, surgeries.get(surgeriesCount).getStartHour(), surgeries.get(surgeriesCount).getRoomId(), surgeonId);
-//						surgeries.get(surgeriesCount).setDone(true);//Ya se han realizado
-//					}
-//				}
-//				// Mostrar SCHEDULE
-//				System.out.println("Note:" + countExtra + "surgeries could not be programmed for this day, will pass for the next");
-//				showSchedule();
-//			} else {
-//				System.out.println("No surgeries in the bata base");
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
-//
-//	private static int assignSurgeon(int surgeryId, Date date) {// La fecha para buscar en la lista de WORKS WITH
-//		List<WorksWith> teamSurgeonNurse = new ArrayList<WorksWith>();
-//		teamSurgeonNurse = worksWithManager.getListOfWorksWith(date);
-//		System.out.println(teamSurgeonNurse);
-//		int surgeonId;
-//		for (int i = 0; i < teamSurgeonNurse.size(); i++) {// Recorrer toda la lista disponible
-//			System.out.println(teamSurgeonNurse.get(i).getHoursAvailable());
-//			for (int j = 0; j < 4; j++) {
-//				if (teamSurgeonNurse.get(i).getHoursAvailable().get(j) == true) {
-//					surgeonId = teamSurgeonNurse.get(i).getSurgeonID();
-//					teamSurgeonNurse.get(i).changeHoursAvailable(j);
-//					return surgeonId;
-//				}
-//			}
-//		}
-//		return -1;// No se han encontrado HUECOS LIBRES en los SURGEON
-//	}
 
 	private static void createSchedule() {
 		try {

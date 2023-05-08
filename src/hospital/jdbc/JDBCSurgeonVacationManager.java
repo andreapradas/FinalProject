@@ -23,7 +23,7 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM surgeonVacation";
+			String sql = "SELECT * FROM surgeonVacation ORDER BY starts";
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next())
 			{
