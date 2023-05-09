@@ -618,7 +618,7 @@ public class Menu {
 			}
 			System.out.println("User has been created correctly");
 			userManager.newUser(u);
-			System.out.println(u.getRole().getUsers());
+			//System.out.println(u.getRole().getUsers());
 		} catch (Exception e) {
 			System.out.println("It was not created");
 			main(null);
