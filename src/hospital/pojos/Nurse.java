@@ -1,14 +1,30 @@
 package hospital.pojos;
 
 import java.io.Serializable;
+
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Nurse")
+//@XmlType(propOrder = {"email"}) //we only have one, so we do not need to indicate its order
 
 public class Nurse implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@XmlTransient
 	private int nurseId;
+	@XmlAttribute
 	private String nurseName;
+	@XmlAttribute
 	private String nurseSurname;
+	@XmlElement
 	private String email;
 	
 	public Nurse() {

@@ -24,6 +24,7 @@ import hospital.pojos.Surgery;
 import hospital.pojos.User;
 import hospital.pojos.WorksWith;
 import hospital.pojos.phoneException;
+import hospital.xml.XMLManagerImpl;
 import hospitalJPA.JPAUserManager;
 
 public class Menu {
@@ -39,6 +40,7 @@ public class Menu {
 	private static JDBCManager jdbcManager;
 	private static NurseManager nurseManager;
 	private static WorksWithManager worksWithManager;
+	private static XMLManager xmlManager;
 	private static User u;
 
 	public static void main(String[] args) {
@@ -53,7 +55,7 @@ public class Menu {
 		surgeryManager = new JDBCSurgeryManager(jdbcManager);
 		nurseVacationManager = new JDBCNurseVacationManager(jdbcManager);
 		operatingRoomManager = new JDBCOperatingRoomManager(jdbcManager);
-
+		xmlManager = new XMLManagerImpl();
 		do {
 			try {
 				userManager.getRole("surgeon").setUsers(userManager.getSpecificUsers("surgeon"));

@@ -3,14 +3,28 @@ package hospital.pojos;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Patient")
+//@XmlType(propOrder = {"phoneNumber"}) //we only have one, so we do not need to indicate its order
+
 public class Patient implements Serializable {
 
 	private static final long serialVersionUID = -9167697616498813358L;
-
+	@XmlTransient
 	private int patientId;
+	@XmlElement
 	private int phoneNumber;
+	@XmlAttribute
 	private String patientName;
+	@XmlAttribute
 	private String patientSurname;
+	@XmlTransient
 	private byte[] photo;
 
 	public Patient(String name, String surname, int phoneNumber) throws phoneException {
