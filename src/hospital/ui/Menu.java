@@ -632,12 +632,14 @@ public class Menu {
 				System.out.println("Are you sure you want to delete your account? (Y/N)");
 				String conf= reader.readLine();
 				if(conf.equalsIgnoreCase("Y")) {
+					User u= userManager.getUserByEmail(email);
 					userManager.deletUser(email);
 					if (role.equals("surgeon") || role.equals("chiefSurgeon")) {
-						userManager.getRole(role).getUsers().remove(surgeonManager.getSurgeonById(id));
 						surgeonManager.deleteSurgeonByID(id);
+						userManager.getRole(role).getUsers().remove(u);
+						
 					} else if (role.equals("nurse")) {
-						userManager.getRole(role).getUsers().remove(nurseManager.getNurseById(id));
+						userManager.getRole(role).getUsers().remove(u);
 						nurseManager.deleteNurseByID(id);
 					}
 					System.out.println("ACCOUNT DELETED\n\n");
