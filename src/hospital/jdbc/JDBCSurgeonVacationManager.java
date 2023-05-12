@@ -1,8 +1,10 @@
 package hospital.jdbc;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +51,11 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		try {
 			String sql = "SELECT Surgeon.surgeonId, starts, ends, vacationId  FROM Surgeon INNER JOIN "
 					+ "surgeonVacation ON (Surgeon.surgeonId= surgeonVacation.surgeonId)"
-					+ " WHERE Surgeon.surgeonId= ?";
+					+ " WHERE Surgeon.surgeonId= ? AND starts > ? ORDER BY starts";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);	
+			Date today = Date.valueOf(LocalDate.now());
+			prep.setDate(2, today);
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
@@ -140,33 +144,15 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 			e.printStackTrace();
 		}
 	}
-
-	
-//	@Override
-//	public int getSurgeonVacationId(int surgeonId, java.sql.Date start, java.sql.Date end) {
-//		int vacId= null;
-//		try {
-//			Statement stmt = manager.getConnection().createStatement();
-//			String sql = "SELECT vacationId FROM surgeonVacation WHERE surgeonId= surgeonId"
-//					+ " AND starts= start AND ends= end";
-//			ResultSet rs = stmt.executeQuery(sql);
-//			vacId= rs.getInt("vacationId");
-//			rs.close();
-//			stmt.close();
-//			
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return vacId;
-//	}
 	
 	@Override
 	public void deleteSurgeonVacationById(int vacationId) {
 		try {			
-			String sql = "DELETE FROM surgeonVacation WHERE vacationId=?;";
+			String sql = "DELETE FROM surgeonVacation WHERE vacationId=? AND starts>?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, vacationId);
+			Date today = Date.valueOf(LocalDate.now());
+			prep.setDate(2, today);
 			prep.executeUpdate();
 			prep.close();
 		}catch(Exception e) {
@@ -174,14 +160,16 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public int countSurgeonVacations(int id) {
-		// TODO Auto-generated method stub
+	public int countSurgeonVacations(int id, int year) {
 		int countVac = 0;
 		try {
-			String sql = "SELECT COUNT(vacationId) AS count FROM surgeonVacation WHERE surgeonId= ?";
+			String sql = "SELECT COUNT(vacationId) AS count FROM surgeonVacation WHERE surgeonId= ? AND starts BETWEEN ? AND ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);
+			prep.setDate(2, new Date(year-1900, 0, 1));
+			prep.setDate(3, new Date(year-1900, 11, 31));
 			ResultSet rs = prep.executeQuery();
 			countVac= rs.getInt("count");
 			rs.close();
@@ -208,10 +196,9 @@ public class JDBCSurgeonVacationManager implements SurgeonVacationManager{
 
 	@Override
 	public List<SurgeonVacation> getMyVacationsSurgeon(int id) {
-		// TODO Auto-generated method stub
 		List<SurgeonVacation> surgeonVacations= new ArrayList<SurgeonVacation>();
 		try {
-			String sql = "SELECT * FROM surgeonVacation WHERE surgeonId = ?";
+			String sql = "SELECT * FROM surgeonVacation WHERE surgeonId = ? ORDER BY starts";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1,id);	
 			ResultSet rs = prep.executeQuery();

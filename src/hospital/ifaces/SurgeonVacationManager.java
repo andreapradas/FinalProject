@@ -13,8 +13,8 @@ public interface SurgeonVacationManager {
 	void modifySurgeonVacation(int vacationId, java.sql.Date starts, java.sql.Date ends);
 	void deleteSurgeonVacationById(int vacationId);
 	List<SurgeonVacation> getAllVacations();
-	int countSurgeonVacations(int id);
 	List<Surgeon> getSurgeonsOnVacation(Date date);
 	void deleteSurgeonByID(int id);
 	List<SurgeonVacation> getMyVacationsSurgeon(int id);
+	int countSurgeonVacations(int id, int year);
 }

@@ -481,6 +481,7 @@ public class Menu {
 
 	private static void modifyVacation(String role) throws Exception {
 		if (role.equals("surgeon")) {
+			modifyS:
 			do {
 				List<SurgeonVacation> surgVac = surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
 				if (surgVac.size() < 1) {
@@ -490,7 +491,9 @@ public class Menu {
 				int vacId;
 				do {
 					try {
-					System.out.println(surgVac);
+					for(SurgeonVacation sv: surgVac) {
+						System.out.println(sv.toString());
+					}
 					System.out.println("Select the id of the vacation you want to modify");
 					vacId = Integer.parseInt(reader.readLine());
 					break;
@@ -498,44 +501,52 @@ public class Menu {
 						System.out.println("Not valid input");
 					}
 				} while(true);
-				if (surgVac.get(0).getVacationId() == vacId || surgVac.get(1).getVacationId() == vacId) {
-					System.out.println("Select the new vacation dates");
-					Date start = selectStartDate();
-					Date end = new java.sql.Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
-					surgeonVacationManager.modifySurgeonVacation(vacId, start, end);
-					break;
-				} else {
-					System.out.println("Incorrect vacationId\n");
+				for(SurgeonVacation sv: surgVac) {
+					if (sv.getVacationId() == vacId) {
+						System.out.println("Select the new vacation dates");
+						@SuppressWarnings("deprecation")
+						Date start = selectStartDate(role, sv.getStartDate().getYear()+1900);
+						Date end = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
+						surgeonVacationManager.modifySurgeonVacation(vacId, start, end);
+						System.out.println("Your vacation has been modified");
+						break modifyS;
+					}
 				}
+				System.out.println("Incorrect vacationId\n");
 			} while (true);
 		} else if (role.equals("nurse")) {
+			modifyN:
 			do {
 				List<NurseVacation> nurseVac = nurseVacationManager.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
 				if (nurseVac.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 					break;
 				}
-				System.out.println(nurseVac);
-				System.out.println("Select the id of the vacation you want to modify");
 				int vacId;
 				do {
 					try {
+					for(NurseVacation nv: nurseVac) {
+						System.out.println(nv.toString());
+					}
+					System.out.println("Select the id of the vacation you want to modify");
 					vacId = Integer.parseInt(reader.readLine());
 					break;
 					}catch(Exception e){
 						System.out.println("Not valid input");
 					}
 				} while(true);
-				
-				if (nurseVac.get(0).getVacationId() == vacId || nurseVac.get(1).getVacationId() == vacId) {
-					System.out.println("Select the new vacation dates");
-					Date start = selectStartDate();
-					Date end = new java.sql.Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
-					nurseVacationManager.modifyNurseVacation(vacId, start, end);
-					break;
-				} else {
-					System.out.println("Incorrect vacationId\n");
+				for(NurseVacation nv: nurseVac) {
+					if (nv.getVacationId() == vacId) {
+						System.out.println("Select the new vacation dates");
+						@SuppressWarnings("deprecation")
+						Date start = selectStartDate(role, nv.getStartDate().getYear()+1900);
+						Date end = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
+						surgeonVacationManager.modifySurgeonVacation(vacId, start, end);
+						System.out.println("Your vacation has been modified");
+						break modifyN;
+					}
 				}
+				System.out.println("Incorrect vacationId\n");
 			} while (true);
 		}
 	}
@@ -915,8 +926,8 @@ public class Menu {
 				if (sVacations.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 				}
-				for (int i = 0; i < sVacations.size(); i++) {
-					System.out.print(sVacations.get(i).toString());
+				for(SurgeonVacation sv: sVacations) {
+					System.out.println(sv.toString());
 				}
 			} else if (u.getRole().getName().equals("nurse")) {
 				nVacations = new ArrayList<NurseVacation>();
@@ -924,8 +935,8 @@ public class Menu {
 				if (nVacations.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 				}
-				for (int i = 0; i < nVacations.size(); i++) {
-					System.out.print(nVacations.get(i).toString());
+				for(NurseVacation nv: nVacations) {
+					System.out.println(nv.toString());
 				}
 			}
 		} catch (Exception e) {
@@ -1352,18 +1363,10 @@ public class Menu {
 		int nurseId = 0;
 		if (role.equals("surgeon")) {
 			surgId = surgeonManager.getIdByEmail(u.getEmail());
-			if (surgeonVacationManager.countSurgeonVacations(surgId) == 2) {
-				System.out.println("You cannot add more vacations\n");
-				surgeonMenu();
-			}
 		} else if (role.equals("nurse")) {
 			nurseId = nurseManager.getIdByEmail(u.getEmail());
-			if (nurseVacationManager.countNurseVacations(nurseId) == 2) {
-				System.out.println("You cannot add more vacations\n");
-				NurseMenu();
-			}
 		}
-		Date start = selectStartDate();
+		Date start = selectStartDate(role);
 		Date end = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
 		if (role.equals("surgeon")) {
 			SurgeonVacation sVac = new SurgeonVacation(start, end, surgId);
@@ -1376,7 +1379,7 @@ public class Menu {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static Date selectStartDate() throws Exception {
+	public static Date selectStartDate(String role) throws Exception {
 		Date start = null;
 		Integer year;
 		while (true) {
@@ -1396,6 +1399,43 @@ public class Menu {
 				System.out.println("Not valid year");
 			}catch(Exception e){
 				System.out.println("Not valid input");
+			}
+		}
+		int surgId = 0;
+		int nurseId = 0;
+		if (role.equals("surgeon")) {
+			surgId = surgeonManager.getIdByEmail(u.getEmail());
+			if (surgeonVacationManager.countSurgeonVacations(surgId, year) == 2) {
+				System.out.println("You cannot add more vacations these year\n");
+				do {
+					System.out.println("Do you want to select a new date? (Y/N)");
+					String conf= reader.readLine();
+					if(conf.equalsIgnoreCase("Y")) {
+						selectStartDate(role);
+						break;
+					} else if(conf.equalsIgnoreCase("N")){
+						System.out.println("Vacation not saved");
+						surgeonMenu();
+						break;
+					}
+				}while(true);
+			}
+		} else if (role.equals("nurse")) {
+			nurseId = nurseManager.getIdByEmail(u.getEmail());
+			if (nurseVacationManager.countNurseVacations(nurseId, year) == 2) {
+				System.out.println("You cannot add more vacations these year\n");
+				do {
+					System.out.println("Do you want to select a new date? (Y/N)");
+					String conf= reader.readLine();
+					if(conf.equalsIgnoreCase("Y")) {
+						selectStartDate(role);
+						break;
+					} else if(conf.equalsIgnoreCase("N")){
+						System.out.println("Vacation not saved");
+						NurseMenu();
+						break;
+					}
+				}while(true);
 			}
 		}
 		int option;
@@ -1440,11 +1480,119 @@ public class Menu {
 		Date today = Date.valueOf(LocalDate.now());
 		if (start.compareTo(today) < 0) {
 			System.out.println("You cannot add a vacation for a passed day");
-			selectStartDate();
+			selectStartDate(role);
 		}
 		return start;
 	}
 
+	@SuppressWarnings("deprecation")
+	public static Date selectStartDate(String role, int vacYear) throws Exception {
+		Date start = null;
+		Integer year;
+		System.out.println(vacYear);
+		while (true) {
+			try {
+				System.out.println("Type the year:");
+				do {
+					try {
+					year = Integer.parseInt(reader.readLine());
+					break;
+					}catch(Exception e){
+						System.out.println("Not valid input");
+					}
+				} while(true);
+				if (year.toString().length() == 4) {
+					break;
+				}
+				System.out.println("Not valid year");
+			}catch(Exception e){
+				System.out.println("Not valid input");
+			}
+		}
+		int surgId = 0;
+		int nurseId = 0;
+		if (role.equals("surgeon")) {
+			surgId = surgeonManager.getIdByEmail(u.getEmail());
+			if (surgeonVacationManager.countSurgeonVacations(surgId, year) == 2 && year!= vacYear) {
+				System.out.println("You cannot add more vacations these year\n");
+				do {
+					System.out.println("Do you want to select a new date? (Y/N)");
+					String conf= reader.readLine();
+					if(conf.equalsIgnoreCase("Y")) {
+						selectStartDate(role,vacYear);
+						break;
+					} else if(conf.equalsIgnoreCase("N")){
+						System.out.println("Vacation not saved");
+						surgeonMenu();
+						break;
+					}
+				}while(true);
+			}
+		} else if (role.equals("nurse")) {
+			nurseId = nurseManager.getIdByEmail(u.getEmail());
+			if (nurseVacationManager.countNurseVacations(nurseId, year) == 2 && year!= vacYear) {
+				System.out.println("You cannot add more vacations these year\n");
+				do {
+					System.out.println("Do you want to select a new date? (Y/N)");
+					String conf= reader.readLine();
+					if(conf.equalsIgnoreCase("Y")) {
+						selectStartDate(role, vacYear);
+						break;
+					} else if(conf.equalsIgnoreCase("N")){
+						System.out.println("Vacation not saved");
+						NurseMenu();
+						break;
+					}
+				}while(true);
+			}
+		}
+		int option;
+		do {
+			System.out.println("These are the vacation periods, please choose one of them:");
+			System.out.println("1) 1 june to 15 june");
+			System.out.println("2) 16 june to 30 june");
+			System.out.println("3) 1 july to 15 july");
+			System.out.println("4) 16 july to 30 july");
+			System.out.println("5) 1 august to 15 august");
+			System.out.println("6) 16 august to 30 august");
+			do {
+				try {
+				option = Integer.parseInt(reader.readLine());
+				break;
+				}catch(Exception e){
+					System.out.println("Not valid input");
+				}
+			} while(true);			
+			year = year - 1900;
+			switch (option) {
+			case 1:
+				start = new Date(year, 5, 1);
+				break;
+			case 2:
+				start = new Date(year, 5, 16);
+				break;
+			case 3:
+				start = new Date(year, 6, 1);
+				break;
+			case 4:
+				start = new Date(year, 6, 16);
+				break;
+			case 5:
+				start = new Date(year, 7, 1);
+				break;
+			case 6:
+				start = new Date(year, 7, 16);
+				break;
+			}
+		} while (option < 1 || option > 6);
+		Date today = Date.valueOf(LocalDate.now());
+		if (start.compareTo(today) < 0) {
+			System.out.println("You cannot add a vacation for a passed day");
+			selectStartDate(role);
+		}
+		return start;
+	}
+	
 	public static Date getDate() throws Exception {
 		Integer Year;
 		Integer Month;

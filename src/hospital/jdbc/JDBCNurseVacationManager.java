@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +51,11 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 		try {
 			String sql = "SELECT Nurse.nurseId, starts, ends, vacationId  FROM Nurse INNER JOIN "
 					+ "nurseVacation ON (Nurse.nurseId= nurseVacation.nurseId)"
-					+ " WHERE Nurse.nurseId= ?";
+					+ " WHERE Nurse.nurseId= ? AND starts > ? ORDER BY starts";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);	
+			Date today = Date.valueOf(LocalDate.now());
+			prep.setDate(2, today);
 			ResultSet rs = prep.executeQuery();
 			while(rs.next())
 			{
@@ -143,9 +146,11 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 	@Override
 	public void deleteNurseVacationById(int vacationId) {
 		try {
-			String sql = "DELETE FROM nurseVacation WHERE vacationId=?;";
+			String sql = "DELETE FROM nurseVacation WHERE vacationId=? AND starts > ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, vacationId);
+			Date today = Date.valueOf(LocalDate.now());
+			prep.setDate(2, today);
 			prep.executeUpdate();
 			prep.close();
 		}catch(Exception e) {
@@ -153,13 +158,16 @@ public class JDBCNurseVacationManager implements NurseVacationManager{
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public int countNurseVacations(int id) {
+	public int countNurseVacations(int id, int year) {
 		int countVac = 0;
 		try {
-			String sql = "SELECT COUNT(vacationId) AS count FROM nurseVacation WHERE nurseId= ?";
+			String sql = "SELECT COUNT(vacationId) AS count FROM nurseVacation WHERE nurseId= ? AND starts BETWEEN ? AND ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);
+			prep.setDate(2, new Date(year-1900, 0, 1));
+			prep.setDate(3, new Date(year-1900, 11, 31));
 			ResultSet rs = prep.executeQuery();
 			countVac= rs.getInt("count");
 			rs.close();
