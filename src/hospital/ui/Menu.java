@@ -417,8 +417,9 @@ public class Menu {
 		System.out.println(p);
 	}
 	
-	
-
+	private static void printMeNurse(Integer nurseId) {
+		xmlManager.nurse2xml(nurseId);;
+	}
 
 	private static void updatePhoneNumber() throws Exception, phoneException {
 		try {
