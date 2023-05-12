@@ -9,16 +9,19 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import hospital.ifaces.NurseManager;
+import hospital.ifaces.PatientManager;
 import hospital.ifaces.XMLManager;
 import hospital.jdbc.JDBCManager;
 import hospital.jdbc.JDBCNurseManager;
+import hospital.jdbc.JDBCPatientManager;
 import hospital.pojos.Nurse;
 import hospital.pojos.Patient;
 
 public class XMLManagerImpl implements XMLManager {
-	JDBCManager manager;
-	private static JDBCManager jdbcManager;
+	private static JDBCManager jdbcManager = new JDBCManager();
 	private static NurseManager nurseManager;
+	private static PatientManager patientManager;
+
 
 
 	@Override
@@ -27,7 +30,7 @@ public class XMLManagerImpl implements XMLManager {
 
 		try {
 			// Do a sql query to get the nurse by the id
-			Statement stmt = manager.getConnection().createStatement();
+			Statement stmt = jdbcManager.getConnection().createStatement();
 			String sql = "SELECT * from Nurse where id =" + id;
 			ResultSet rs = stmt.executeQuery(sql);
 			String name = rs.getString("nurseName");
@@ -65,19 +68,20 @@ public class XMLManagerImpl implements XMLManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public Patient xml2Patient(File xml) {
 		Patient p = null;
 		try {
+			patientManager = new JDBCPatientManager(jdbcManager);
+
 			JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			p = (Patient) unmarshaller.unmarshal(xml);
 
 			// JDBC code to insert patient to table patients
-			
+			patientManager.addPatient(p);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
