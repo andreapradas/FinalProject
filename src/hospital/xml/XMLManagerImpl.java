@@ -8,18 +8,23 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import hospital.ifaces.NurseManager;
 import hospital.ifaces.XMLManager;
 import hospital.jdbc.JDBCManager;
+import hospital.jdbc.JDBCNurseManager;
 import hospital.pojos.Nurse;
 import hospital.pojos.Patient;
 
 public class XMLManagerImpl implements XMLManager {
 	JDBCManager manager;
+	private static JDBCManager jdbcManager;
+	private static NurseManager nurseManager;
+
 
 	@Override
 	public void nurse2xml(Integer id) {
 		Nurse n = null;
-		manager = new JDBCManager();
+
 		try {
 			// Do a sql query to get the nurse by the id
 			Statement stmt = manager.getConnection().createStatement();
@@ -72,6 +77,7 @@ public class XMLManagerImpl implements XMLManager {
 			p = (Patient) unmarshaller.unmarshal(xml);
 
 			// JDBC code to insert patient to table patients
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -82,11 +88,14 @@ public class XMLManagerImpl implements XMLManager {
 	public Nurse xml2Nurse(File xml) {
 		Nurse n = null;
 		try {
+
+			nurseManager = new JDBCNurseManager(jdbcManager);
 			JAXBContext jaxbContext = JAXBContext.newInstance(Nurse.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			n = (Nurse) unmarshaller.unmarshal(xml);
 
 			// JDBC code to insert patient to table patients
+			nurseManager.addNurse(n);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
