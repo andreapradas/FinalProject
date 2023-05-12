@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!DOCTYPE Patient [
+<!ELEMENT Patient (phoneNumber)>
+	<!ATTLIST Patient patientName CDATA #REQUIRED>
+	<!ATTLIST Patient patientSurname CDATA #REQUIRED>
+	<!ELEMENT phoneNumber (#PCDATA)>
+]>
+
+<Patient patientName = "Maria" patientSurname = "Perez">
+	<phoneNumber> 123456789 </phoneNumber> 
+	
+	
+</Patient>

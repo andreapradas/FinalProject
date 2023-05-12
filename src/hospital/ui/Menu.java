@@ -400,6 +400,25 @@ public class Menu {
 			}
 		} while (true);
 	}
+	
+	private static void loadNurse() {
+		Nurse n = null;
+		File file = new File("./xmls/ExternalNurse.xml");
+		n = xmlManager.xml2Nurse(file);
+		
+		System.out.println(n);
+	}
+	
+	private static void loadPatient() {
+		Patient p = null;
+		File file = new File("./xmls/ExternalNurse.xml");
+		p = xmlManager.xml2Patient(file);
+		
+		System.out.println(p);
+	}
+	
+	
+
 
 	private static void updatePhoneNumber() throws Exception, phoneException {
 		try {

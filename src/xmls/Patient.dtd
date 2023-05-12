@@ -1,0 +1,6 @@
+<!DOCTYPE Patient [
+<!ELEMENT Patient (phoneNumber)>
+	<!ATTLIST Patient patientName CDATA #REQUIRED>
+	<!ATTLIST Patient patientSurname CDATA #REQUIRED>
+	<!ELEMENT phoneNumber (#PCDATA)>
+]>

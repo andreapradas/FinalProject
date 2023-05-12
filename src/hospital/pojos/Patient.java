@@ -17,7 +17,7 @@ public class Patient implements Serializable {
 
 	private static final long serialVersionUID = -9167697616498813358L;
 	@XmlTransient
-	private int patientId;
+	private int patientId;//nO appear in the xmL
 	@XmlElement
 	private int phoneNumber;
 	@XmlAttribute
