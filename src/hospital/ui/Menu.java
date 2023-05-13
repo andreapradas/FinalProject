@@ -561,7 +561,7 @@ public class Menu {
 						@SuppressWarnings("deprecation")
 						Date start = selectStartDate(role, nv.getStartDate().getYear()+1900);
 						Date end = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
-						surgeonVacationManager.modifySurgeonVacation(vacId, start, end);
+						nurseVacationManager.modifyNurseVacation(vacId, start, end);
 						System.out.println("Your vacation has been modified");
 						break modifyN;
 					}

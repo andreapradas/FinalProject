@@ -192,22 +192,6 @@ public class JDBCSurgeonManager implements SurgeonManager{
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void deleteChief() {
-		Surgeon s= getChiefSurgeon();
-		PreparedStatement prep;
-		try {
-			String sql = "UPDATE Surgeon SET chief=false WHERE surgeonId=?";
-			prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, s.getSurgeonId());
-			ResultSet rs = prep.executeQuery();
-			rs.close();
-			prep.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	@Override
 	public List<Surgeon> getSurgeonsAssignedThisDay(Date date) {

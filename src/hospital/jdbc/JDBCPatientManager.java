@@ -177,31 +177,4 @@ public class JDBCPatientManager implements PatientManager{
 			return null;
 		}
 	}
-	
-	@Override
-	public List<Patient> getPatientBySurname(String patientSurname, String patientName) {
-		List<Patient> patients = new ArrayList<Patient>();
-		try {
-			String sql = "SELECT * FROM patient WHERE UPPER(patientName)=UPPER(?)"
-					+ " AND UPPER(patientSurname)=UPPER(?) ORDER BY patientName, patientSurname";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setString(1, patientName);
-			prep.setString(2, patientSurname);
-			ResultSet rs = prep.executeQuery();
-			while(rs.next())
-			{
-				String name = rs.getString("patientName");
-				int patientId = rs.getInt("patientId");
-				String surname = rs.getString("patientSurname");
-				int phoneNumber = rs.getInt("phoneNumber");
-				Patient p = new Patient(patientId, name, surname, phoneNumber);
-				patients.add(p);
-			}		
-			rs.close();
-			prep.close();
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-		return patients;
-	}
 }

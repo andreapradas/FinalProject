@@ -11,7 +11,6 @@ public interface SurgeonManager {
 	List<Surgeon> getListOfSurgeons();
 	Surgeon getChiefSurgeon();
 	void changeChief(int id);
-	void deleteChief();
 	int getIdByEmail(String email);
 	String getEmailById(int id);
 	Surgeon getSurgeonById(int Id);
