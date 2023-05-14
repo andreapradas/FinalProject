@@ -69,13 +69,13 @@ public class Menu {
 				int choice;
 				do {
 					try {
-					choice = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						choice = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
-			
+				} while (true);
+
 				switch (choice) {
 				case 1:
 					signIn();
@@ -127,7 +127,7 @@ public class Menu {
 				System.out.println("11. Surgeons on vacation (specific period)");
 				System.out.println("12. Nurses on vacation (specific period)");
 				System.out.println("13. All employee vacations");
-				System.out.println("14. Add new operating room");				
+				System.out.println("14. Add new operating room");
 				System.out.println("15. Create surgery");
 				System.out.println("16. Delete surgery");
 				System.out.println("17. List of surgeries");
@@ -143,12 +143,12 @@ public class Menu {
 				int choice;
 				do {
 					try {
-					choice = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						choice = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
+				} while (true);
 				switch (choice) {
 				case 1:
 					createPatient();
@@ -186,7 +186,7 @@ public class Menu {
 					break;
 				case 12:
 					getNursesOnVacation();
-					break;	
+					break;
 				case 13:
 					getAllVacations();
 					break;
@@ -195,10 +195,10 @@ public class Menu {
 					break;
 				case 15:
 					createSurgery();
-					break;	
+					break;
 				case 16:
 					deleteSurgery();
-					break;	
+					break;
 				case 17:
 					getAllSurgeries();
 					break;
@@ -253,7 +253,7 @@ public class Menu {
 				System.out.println(" 7. Modify vacation");
 				System.out.println(" 8. Delete vacation");
 				System.out.println(" 9. My vacations");
-				System.out.println("10. All employee vacations");				
+				System.out.println("10. All employee vacations");
 				System.out.println("11. Create surgery");
 				System.out.println("12. List of surgeries");
 				System.out.println("13. Show schedule");
@@ -263,12 +263,12 @@ public class Menu {
 				int choice;
 				do {
 					try {
-					choice = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						choice = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
+				} while (true);
 				switch (choice) {
 				case 1:
 					createPatient();
@@ -353,13 +353,13 @@ public class Menu {
 				int choice;
 				do {
 					try {
-					choice = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						choice = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
-				
+				} while (true);
+
 				switch (choice) {
 				case 1:
 					getPatients();
@@ -395,7 +395,7 @@ public class Menu {
 					showSchedule(date);
 					break;
 				case 11:
-					printMeNurse(nurseManager.getIdByEmail(u.getEmail()) );
+					printMeNurse(nurseManager.getIdByEmail(u.getEmail()));
 					break;
 				case 12:
 					main(null);
@@ -416,47 +416,44 @@ public class Menu {
 			}
 		} while (true);
 	}
-	
+
 	private static void loadNurse() {
 		Nurse n = null;
 		File file = new File(".\\src\\xmls\\ExternalNurse.xml");
 		n = xmlManager.xml2Nurse(file);
-		
 		System.out.println(n);
 	}
-	
+
 	private static void loadPatient() {
 		Patient p = null;
 		File file = new File(".\\src\\xmls\\ExternalPatient.xml");
 		p = xmlManager.xml2Patient(file);
 		System.out.println(p);
 	}
-	
+
 	private static void printMeNurse(Integer nurseId) {
 		xmlManager.nurse2xml(nurseId);
 		System.out.println("You have been printed to an xml document");
 	}
 
-
 	private static void printPatient() {
 		int patientId;
 		do {
 			System.out.println("Select the patient you want to print");
-			List<Patient> patients= patientManager.getListOfPatients();
+			List<Patient> patients = patientManager.getListOfPatients();
 			System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
 			System.out.println("-----------------------------");
 			for (Patient p : patients) {
-				System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(),
-						p.getPatientId());
+				System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(), p.getPatientId());
 			}
 			do {
 				try {
-				patientId = Integer.parseInt(reader.readLine());
-				break;
-				}catch(Exception e){
+					patientId = Integer.parseInt(reader.readLine());
+					break;
+				} catch (Exception e) {
 					System.out.println("Not valid input");
 				}
-			} while(true);
+			} while (true);
 			if (patientManager.getListOfPatients().contains(patientManager.getPatientById(patientId))) {
 				break;
 			} else {
@@ -501,12 +498,12 @@ public class Menu {
 					}
 					do {
 						try {
-						patientId = Integer.parseInt(reader.readLine());
-						break;
-						}catch(Exception e){
+							patientId = Integer.parseInt(reader.readLine());
+							break;
+						} catch (Exception e) {
 							System.out.println("Not valid input");
 						}
-					} while(true);
+					} while (true);
 					if (patientManager.getListOfPatients().contains(patientManager.getPatientById(patientId))) {
 						break;
 					} else {
@@ -526,12 +523,12 @@ public class Menu {
 				int phone;
 				do {
 					try {
-					phone = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						phone = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
+				} while (true);
 				if (patient.checkPhoneNumber(phone)) {
 					patientManager.updatePhoneNumber(patientId, phone);
 					patient.setPhoneNumber(phone);
@@ -547,9 +544,9 @@ public class Menu {
 
 	private static void modifyVacation(String role) throws Exception {
 		if (role.equals("surgeon")) {
-			modifyS:
-			do {
-				List<SurgeonVacation> surgVac = surgeonVacationManager.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
+			modifyS: do {
+				List<SurgeonVacation> surgVac = surgeonVacationManager
+						.getSurgeonReservedVacation(surgeonManager.getIdByEmail(u.getEmail()));
 				if (surgVac.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 					break;
@@ -557,21 +554,21 @@ public class Menu {
 				int vacId;
 				do {
 					try {
-					for(SurgeonVacation sv: surgVac) {
-						System.out.println(sv.toString());
-					}
-					System.out.println("Select the id of the vacation you want to modify");
-					vacId = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						for (SurgeonVacation sv : surgVac) {
+							System.out.println(sv.toString());
+						}
+						System.out.println("Select the id of the vacation you want to modify");
+						vacId = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
-				for(SurgeonVacation sv: surgVac) {
+				} while (true);
+				for (SurgeonVacation sv : surgVac) {
 					if (sv.getVacationId() == vacId) {
 						System.out.println("Select the new vacation dates");
 						@SuppressWarnings("deprecation")
-						Date start = selectStartDate(role, sv.getStartDate().getYear()+1900);
+						Date start = selectStartDate(role, sv.getStartDate().getYear() + 1900);
 						Date end = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
 						surgeonVacationManager.modifySurgeonVacation(vacId, start, end);
 						System.out.println("Your vacation has been modified");
@@ -581,9 +578,9 @@ public class Menu {
 				System.out.println("Incorrect vacationId\n");
 			} while (true);
 		} else if (role.equals("nurse")) {
-			modifyN:
-			do {
-				List<NurseVacation> nurseVac = nurseVacationManager.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
+			modifyN: do {
+				List<NurseVacation> nurseVac = nurseVacationManager
+						.getNurseReservedVacation(nurseManager.getIdByEmail(u.getEmail()));
 				if (nurseVac.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 					break;
@@ -591,21 +588,21 @@ public class Menu {
 				int vacId;
 				do {
 					try {
-					for(NurseVacation nv: nurseVac) {
-						System.out.println(nv.toString());
-					}
-					System.out.println("Select the id of the vacation you want to modify");
-					vacId = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						for (NurseVacation nv : nurseVac) {
+							System.out.println(nv.toString());
+						}
+						System.out.println("Select the id of the vacation you want to modify");
+						vacId = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
-				for(NurseVacation nv: nurseVac) {
+				} while (true);
+				for (NurseVacation nv : nurseVac) {
 					if (nv.getVacationId() == vacId) {
 						System.out.println("Select the new vacation dates");
 						@SuppressWarnings("deprecation")
-						Date start = selectStartDate(role, nv.getStartDate().getYear()+1900);
+						Date start = selectStartDate(role, nv.getStartDate().getYear() + 1900);
 						Date end = new Date(start.getTime() + (1000 * 60 * 60 * 24 * 15));
 						nurseVacationManager.modifyNurseVacation(vacId, start, end);
 						System.out.println("Your vacation has been modified");
@@ -646,13 +643,13 @@ public class Menu {
 			int option;
 			do {
 				try {
-				option = Integer.parseInt(reader.readLine());
-				break;
-				}catch(Exception e){
+					option = Integer.parseInt(reader.readLine());
+					break;
+				} catch (Exception e) {
 					System.out.println("Not valid input");
 				}
-			} while(true);
-			
+			} while (true);
+
 			Role role = null;
 			Boolean chief = null;
 			switch (option) {
@@ -675,28 +672,39 @@ public class Menu {
 			}
 			System.out.println("Type your email: ");
 			String email = reader.readLine();
-			System.out.println("Type the password: ");
-			String password = reader.readLine();
-			System.out.println("Type your name:");
-			String name = reader.readLine();
-			System.out.println("Type your surname:");
-			String surname = reader.readLine();
-			Surgeon s;
-			Nurse n;
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-			byte[] hash = md.digest();
-			User u = new User(email, hash, role);
-			u.getRole().addUser(u);
-			if (role.getName().equals("surgeon") || role.getName().equals("chiefSurgeon")) {
-				s = new Surgeon(name, surname, email, chief);
-				surgeonManager.addSurgeon(s);
-			} else if (role.getName().equals("nurse")) {
-				n = new Nurse(name, surname, email);
-				nurseManager.addNurse(n);
+			User u;
+			if (nurseManager.getListOfNurses().contains(nurseManager.getNurseById(nurseManager.getIdByEmail(email)))) {
+				System.out.println("Type the password: ");
+				String password = reader.readLine();
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				md.update(password.getBytes());
+				byte[] hash = md.digest();
+				u = new User(email, hash, userManager.getRole("nurse"));
+				u.getRole().addUser(u);
+			} else {
+				System.out.println("Type the password: ");
+				String password = reader.readLine();
+				System.out.println("Type your name:");
+				String name = reader.readLine();
+				System.out.println("Type your surname:");
+				String surname = reader.readLine();
+				Surgeon s;
+				Nurse n;
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				md.update(password.getBytes());
+				byte[] hash = md.digest();
+				u = new User(email, hash, role);
+				u.getRole().addUser(u);
+				if (role.getName().equals("surgeon") || role.getName().equals("chiefSurgeon")) {
+					s = new Surgeon(name, surname, email, chief);
+					surgeonManager.addSurgeon(s);
+				} else if (role.getName().equals("nurse")) {
+					n = new Nurse(name, surname, email);
+					nurseManager.addNurse(n);
+				}
 			}
-			System.out.println("User has been created correctly");
 			userManager.newUser(u);
+			System.out.println("User has been created correctly");
 		} catch (Exception e) {
 			System.out.println("It was not created");
 			main(null);
@@ -705,28 +713,28 @@ public class Menu {
 
 	private static void deleteAccount(String role, int id, String email) {
 		try {
-			
+
 			do {
 				System.out.println("Are you sure you want to delete your account? (Y/N)");
-				String conf= reader.readLine();
-				if(conf.equalsIgnoreCase("Y")) {
-					User u= userManager.getUserByEmail(email);
+				String conf = reader.readLine();
+				if (conf.equalsIgnoreCase("Y")) {
+					User u = userManager.getUserByEmail(email);
 					userManager.deletUser(email);
 					if (role.equals("surgeon") || role.equals("chiefSurgeon")) {
 						surgeonManager.deleteSurgeonByID(id);
 						userManager.getRole(role).getUsers().remove(u);
-						
+
 					} else if (role.equals("nurse")) {
 						userManager.getRole(role).getUsers().remove(u);
 						nurseManager.deleteNurseByID(id);
 					}
 					System.out.println("ACCOUNT DELETED\n\n");
 					break;
-				} else if(conf.equalsIgnoreCase("N")){
+				} else if (conf.equalsIgnoreCase("N")) {
 					System.out.println("ACCOUNT NOT DELETED\n\n");
 					break;
 				}
-			}while(true);
+			} while (true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -749,12 +757,12 @@ public class Menu {
 					System.out.print("\nPlease enter the nurse ID to assign: ");
 					do {
 						try {
-						nurseId = Integer.parseInt(reader.readLine());
-						break;
-						}catch(Exception e){
+							nurseId = Integer.parseInt(reader.readLine());
+							break;
+						} catch (Exception e) {
 							System.out.println("Not valid input");
 						}
-					} while(true);					
+					} while (true);
 					if (!avaliableNurses(date).contains(nurseManager.getNurseById(nurseId))) {
 						System.out.println("That nurse is not avaliable\n");
 					} else {
@@ -773,12 +781,12 @@ public class Menu {
 					System.out.print("\nPlease enter the surgeon ID to assign: ");
 					do {
 						try {
-						surgeonId = Integer.parseInt(reader.readLine());
-						break;
-						}catch(Exception e){
+							surgeonId = Integer.parseInt(reader.readLine());
+							break;
+						} catch (Exception e) {
 							System.out.println("Not valid input");
 						}
-					} while(true);
+					} while (true);
 					if (!avaliableSurgeons(date).contains(surgeonManager.getSurgeonById(surgeonId))) {
 						System.out.println("That surgeon is not avaliable");
 					} else {
@@ -833,12 +841,12 @@ public class Menu {
 		Integer newChiefId = null;
 		do {
 			try {
-			newChiefId = Integer.parseInt(reader.readLine());
-			break;
-			}catch(Exception e){
+				newChiefId = Integer.parseInt(reader.readLine());
+				break;
+			} catch (Exception e) {
 				System.out.println("Not valid input");
 			}
-		} while(true);
+		} while (true);
 		if (userManager.getChief().getEmail().equals(surgeonManager.getEmailById(newChiefId))) {
 			System.out.println("That's the actual chief, no changes done\n");
 
@@ -868,12 +876,12 @@ public class Menu {
 					int vacId;
 					do {
 						try {
-						vacId = Integer.parseInt(reader.readLine());
-						break;
-						}catch(Exception e){
+							vacId = Integer.parseInt(reader.readLine());
+							break;
+						} catch (Exception e) {
 							System.out.println("Not valid input");
 						}
-					} while(true);
+					} while (true);
 					if (surgVac.get(0).getVacationId() == vacId || surgVac.get(1).getVacationId() == vacId) {
 						surgeonVacationManager.deleteSurgeonVacationById(vacId);
 						break;
@@ -894,12 +902,12 @@ public class Menu {
 					int vacId;
 					do {
 						try {
-						vacId = Integer.parseInt(reader.readLine());
-						break;
-						}catch(Exception e){
+							vacId = Integer.parseInt(reader.readLine());
+							break;
+						} catch (Exception e) {
 							System.out.println("Not valid input");
 						}
-					} while(true);
+					} while (true);
 					if (nurseVac.get(0).getVacationId() == vacId || nurseVac.get(1).getVacationId() == vacId) {
 						nurseVacationManager.deleteNurseVacationById(vacId);
 						break;
@@ -915,10 +923,11 @@ public class Menu {
 
 	private static void deleteSurgery() {
 		try {
-			//Listar todas las SURGERIES que puede borrar, que NO se hayan hecho y que NO se hayan programado aun
+			// Listar todas las SURGERIES que puede borrar, que NO se hayan hecho y que NO
+			// se hayan programado aun
 			List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
-			boolean checkId=false;//Para comprobar si existe o no el id introducido entre las cirugias
-			if(surgeries.size()>0) {
+			boolean checkId = false;// Para comprobar si existe o no el id introducido entre las cirugias
+			if (surgeries.size() > 0) {
 				System.out.format("%-15s %-18s %-13s %-15s %s\n", "Patient name", "Patient surname", "Patient id",
 						"Surgery type", "Surgery Id");
 				System.out.println("-------------------------------------------------------------------------");
@@ -932,29 +941,29 @@ public class Menu {
 				int surgeryId;
 				do {
 					try {
-					surgeryId = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						surgeryId = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
-				for(int i=0;i<surgeries.size();i++) {
-					if(surgeryId == surgeries.get(i).getSurgeryId()) {//Es que está entre las listadas
+				} while (true);
+				for (int i = 0; i < surgeries.size(); i++) {
+					if (surgeryId == surgeries.get(i).getSurgeryId()) {// Es que está entre las listadas
 						surgeryManager.deleteSurgery(surgeryId);
 						checkId = true;
 						System.out.println("Surgery deleted succesfully!");
 						break;
 					}
 				}
-				if(checkId == false) {
+				if (checkId == false) {
 					System.out.println("Wrong id, please enter it again.");
 					deleteSurgery();
 				}
-			}else {
+			} else {
 				System.out.println("No surgeries added yet");
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -968,14 +977,14 @@ public class Menu {
 			int i;
 			System.out.println("Surgeons:");
 			for (i = 0; i < sVacations.size(); i++) {
-				System.out.format("%-20s" , surgeonManager.getNameById(sVacations.get(i).getSurgeonId()) +
-						" " + surgeonManager.getSurgeonById(sVacations.get(i).getSurgeonId()).getSurname() + ": ");
+				System.out.format("%-20s", surgeonManager.getNameById(sVacations.get(i).getSurgeonId()) + " "
+						+ surgeonManager.getSurgeonById(sVacations.get(i).getSurgeonId()).getSurname() + ": ");
 				System.out.println(sVacations.get(i).toString());
 			}
 			System.out.println("\nNurses:");
 			for (i = 0; i < nVacations.size(); i++) {
-				System.out.format("%-20s" ,nurseManager.getNameById(nVacations.get(i).getNurseId())+
-						" " + nurseManager.getNurseById(nVacations.get(i).getNurseId()).getNurseSurname() + ": ");
+				System.out.format("%-20s", nurseManager.getNameById(nVacations.get(i).getNurseId()) + " "
+						+ nurseManager.getNurseById(nVacations.get(i).getNurseId()).getNurseSurname() + ": ");
 				System.out.println(nVacations.get(i).toString());
 			}
 		} catch (Exception e) {
@@ -992,7 +1001,7 @@ public class Menu {
 				if (sVacations.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 				}
-				for(SurgeonVacation sv: sVacations) {
+				for (SurgeonVacation sv : sVacations) {
 					System.out.println(sv.toString());
 				}
 			} else if (u.getRole().getName().equals("nurse")) {
@@ -1001,7 +1010,7 @@ public class Menu {
 				if (nVacations.size() < 1) {
 					System.out.println("\nYou do not have any vacations yet");
 				}
-				for(NurseVacation nv: nVacations) {
+				for (NurseVacation nv : nVacations) {
 					System.out.println(nv.toString());
 				}
 			}
@@ -1018,28 +1027,28 @@ public class Menu {
 			System.out.println("Type the phone number");
 			int phone = Integer.parseInt(reader.readLine());
 			System.out.print("Do you want to add a photo? (Y/N): ");
-			do {	
+			do {
 				String yesNo = reader.readLine();
 				if (yesNo.equalsIgnoreCase("N")) {
 					Patient patient = new Patient(name, surname, phone);
 					patientManager.addPatient(patient);
 					System.out.println("Patient created successfully\n");
 					break;
-				}else if(yesNo.equalsIgnoreCase("Y")) {
-						System.out.print("Type the file name as it appears in folder /photos, including extension: ");
-						String fileName = reader.readLine();
-		                File photo = new File(".\\photos\\" + fileName);
-						InputStream streamBlob = new FileInputStream(photo);
-						byte[] bytesBlob = new byte[streamBlob.available()];
-						streamBlob.read(bytesBlob);
-						streamBlob.close();
-						Patient patient = new Patient(name, surname, phone, bytesBlob);
-						patientManager.addPatient(patient, fileName);
-						System.out.println("Patient created successfully\n");
-						break;
+				} else if (yesNo.equalsIgnoreCase("Y")) {
+					System.out.print("Type the file name as it appears in folder /photos, including extension: ");
+					String fileName = reader.readLine();
+					File photo = new File(".\\photos\\" + fileName);
+					InputStream streamBlob = new FileInputStream(photo);
+					byte[] bytesBlob = new byte[streamBlob.available()];
+					streamBlob.read(bytesBlob);
+					streamBlob.close();
+					Patient patient = new Patient(name, surname, phone, bytesBlob);
+					patientManager.addPatient(patient, fileName);
+					System.out.println("Patient created successfully\n");
+					break;
 				}
 				System.out.println("Write a valid input please (Y/N)");
-			}while(true);
+			} while (true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error while creating the patient");
@@ -1125,12 +1134,12 @@ public class Menu {
 					}
 					do {
 						try {
-						patientId = Integer.parseInt(reader.readLine());
-						break;
-						}catch(Exception e){
+							patientId = Integer.parseInt(reader.readLine());
+							break;
+						} catch (Exception e) {
 							System.out.println("Not valid input");
 						}
-					} while(true);
+					} while (true);
 					if (patientManager.getListOfPatients().contains(patientManager.getPatientById(patientId))) {
 						break;
 					} else {
@@ -1286,12 +1295,12 @@ public class Menu {
 					int option;
 					do {
 						try {
-						option = Integer.parseInt(reader.readLine());
-						break;
-						}catch(Exception e){
+							option = Integer.parseInt(reader.readLine());
+							break;
+						} catch (Exception e) {
 							System.out.println("Not valid input");
 						}
-					} while(true);
+					} while (true);
 					switch (option) {
 					case 1:
 						List<OperatingRoom> rooms = operatingRoomManager.getListOfOperatingRoom();
@@ -1308,12 +1317,12 @@ public class Menu {
 							int roomId;
 							do {
 								try {
-								roomId = Integer.parseInt(reader.readLine());
-								break;
-								}catch(Exception e){
+									roomId = Integer.parseInt(reader.readLine());
+									break;
+								} catch (Exception e) {
 									System.out.println("Not valid input");
 								}
-							} while(true);
+							} while (true);
 							for (OperatingRoom r : rooms) {
 								if (r.getRoomId() == roomId) {
 									operatingRoomManager.updateActivity(roomId, true);
@@ -1332,12 +1341,12 @@ public class Menu {
 							int rId;
 							do {
 								try {
-								rId = Integer.parseInt(reader.readLine());
-								break;
-								}catch(Exception e){
+									rId = Integer.parseInt(reader.readLine());
+									break;
+								} catch (Exception e) {
 									System.out.println("Not valid input");
 								}
-							} while(true);
+							} while (true);
 							for (OperatingRoom r : operatingRoomManager.getListOfActiveOperatingRoom()) {
 								if (r.getRoomId() == rId) {
 									operatingRoomManager.updateActivity(rId, false);
@@ -1367,12 +1376,12 @@ public class Menu {
 						int roomId;
 						do {
 							try {
-							roomId = Integer.parseInt(reader.readLine());
-							break;
-							}catch(Exception e){
+								roomId = Integer.parseInt(reader.readLine());
+								break;
+							} catch (Exception e) {
 								System.out.println("Not valid input");
 							}
-						} while(true);
+						} while (true);
 						for (OperatingRoom r : rooms) {
 							if (r.getRoomId() == roomId) {
 								operatingRoomManager.updateActivity(roomId, true);
@@ -1401,22 +1410,22 @@ public class Menu {
 		int roomNumber;
 		do {
 			try {
-			roomNumber = Integer.parseInt(reader.readLine());
-			break;
-			}catch(Exception e){
+				roomNumber = Integer.parseInt(reader.readLine());
+				break;
+			} catch (Exception e) {
 				System.out.println("Not valid input");
 			}
-		} while(true);
+		} while (true);
 		System.out.println("Type the room floor: ");
 		int roomFloor;
 		do {
 			try {
-			roomFloor = Integer.parseInt(reader.readLine());
-			break;
-			}catch(Exception e){
+				roomFloor = Integer.parseInt(reader.readLine());
+				break;
+			} catch (Exception e) {
 				System.out.println("Not valid input");
 			}
-		} while(true);
+		} while (true);
 		OperatingRoom r = new OperatingRoom(roomNumber, roomFloor);
 		operatingRoomManager.addOperatingRoom(r);
 		System.out.println("OperatingRoom added successfully\n");
@@ -1451,17 +1460,17 @@ public class Menu {
 				System.out.println("Type the year:");
 				do {
 					try {
-					year = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						year = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
+				} while (true);
 				if (year.toString().length() == 4) {
 					break;
 				}
 				System.out.println("Not valid year");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Not valid input");
 			}
 		}
@@ -1473,16 +1482,16 @@ public class Menu {
 				System.out.println("You cannot add more vacations these year\n");
 				do {
 					System.out.println("Do you want to select a new date? (Y/N)");
-					String conf= reader.readLine();
-					if(conf.equalsIgnoreCase("Y")) {
+					String conf = reader.readLine();
+					if (conf.equalsIgnoreCase("Y")) {
 						selectStartDate(role);
 						break;
-					} else if(conf.equalsIgnoreCase("N")){
+					} else if (conf.equalsIgnoreCase("N")) {
 						System.out.println("Vacation not saved");
 						surgeonMenu();
 						break;
 					}
-				}while(true);
+				} while (true);
 			}
 		} else if (role.equals("nurse")) {
 			nurseId = nurseManager.getIdByEmail(u.getEmail());
@@ -1490,16 +1499,16 @@ public class Menu {
 				System.out.println("You cannot add more vacations these year\n");
 				do {
 					System.out.println("Do you want to select a new date? (Y/N)");
-					String conf= reader.readLine();
-					if(conf.equalsIgnoreCase("Y")) {
+					String conf = reader.readLine();
+					if (conf.equalsIgnoreCase("Y")) {
 						selectStartDate(role);
 						break;
-					} else if(conf.equalsIgnoreCase("N")){
+					} else if (conf.equalsIgnoreCase("N")) {
 						System.out.println("Vacation not saved");
 						NurseMenu();
 						break;
 					}
-				}while(true);
+				} while (true);
 			}
 		}
 		int option;
@@ -1513,12 +1522,12 @@ public class Menu {
 			System.out.println("6) 16 august to 30 august");
 			do {
 				try {
-				option = Integer.parseInt(reader.readLine());
-				break;
-				}catch(Exception e){
+					option = Integer.parseInt(reader.readLine());
+					break;
+				} catch (Exception e) {
 					System.out.println("Not valid input");
 				}
-			} while(true);			
+			} while (true);
 			year = year - 1900;
 			switch (option) {
 			case 1:
@@ -1559,17 +1568,17 @@ public class Menu {
 				System.out.println("Type the year:");
 				do {
 					try {
-					year = Integer.parseInt(reader.readLine());
-					break;
-					}catch(Exception e){
+						year = Integer.parseInt(reader.readLine());
+						break;
+					} catch (Exception e) {
 						System.out.println("Not valid input");
 					}
-				} while(true);
+				} while (true);
 				if (year.toString().length() == 4) {
 					break;
 				}
 				System.out.println("Not valid year");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Not valid input");
 			}
 		}
@@ -1577,37 +1586,37 @@ public class Menu {
 		int nurseId = 0;
 		if (role.equals("surgeon")) {
 			surgId = surgeonManager.getIdByEmail(u.getEmail());
-			if (surgeonVacationManager.countSurgeonVacations(surgId, year) == 2 && year!= vacYear) {
+			if (surgeonVacationManager.countSurgeonVacations(surgId, year) == 2 && year != vacYear) {
 				System.out.println("You cannot add more vacations these year\n");
 				do {
 					System.out.println("Do you want to select a new date? (Y/N)");
-					String conf= reader.readLine();
-					if(conf.equalsIgnoreCase("Y")) {
-						selectStartDate(role,vacYear);
+					String conf = reader.readLine();
+					if (conf.equalsIgnoreCase("Y")) {
+						selectStartDate(role, vacYear);
 						break;
-					} else if(conf.equalsIgnoreCase("N")){
+					} else if (conf.equalsIgnoreCase("N")) {
 						System.out.println("Vacation not saved");
 						surgeonMenu();
 						break;
 					}
-				}while(true);
+				} while (true);
 			}
 		} else if (role.equals("nurse")) {
 			nurseId = nurseManager.getIdByEmail(u.getEmail());
-			if (nurseVacationManager.countNurseVacations(nurseId, year) == 2 && year!= vacYear) {
+			if (nurseVacationManager.countNurseVacations(nurseId, year) == 2 && year != vacYear) {
 				System.out.println("You cannot add more vacations these year\n");
 				do {
 					System.out.println("Do you want to select a new date? (Y/N)");
-					String conf= reader.readLine();
-					if(conf.equalsIgnoreCase("Y")) {
+					String conf = reader.readLine();
+					if (conf.equalsIgnoreCase("Y")) {
 						selectStartDate(role, vacYear);
 						break;
-					} else if(conf.equalsIgnoreCase("N")){
+					} else if (conf.equalsIgnoreCase("N")) {
 						System.out.println("Vacation not saved");
 						NurseMenu();
 						break;
 					}
-				}while(true);
+				} while (true);
 			}
 		}
 		int option;
@@ -1621,12 +1630,12 @@ public class Menu {
 			System.out.println("6) 16 august to 30 august");
 			do {
 				try {
-				option = Integer.parseInt(reader.readLine());
-				break;
-				}catch(Exception e){
+					option = Integer.parseInt(reader.readLine());
+					break;
+				} catch (Exception e) {
 					System.out.println("Not valid input");
 				}
-			} while(true);			
+			} while (true);
 			year = year - 1900;
 			switch (option) {
 			case 1:
@@ -1656,7 +1665,7 @@ public class Menu {
 		}
 		return start;
 	}
-	
+
 	public static Date getDate() throws Exception {
 		Integer Year;
 		Integer Month;
@@ -1665,35 +1674,35 @@ public class Menu {
 			System.out.println("Type the year:");
 			do {
 				try {
-				Year = Integer.parseInt(reader.readLine());
-				break;
-				}catch(Exception e){
+					Year = Integer.parseInt(reader.readLine());
+					break;
+				} catch (Exception e) {
 					System.out.println("Not valid input");
 				}
-			} while(true);
-			
+			} while (true);
+
 		} while (Year.toString().length() != 4);
 		do {
 			System.out.println("Type the month [1-12]:");
 			do {
 				try {
-				Month = Integer.parseInt(reader.readLine());
-				break;
-				}catch(Exception e){
+					Month = Integer.parseInt(reader.readLine());
+					break;
+				} catch (Exception e) {
 					System.out.println("Not valid input");
 				}
-			} while(true);
+			} while (true);
 		} while (Month < 1 || Month > 12);
 		do {
 			System.out.println("Type the day:");
 			do {
 				try {
-				Day = Integer.parseInt(reader.readLine());
-				break;
-				}catch(Exception e){
+					Day = Integer.parseInt(reader.readLine());
+					break;
+				} catch (Exception e) {
 					System.out.println("Not valid input");
 				}
-			} while(true);
+			} while (true);
 		} while (Day < 1 || Month > 31);
 		@SuppressWarnings("deprecation")
 		Date date = new Date(Year - 1900, Month - 1, Day);
@@ -1709,9 +1718,9 @@ public class Menu {
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 			if (start.compareTo(end) > 0) {
-				Date aux= start;
-				start= end;
-				end= aux;
+				Date aux = start;
+				start = end;
+				end = aux;
 			}
 			surgeons = surgeonVacationManager.getSurgeonsOnVacation(start, end);
 			List<SurgeonVacation> sVacations = new ArrayList<>();
@@ -1736,9 +1745,9 @@ public class Menu {
 		List<Nurse> nurses = new ArrayList<Nurse>();
 		try {
 			if (start.compareTo(end) > 0) {
-				Date aux= start;
-				start= end;
-				end= aux;
+				Date aux = start;
+				start = end;
+				end = aux;
 			}
 			nurses = nurseVacationManager.getNursesOnVacation(start, end);
 			List<NurseVacation> nVacations = new ArrayList<>();

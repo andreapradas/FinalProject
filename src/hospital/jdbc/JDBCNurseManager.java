@@ -118,7 +118,7 @@ public class JDBCNurseManager implements NurseManager {
 	public int getIdByEmail(String email) {
 		int id = 0;
 		try {
-			String sql = "SELECT nurseId FROM Nurse WHERE nurseEmail= ?";
+			String sql = "SELECT nurseId FROM Nurse WHERE nurseEmail= LTRIM(RTRIM(?))";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, email);
 			ResultSet rs = prep.executeQuery();

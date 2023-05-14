@@ -138,7 +138,7 @@ public class JPAUserManager implements UserManager{
 	@Override
 	public User checkPassword(String email, String password) {
 		User u= null;
-		Query q= em.createNativeQuery("SELECT * FROM users WHERE email=? AND password=?", User.class);
+		Query q= em.createNativeQuery("SELECT * FROM users WHERE email= LTRIM(RTRIM(?)) AND password=?", User.class);
 		q.setParameter(1, email);
 		try {
 			MessageDigest md= MessageDigest.getInstance("MD5");
