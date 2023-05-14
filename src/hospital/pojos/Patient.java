@@ -26,6 +26,10 @@ public class Patient implements Serializable {
 	private String patientSurname;
 	@XmlTransient
 	private byte[] photo;
+	
+	public Patient(){
+		super();
+	}
 
 	public Patient(String name, String surname, int phoneNumber) throws phoneException {
 		super();

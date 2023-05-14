@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!DOCTYPE Nurse[
-<!ELEMENT Nurse (email)>
-<!ATTLIST Nurse nurseName CDATA #REQUIRED>
-<!ATTLIST Nurse nurseSurname CDATA #REQUIRED>
-<!ELEMENT email (#PCDATA)>
+	<!ELEMENT Nurse (email)>
+	<!ATTLIST Nurse nurseName CDATA #REQUIRED>
+	<!ATTLIST Nurse nurseSurname CDATA #REQUIRED>
+	<!ELEMENT email (#PCDATA)>
 ]>
 
 <Nurse nurseName = "Carla" nurseSurname = "Sanchez">

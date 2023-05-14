@@ -25,13 +25,13 @@ public class XMLManagerImpl implements XMLManager {
 
 
 	@Override
-	public void nurse2xml(Integer id) {
+	public void nurse2xml(int id) {
 		Nurse n = null;
 
 		try {
 			// Do a sql query to get the nurse by the id
 			Statement stmt = jdbcManager.getConnection().createStatement();
-			String sql = "SELECT * from Nurse where id =" + id;
+			String sql = "SELECT * from Nurse where nurseId =" + id;
 			ResultSet rs = stmt.executeQuery(sql);
 			String name = rs.getString("nurseName");
 			String surname = rs.getString("nurseSurname");
@@ -46,7 +46,7 @@ public class XMLManagerImpl implements XMLManager {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Nurse.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			File file = new File("./xmls/Nurse.xml");
+			File file = new File(".\\src\\xmls\\Nurse.xml");
 			marshaller.marshal(n, file);
 
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class XMLManagerImpl implements XMLManager {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			File file = new File("./xmls/Patient.xml");
+			File file = new File(".\\src\\xmls\\Patient.xml");
 			marshaller.marshal(p, file);
 
 		} catch (Exception e) {
@@ -79,8 +79,6 @@ public class XMLManagerImpl implements XMLManager {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			p = (Patient) unmarshaller.unmarshal(xml);
-
-			// JDBC code to insert patient to table patients
 			patientManager.addPatient(p);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,8 +95,6 @@ public class XMLManagerImpl implements XMLManager {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Nurse.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			n = (Nurse) unmarshaller.unmarshal(xml);
-
-			// JDBC code to insert patient to table patients
 			nurseManager.addNurse(n);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,6 @@
 <!DOCTYPE Nurse[
-<!ELEMENT Nurse (email)>
-<!ATTLIST Nurse nurseName CDATA #REQUIRED>
-<!ATTLIST Nurse nurseSurname CDATA #REQUIRED>
-<!ELEMENT email (#PCDATA)>
+	<!ELEMENT Nurse (email)>
+	<!ATTLIST Nurse nurseName CDATA #REQUIRED>
+	<!ATTLIST Nurse nurseSurname CDATA #REQUIRED>
+	<!ELEMENT email (#PCDATA)>
 ]>

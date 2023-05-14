@@ -65,7 +65,7 @@ public class Menu {
 				System.out.println("1. Sign in");
 				System.out.println("2. Log in");
 				System.out.println("3. List of users");
-				System.out.println("0. exit");
+				System.out.println("0. Exit");
 				int choice;
 				do {
 					try {
@@ -134,9 +134,12 @@ public class Menu {
 				System.out.println("18. Change chief surgeon");
 				System.out.println("19. Create schedule");
 				System.out.println("20. Show schedule");
-				System.out.println("21. Log out");
-				System.out.println("22. Delete account");
-				System.out.println(" 0. exit");
+				System.out.println("21. Print patient to xml document");
+				System.out.println("22. Load patient from xml");
+				System.out.println("23. Load nurse from xml");
+				System.out.println("24. Log out");
+				System.out.println("25. Delete account");
+				System.out.println(" 0. Exit");
 				int choice;
 				do {
 					try {
@@ -210,9 +213,18 @@ public class Menu {
 					showSchedule(date);
 					break;
 				case 21:
-					main(null);
+					printPatient();
 					break;
 				case 22:
+					loadPatient();
+					break;
+				case 23:
+					loadNurse();
+					break;
+				case 24:
+					main(null);
+					break;
+				case 25:
 					deleteAccount("surgeon", surgeonManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
 				case 0:
@@ -247,7 +259,7 @@ public class Menu {
 				System.out.println("13. Show schedule");
 				System.out.println("14. Log out");
 				System.out.println("15. Delete account");
-				System.out.println(" 0. exit");
+				System.out.println(" 0. Exit");
 				int choice;
 				do {
 					try {
@@ -334,9 +346,10 @@ public class Menu {
 				System.out.println(" 8. All employee vacations");
 				System.out.println(" 9. List of surgeries");
 				System.out.println("10. Show schedule");
-				System.out.println("11. Log out");
-				System.out.println("12. Delete account");
-				System.out.println(" 0. exit");
+				System.out.println("11. Print me to xml");
+				System.out.println("12. Log out");
+				System.out.println("13. Delete account");
+				System.out.println(" 0. Exit");
 				int choice;
 				do {
 					try {
@@ -382,9 +395,12 @@ public class Menu {
 					showSchedule(date);
 					break;
 				case 11:
-					main(null);
+					printMeNurse(nurseManager.getIdByEmail(u.getEmail()) );
 					break;
 				case 12:
+					main(null);
+					break;
+				case 13:
 					deleteAccount("nurse", nurseManager.getIdByEmail(u.getEmail()), u.getEmail());
 					main(null);
 					break;
@@ -403,7 +419,7 @@ public class Menu {
 	
 	private static void loadNurse() {
 		Nurse n = null;
-		File file = new File("./xmls/ExternalNurse.xml");
+		File file = new File(".\\src\\xmls\\ExternalNurse.xml");
 		n = xmlManager.xml2Nurse(file);
 		
 		System.out.println(n);
@@ -411,14 +427,44 @@ public class Menu {
 	
 	private static void loadPatient() {
 		Patient p = null;
-		File file = new File("./xmls/ExternalNurse.xml");
+		File file = new File(".\\src\\xmls\\ExternalPatient.xml");
 		p = xmlManager.xml2Patient(file);
-		
 		System.out.println(p);
 	}
 	
 	private static void printMeNurse(Integer nurseId) {
-		xmlManager.nurse2xml(nurseId);;
+		xmlManager.nurse2xml(nurseId);
+		System.out.println("You have been printed to an xml document");
+	}
+
+
+	private static void printPatient() {
+		int patientId;
+		do {
+			System.out.println("Select the patient you want to print");
+			List<Patient> patients= patientManager.getListOfPatients();
+			System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
+			System.out.println("-----------------------------");
+			for (Patient p : patients) {
+				System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(),
+						p.getPatientId());
+			}
+			do {
+				try {
+				patientId = Integer.parseInt(reader.readLine());
+				break;
+				}catch(Exception e){
+					System.out.println("Not valid input");
+				}
+			} while(true);
+			if (patientManager.getListOfPatients().contains(patientManager.getPatientById(patientId))) {
+				break;
+			} else {
+				System.out.println("Incorrect id, type id again: ");
+			}
+		} while (true);
+		xmlManager.patient2xml(patientManager.getPatientById(patientId));
+		System.out.println("The patient has been printed to an xml document");
 	}
 
 	private static void updatePhoneNumber() throws Exception, phoneException {
@@ -1051,8 +1097,6 @@ public class Menu {
 		} catch (Exception e) {
 			System.out.println("No patients in the data base");
 		}
-		//Listar los pacientes antes
-		getPatients();
 		System.out.println("\nType the name of the patient: ");
 		Surgery s = null;
 		do {
@@ -1665,7 +1709,9 @@ public class Menu {
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 			if (start.compareTo(end) > 0) {
-				throw new Exception();
+				Date aux= start;
+				start= end;
+				end= aux;
 			}
 			surgeons = surgeonVacationManager.getSurgeonsOnVacation(start, end);
 			List<SurgeonVacation> sVacations = new ArrayList<>();
@@ -1677,7 +1723,6 @@ public class Menu {
 				System.out.println(sVacations.get(i).toString());
 			}
 		} catch (Exception e) {
-			System.out.println("End date cannot be before start date");
 			e.printStackTrace();
 		}
 	}
@@ -1691,7 +1736,9 @@ public class Menu {
 		List<Nurse> nurses = new ArrayList<Nurse>();
 		try {
 			if (start.compareTo(end) > 0) {
-				throw new Exception();
+				Date aux= start;
+				start= end;
+				end= aux;
 			}
 			nurses = nurseVacationManager.getNursesOnVacation(start, end);
 			List<NurseVacation> nVacations = new ArrayList<>();
@@ -1703,7 +1750,6 @@ public class Menu {
 				System.out.println(nVacations.get(i).toString());
 			}
 		} catch (Exception e) {
-			System.out.println("End date cannot be before start date");
 			e.printStackTrace();
 		}
 	}
