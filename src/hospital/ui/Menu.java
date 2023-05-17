@@ -169,8 +169,7 @@ public class Menu {
 					getUsers();
 					break;
 				case 7:
-					createVacation("surgeon"); // estamos dentro del menu de chiefSurgeons por lo que el
-					// que este aqui metido va a ser un chief y solo podra añadir sus vacaciones
+					createVacation("surgeon");
 					break;
 				case 8:
 					modifyVacation("surgeon");
@@ -286,10 +285,7 @@ public class Menu {
 					getUsers();
 					break;
 				case 6:
-					createVacation("surgeon"); // estamos dentro del menu de Surgeons por lo que
-					// el que este aqui metido va a ser un surgeon y solo podra añadir sus
-					// vacaciones
-					break;
+					createVacation("surgeon");
 				case 7:
 					modifyVacation("surgeon");
 					break;
@@ -371,9 +367,7 @@ public class Menu {
 					getUsers();
 					break;
 				case 4:
-					createVacation("nurse"); // estamos dentro del menu de nurse
-					// por lo que el que este aqui metido va a ser un nurse y solo podra
-					// añadir sus vacaciones
+					createVacation("nurse");
 					break;
 				case 5:
 					modifyVacation("nurse");
@@ -477,7 +471,7 @@ public class Menu {
 			// Prove that exits and there is only one
 			List<Patient> patients = new ArrayList<Patient>();
 			patients = patientManager.getListPatientByName(patientName);
-			if (patients.size() == 0) {// Si no existe ese nombre entre los pacientes
+			if (patients.size() == 0) {// If there is no patient with that name
 				System.out.println("There no such a patient with that name. Please enter another name: ");
 				System.out.println("These are the patients\n");
 				System.out.format("%-10s %-15s\n", "Name", "Surname");
@@ -485,7 +479,7 @@ public class Menu {
 				for (Patient p : patientManager.getListOfPatients()) {
 					System.out.format("%-10s %-15s\n", p.getPatientName(), p.getPatientSurname());
 				}
-			} else if (patients.size() > 1) {// quiere decir que hay dos o mas pacientes con el mismo nombre
+			} else if (patients.size() > 1) {//two or more patients with that name
 				System.out.println("\nSeems that there are 2 patients or more with the same name ");
 				System.out.println("Do you mean (type the Id)...");
 
@@ -510,7 +504,7 @@ public class Menu {
 						System.out.println("Incorrect id, type id again: ");
 					}
 				} while (true);
-			} else {// Si solo hay un paciente con ese nombre
+			} else {//if there is just one patient with that name
 				Patient p = patientManager.getPatientByName(patientName);
 				patientId = p.getPatientId();
 				break;
@@ -923,10 +917,9 @@ public class Menu {
 
 	private static void deleteSurgery() {
 		try {
-			// Listar todas las SURGERIES que puede borrar, que NO se hayan hecho y que NO
-			// se hayan programado aun
+			//SURGERIES that can be deleted, NOT DONE and NOT SCHEDULED
 			List<Surgery> surgeries = surgeryManager.getListOfSurgeriesNotDone();
-			boolean checkId = false;// Para comprobar si existe o no el id introducido entre las cirugias
+			boolean checkId = false;//checks if the id introduced is in the surgeries
 			if (surgeries.size() > 0) {
 				System.out.format("%-15s %-18s %-13s %-15s %s\n", "Patient name", "Patient surname", "Patient id",
 						"Surgery type", "Surgery Id");
@@ -948,7 +941,7 @@ public class Menu {
 					}
 				} while (true);
 				for (int i = 0; i < surgeries.size(); i++) {
-					if (surgeryId == surgeries.get(i).getSurgeryId()) {// Es que está entre las listadas
+					if (surgeryId == surgeries.get(i).getSurgeryId()) {
 						surgeryManager.deleteSurgery(surgeryId);
 						checkId = true;
 						System.out.println("Surgery deleted succesfully!");
@@ -1113,7 +1106,7 @@ public class Menu {
 			// Prove that exits and there is only one
 			List<Patient> patients = new ArrayList<Patient>();
 			patients = patientManager.getListPatientByName(patientName);
-			if (patients.size() == 0) {// Si no existe ese nombre entre los pacientes
+			if (patients.size() == 0) {
 				System.out.println("There no such a patient with that name. Please enter another name: ");
 				System.out.println("These are the patients\n");
 				System.out.format("%-10s %-15s\n", "Name", "Surname");
@@ -1121,7 +1114,7 @@ public class Menu {
 				for (Patient p : patientManager.getListOfPatients()) {
 					System.out.format("%-10s %-15s\n", p.getPatientName(), p.getPatientSurname());
 				}
-			} else if (patients.size() > 1) {// quiere decir que hay dos o mas pacientes con el mismo nombre
+			} else if (patients.size() > 1) {
 				System.out.println("\nSeems that there are 2 patients or more with the same name ");
 				System.out.println("\nDo you mean (type the Id)...");
 				int patientId;
@@ -1151,7 +1144,7 @@ public class Menu {
 				s = new Surgery(surgeryType, patientId);
 				break;
 
-			} else {// Si solo hay un paciente con ese nombre
+			} else {
 				Patient p = patientManager.getPatientByName(patientName);
 				int patientId = p.getPatientId();
 				System.out.println("\nType the type of the surgery: ");
@@ -1185,7 +1178,7 @@ public class Menu {
 					System.out.println("Surgery already programmed for that day");
 				} else {
 					System.out.println("Choose the surgeon-nurse who are going to work together the whole day");
-					createTeams(date);// Hacer Surgeon-Nurse
+					createTeams(date);
 					chooseActiveRooms();
 					List<OperatingRoom> rooms = operatingRoomManager.getListOfActiveOperatingRoom();
 					List<WorksWith> ww = worksWithManager.getListOfWorksWith(date);
@@ -1232,7 +1225,6 @@ public class Menu {
 						}
 						surgeryManager.updateDone(surgeries.get(surgeriesCount).getSurgeryId());
 					}
-					// Mostrar SCHEDULE
 					if (surgeries.size() - surgeriesCount == 0) {
 						System.out.println("All surgeries are programmed");
 					} else {
