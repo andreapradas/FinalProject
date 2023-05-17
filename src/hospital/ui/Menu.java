@@ -428,6 +428,7 @@ public class Menu {
 	private static void printMeNurse(Integer nurseId) {
 		xmlManager.nurse2xml(nurseId);
 		System.out.println("You have been printed to an xml document");
+		xmlManager.simpleTransform("./xml/ExternalNurse.xml", "./xmls/Nurse-style.xslt", "./xmls./Nurse.html");
 	}
 
 	private static void printPatient() {
@@ -455,6 +456,7 @@ public class Menu {
 			}
 		} while (true);
 		xmlManager.patient2xml(patientManager.getPatientById(patientId));
+		xmlManager.simpleTransform("./xml/ExternalPatient.xml", "./xmls/Patient-style.xslt", "./xmls./Patient.html");
 		System.out.println("The patient has been printed to an xml document");
 	}
 

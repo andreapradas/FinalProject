@@ -11,4 +11,5 @@ public interface XMLManager {
 	public void patient2xml(Patient p);
 	public Patient xml2Patient(File xml);
 	public Nurse xml2Nurse(File xml);
+	public void simpleTransform(String sourcePath, String xsltPath,String resultDir);
 }
