@@ -54,7 +54,7 @@ public class JDBCPatientManager implements PatientManager{
 		List<Patient> patients = new ArrayList<Patient>();
 			try {
 				Statement stmt = manager.getConnection().createStatement();
-				String sql = "SELECT * FROM Patient";
+				String sql = "SELECT * FROM Patient ORDER BY patientName";
 				ResultSet rs = stmt.executeQuery(sql);
 				
 				while(rs.next())

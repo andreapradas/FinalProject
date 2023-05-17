@@ -1058,10 +1058,10 @@ public class Menu {
 
 	public static void getPatients() throws Exception {
 		try {
-			System.out.format("%-10s %-15s %-10s %-3s\n", "Name", "Surname", "PhoneNumber", "Id");
+			System.out.format("%-18s %-15s %-10s %-3s\n", "Name", "Surname", "PhoneNumber", "Id");
 			System.out.println("----------------------------------------------------");
 			for (Patient p : patientManager.getListOfPatients()) {
-				System.out.format("%-10s %-15s %-12d %-3d\n", p.getPatientName(), p.getPatientSurname(),
+				System.out.format("%-18s %-15s %-12d %-3d\n", p.getPatientName(), p.getPatientSurname(),
 						p.getPhoneNumber(), p.getPatientId());
 			}
 		} catch (Exception e) {
