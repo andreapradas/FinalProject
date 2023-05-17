@@ -7,8 +7,8 @@
 	<!ELEMENT email (#PCDATA)>
 ]>
 
-<Nurse nurseName = "Carla" nurseSurname = "Sanchez">
-	<email>carlasanchez@gmail.com</email>
+<Nurse nurseName = "Claudia" nurseSurname = "Diaz">
+	<email>claudiadiaz@gmail.com</email>
 	
 	
 </Nurse>

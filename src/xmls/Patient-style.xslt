@@ -3,11 +3,28 @@
 
 <xsl:template match="/">
    <html>
+ 	
+ 	<head>
+		<style>
+			 body{
+			 	background-color: lightblue;
+			 }
+			 h1{
+			 	color: white;
+			 	text-align: center;
+			 }
+			 p{
+			 	font-family: verdana;
+			 	text-align: center;
+			 }
+		</style>
+	</head>
+			 
  
-   <p><b>Patient:</b></p><xsl:value-of select="Patient" />
-   <p>Name: <xsl:value-of select="@patientName" /></p>
-   <p>Surname: <xsl:value-of select="@patientSurname" /></p>
-   <p>Phone: <xsl:value-of select="phoneNumber" /></p>
+   <h1><b>Patient</b></h1>
+   <p>Name: <xsl:value-of select="Patient/@patientName" /></p>
+   <p>Surname: <xsl:value-of select="Patient/@patientSurname" /></p>
+   <p>Phone: <xsl:value-of select="Patient/phoneNumber" /></p>
 
   
    </html>

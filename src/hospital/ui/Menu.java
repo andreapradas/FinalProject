@@ -134,7 +134,7 @@ public class Menu {
 				System.out.println("18. Change chief surgeon");
 				System.out.println("19. Create schedule");
 				System.out.println("20. Show schedule");
-				System.out.println("21. Print patient to xml document");
+				System.out.println("21. Print patient to html and xml document");
 				System.out.println("22. Load patient from xml");
 				System.out.println("23. Load nurse from xml");
 				System.out.println("24. Log out");
@@ -342,7 +342,7 @@ public class Menu {
 				System.out.println(" 8. All employee vacations");
 				System.out.println(" 9. List of surgeries");
 				System.out.println("10. Show schedule");
-				System.out.println("11. Print me to xml");
+				System.out.println("11. Print me to html xml");
 				System.out.println("12. Log out");
 				System.out.println("13. Delete account");
 				System.out.println(" 0. Exit");
@@ -427,8 +427,8 @@ public class Menu {
 
 	private static void printMeNurse(Integer nurseId) {
 		xmlManager.nurse2xml(nurseId);
-		System.out.println("You have been printed to an xml document");
-		xmlManager.simpleTransform("./xmls/ExternalNurse.xml", "./xmls/test.xslt", "./xmls/Nurse.html");
+		xmlManager.simpleTransform("./src/xmls/Nurse.xml", "./src/xmls/Nurse-style.xslt", "./src/xmls/Nurse.html");
+		System.out.println("You have been printed to html and xml document");
 	}
 
 	private static void printPatient() {
@@ -436,10 +436,10 @@ public class Menu {
 		do {
 			System.out.println("Select the patient you want to print");
 			List<Patient> patients = patientManager.getListOfPatients();
-			System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
-			System.out.println("-----------------------------");
+			System.out.format("%-18s %-15s %-3s\n", "Name", "Surname", "Id");
+			System.out.println("------------------------------------------");
 			for (Patient p : patients) {
-				System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(), p.getPatientId());
+				System.out.format("%-18s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(), p.getPatientId());
 			}
 			do {
 				try {
@@ -456,8 +456,8 @@ public class Menu {
 			}
 		} while (true);
 		xmlManager.patient2xml(patientManager.getPatientById(patientId));
-		xmlManager.simpleTransform("./xml/ExternalPatient.xml", "./xmls/Patient-style.xslt", "./xmls./Patient.html");
-		System.out.println("The patient has been printed to an xml document");
+		xmlManager.simpleTransform("./src/xmls/Patient.xml", "./src/xmls/Patient-style.xslt", "./src/xmls./Patient.html");
+		System.out.println("The patient has been printed to html an xml document");
 	}
 
 	private static void updatePhoneNumber() throws Exception, phoneException {
@@ -476,20 +476,20 @@ public class Menu {
 			if (patients.size() == 0) {// If there is no patient with that name
 				System.out.println("There no such a patient with that name. Please enter another name: ");
 				System.out.println("These are the patients\n");
-				System.out.format("%-10s %-15s\n", "Name", "Surname");
-				System.out.println("-----------------------");
+				System.out.format("%-18s %-15s\n", "Name", "Surname");
+				System.out.println("------------------------------");
 				for (Patient p : patientManager.getListOfPatients()) {
-					System.out.format("%-10s %-15s\n", p.getPatientName(), p.getPatientSurname());
+					System.out.format("%-18s %-15s\n", p.getPatientName(), p.getPatientSurname());
 				}
 			} else if (patients.size() > 1) {//two or more patients with that name
 				System.out.println("\nSeems that there are 2 patients or more with the same name ");
 				System.out.println("Do you mean (type the Id)...");
 
 				do {
-					System.out.format("%-10s %-15s %-3s\n", "Name", "Surname", "Id");
-					System.out.println("-----------------------------");
+					System.out.format("%-18s %-15s %-3s\n", "Name", "Surname", "Id");
+					System.out.println("---------------------------------------");
 					for (Patient p : patients) {
-						System.out.format("%-10s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(),
+						System.out.format("%-18s %-15s %-3d\n", p.getPatientName(), p.getPatientSurname(),
 								p.getPatientId());
 					}
 					do {
