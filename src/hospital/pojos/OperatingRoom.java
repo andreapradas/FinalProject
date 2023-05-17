@@ -9,24 +9,22 @@ import java.util.Objects;
 public class OperatingRoom implements Serializable{
 
 	private static final long serialVersionUID = 8375381789297162943L;
-	//Attributes 
 	private int roomId;
 	private int roomNumber;
 	private int roomFloor;
 	private Boolean active; 
-	private List<Boolean> hoursAvailable; //Huecos del horario, crear funcion que te ponga tantos huecos como hab disponibles
-	
-	//Constructors
+	private List<Boolean> hoursAvailable; 
+
 	public OperatingRoom() {
 		super();
 	}
 	
-	public OperatingRoom(int roomNumber, int roomFloor) {//Para cuando la crea el CHIEF
+	public OperatingRoom(int roomNumber, int roomFloor) {
 		super();
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
-		this.active = true;//Por defecto estará activa hasta que se le meta una cirugia 
-		this.hoursAvailable = createHoursRange(4);//4 franjas horarias
+		this.active = true;
+		this.hoursAvailable = createHoursRange(4);
 	}
 	
 	public OperatingRoom(int roomId, int roomNumber, int roomFloor, Boolean active) {
@@ -35,7 +33,7 @@ public class OperatingRoom implements Serializable{
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
 		this.active = active;
-		this.hoursAvailable = createHoursRange(4);//4 franjas horarias
+		this.hoursAvailable = createHoursRange(4);
 	}
 	
 	private List<Boolean> createHoursRange(int rangeAmount){
@@ -46,12 +44,12 @@ public class OperatingRoom implements Serializable{
 		return hoursAvailable;
 	}
 	
-	public void changeHoursAvailable(int hourRange) {//Cambia el hueco que le pasa a OCUPADO
+	public void changeHoursAvailable(int hourRange) {
 		this.hoursAvailable.set(hourRange, false);
 	}
 	
 	@SuppressWarnings("deprecation")
-	public Time getStartHour(int space) {//Teniendo el hueco se sabe la hora de la CIRUGÍA 
+	public Time getStartHour(int space) {
 		switch(space) {
 		case 0:
 			Time startHour1=new Time(8,0,0);
@@ -69,7 +67,6 @@ public class OperatingRoom implements Serializable{
 		return null;
 	}
 	
-	//Getters and Setters
 	public int getRoomId() {
 		return roomId;
 	}
@@ -109,8 +106,6 @@ public class OperatingRoom implements Serializable{
 		this.hoursAvailable = hoursAvailable;
 	}
 
-	
-	//HashCode and Equals
 	@Override
 	public int hashCode() {
 		return Objects.hash(roomId);
@@ -128,7 +123,6 @@ public class OperatingRoom implements Serializable{
 		return roomId == other.roomId;
 	}
 	
-	//ToString
 	@Override
 	public String toString() {
 		return "OperatingRoom [roomId=" + roomId + ", roomNumber=" + roomNumber + ", roomFloor=" + roomFloor + "]";

@@ -9,19 +9,15 @@ import java.util.Objects;
 public class Surgery implements Serializable{
 	private static final long serialVersionUID = 7073066432309393382L;
 	
-	//Attributes
 	private int surgeryId;
 	private String surgeryType;
 	private Date surgeryDate;
 	private Time startHour;
 	private Boolean done;
-	//Foreign keys
 	private int patientId; //Many to one relationship
 	private int surgeonId; //Many to one relationship
 	private int roomId; //Many to one relationship
-	
-	//Constructors
-	
+
 	public Surgery() {
 		super();
 	}
@@ -34,8 +30,6 @@ public class Surgery implements Serializable{
 		this.surgeryDate = day;
 		this.startHour = startHour;
 		this.done = false; 
-
-		//Foreign keys
 		this.patientId = patientId;
 		this.surgeonId = surgeonId;
 		this.roomId = roomId;
@@ -47,21 +41,17 @@ public class Surgery implements Serializable{
 		this.surgeryId = surgeryId; 
 		this.surgeryType = surgeryType;
 		this.surgeryDate = day;
-		this.startHour = startHour;//Se crea al meter la cirugia 
+		this.startHour = startHour;
 		this.done = done; 
-		
-		//Foreign keys
 		this.patientId = patientId;
 		this.surgeonId = surgeonId;
 		this.roomId = roomId;
 	}
-	public Surgery(String surgeryType, int patientId) {//Al crear la cirugia solo esos parametros 
+	public Surgery(String surgeryType, int patientId) {
 		super();
 		this.surgeryType = surgeryType;
 		this.patientId = patientId;
 	}
-	
-	//Getters and Setters
 
 	public int getSurgeryId() {
 		return surgeryId;
@@ -116,8 +106,6 @@ public class Surgery implements Serializable{
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
 	}
-
-	//HashCode and equals
 	
 	@Override
 	public int hashCode() {
@@ -135,7 +123,6 @@ public class Surgery implements Serializable{
 		
 		return Objects.equals(surgeryId, other.surgeryId);
 	}
-	//ToString
 	
 	@Override
 	public String toString() {

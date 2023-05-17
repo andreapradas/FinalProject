@@ -18,7 +18,6 @@ public class JDBCManager {
 			c = DriverManager.getConnection("jdbc:sqlite:./db/projectSurgeries.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
-				
 			//create tables
 			this.createTables();
 		}

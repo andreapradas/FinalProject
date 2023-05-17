@@ -18,9 +18,6 @@ import javax.persistence.TableGenerator;
 
 public class User implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2004663877998019879L;
 	@Id
 	@GeneratedValue(generator= "users")
