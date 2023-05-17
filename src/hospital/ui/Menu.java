@@ -428,7 +428,7 @@ public class Menu {
 	private static void printMeNurse(Integer nurseId) {
 		xmlManager.nurse2xml(nurseId);
 		System.out.println("You have been printed to an xml document");
-		xmlManager.simpleTransform("./xml/ExternalNurse.xml", "./xmls/Nurse-style.xslt", "./xmls./Nurse.html");
+		xmlManager.simpleTransform("./xmls/ExternalNurse.xml", "./xmls/test.xslt", "./xmls/Nurse.html");
 	}
 
 	private static void printPatient() {
