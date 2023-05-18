@@ -138,7 +138,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	public List<Surgery> getListOfSurgeries(Date date) {
 		List<Surgery> surgeries = new ArrayList<Surgery>();
 		try {
-			String sql = "SELECT * FROM Surgery WHERE surgeryDate=?";
+			String sql = "SELECT * FROM Surgery WHERE surgeryDate=? ORDER BY startHour";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setDate(1, date);
 			ResultSet rs = prep.executeQuery();

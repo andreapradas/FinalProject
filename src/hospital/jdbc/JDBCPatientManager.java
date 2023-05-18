@@ -141,7 +141,7 @@ public class JDBCPatientManager implements PatientManager{
 	public Patient getPatientById(int id) {
 		try {
 			Patient p = null;
-			String sql = "SELECT * FROM patient WHERE patientId=?";
+			String sql = "SELECT * FROM Patient WHERE patientId=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);
 			ResultSet rs = prep.executeQuery();

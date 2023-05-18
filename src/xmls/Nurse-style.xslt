@@ -7,6 +7,10 @@
 		<style>
 			 body{
 			 	background-color: lightblue;
+			 	background-image: url("logo.png");
+			 	background-repeat: no-repeat;
+			 	background- position: right top;
+			 	margin-right: 50px;
 			 }
 			 h1{
 			 	color: white;

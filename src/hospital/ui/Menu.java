@@ -1081,8 +1081,9 @@ public class Menu {
 	private static void getAllSurgeries() {
 		System.out.format("%-15s %-18s %-13s %-20s %s\n", "Patient name", "Patient surname", "Patient id",
 				"Surgery type", "Surgery Id");
-		System.out.println("-------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------");
 		try {
+			//System.out.println(surgeryManager.getListOfSurgeries());
 			for (Surgery s : surgeryManager.getListOfSurgeries()) {
 				System.out.format("%-15s %-18s %-13d %-20s %d\n",
 						patientManager.getPatientById(s.getPatientId()).getPatientName(),
@@ -1191,16 +1192,16 @@ public class Menu {
 						s.setSurgeonId(-1);
 					}
 					for (surgeriesCount = 0; surgeriesCount < surgeries.size(); surgeriesCount++) {
+						rooms:
 						for (OperatingRoom room : rooms) {
 							for (int i = 0; i < room.getHoursAvailable().size(); i++) {
-								System.out.println(i);
 								if (room.getHoursAvailable().get(i) == true) {
-									room.changeHoursAvailable(i);
 									surgeries.get(surgeriesCount).setRoomId(room.getRoomId());
 									surgeries.get(surgeriesCount).setStartHour(room.getStartHour(i));
 									surgeryManager.updateRoomHourDate(surgeries.get(surgeriesCount).getSurgeryId(),
 											date, room.getStartHour(i), room.getRoomId());
-									break;
+									room.getHoursAvailable().set(i, false);
+									break rooms;
 								}
 							}
 						}
@@ -1208,15 +1209,15 @@ public class Menu {
 							System.out.println("No rooms");
 							break;
 						}
+						teams:
 						for (WorksWith team : ww) {
 							for (int i = 0; i < team.getHoursAvailable().size(); i++) {
-								System.out.println(team.getHoursAvailable());
 								if (team.getHoursAvailable().get(i) == true) {
 									surgeries.get(surgeriesCount).setSurgeonId(team.getSurgeonID());
 									team.changeHoursAvailable(i);
 									surgeryManager.updateSurgeonId(surgeries.get(surgeriesCount).getSurgeryId(),
 											team.getSurgeonID());
-									break;
+									break teams;
 								}
 							}
 						}
@@ -1231,7 +1232,7 @@ public class Menu {
 						System.out.println("All surgeries are programmed");
 					} else {
 						System.out.println("Note: " + (surgeries.size() - surgeriesCount)
-								+ " surgeries could not be programmed for this day, will pass for the next");
+								+ " surgeries could not be programmed for this day, will pass for the next\n");
 					}
 					showSchedule(date);
 				}
@@ -1246,10 +1247,10 @@ public class Menu {
 	private static void showSchedule(Date date) {
 		if (surgeryManager.getListOfSurgeries(date).size() != 0) {
 			List<Surgery> surgeries = surgeryManager.getListOfSurgeries(date);
-			System.out.format("%-5s %-18s %-15s %-15s %-20s %-15s %-15s %-15s %-5s\n", "Id", "Patient", "Date",
+			System.out.format("%-5s %-25s %-15s %-15s %-23s %-25s %-25s %-15s %-5s\n", "Id", "Patient", "Date",
 					"StartHour", "Surgery Type", "Surgeon", "Nurse", "Room Number", "Room Floor");
 			System.out.println(
-					"-----------------------------------------------------------------------------------------------------------------------------------------------------");
+					"----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			try {
 
 				for (Surgery s : surgeries) {
@@ -1259,7 +1260,7 @@ public class Menu {
 					String nCompleteName = nurseManager.getNurseById(nurseId).getNurseName() + " "
 							+ nurseManager.getNurseById(nurseId).getNurseSurname();
 
-					System.out.format("%-5d %-18s %-15s %-15s %-20s %-15s %-15s %-15d %-15d\n", s.getSurgeryId(),
+					System.out.format("%-5d %-25s %-15s %-15s %-23s %-25s %-25s %-15d %-15d\n", s.getSurgeryId(),
 							patientManager.getPatCompleteNametById(s.getPatientId()),
 							new SimpleDateFormat("dd-MM-yyyy").format(s.getSurgeryDate()), s.getStartHour(),
 							s.getSurgeryType(), sCompleteName, nCompleteName,
