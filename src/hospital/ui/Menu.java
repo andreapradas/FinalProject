@@ -44,7 +44,6 @@ public class Menu {
 	private static User u;
 
 	public static void main(String[] args) {
-
 		jdbcManager = new JDBCManager();
 		surgeonManager = new JDBCSurgeonManager(jdbcManager);
 		surgeonVacationManager = new JDBCSurgeonVacationManager(jdbcManager);
