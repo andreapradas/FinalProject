@@ -1079,12 +1079,12 @@ public class Menu {
 	}
 
 	private static void getAllSurgeries() {
-		System.out.format("%-15s %-18s %-13s %-15s %s\n", "Patient name", "Patient surname", "Patient id",
+		System.out.format("%-15s %-18s %-13s %-20s %s\n", "Patient name", "Patient surname", "Patient id",
 				"Surgery type", "Surgery Id");
 		System.out.println("-------------------------------------------------------------------------");
 		try {
 			for (Surgery s : surgeryManager.getListOfSurgeries()) {
-				System.out.format("%-15s %-18s %-13d %-15s %d\n",
+				System.out.format("%-15s %-18s %-13d %-20s %d\n",
 						patientManager.getPatientById(s.getPatientId()).getPatientName(),
 						patientManager.getPatientById(s.getPatientId()).getPatientSurname(), s.getPatientId(),
 						s.getSurgeryType(), s.getSurgeryId());
@@ -1246,10 +1246,10 @@ public class Menu {
 	private static void showSchedule(Date date) {
 		if (surgeryManager.getListOfSurgeries(date).size() != 0) {
 			List<Surgery> surgeries = surgeryManager.getListOfSurgeries(date);
-			System.out.format("%-5s %-18s %-15s %-15s %-15s %-15s %-15s %-15s %-5s\n", "Id", "Patient", "Date",
+			System.out.format("%-5s %-18s %-15s %-15s %-20s %-15s %-15s %-15s %-5s\n", "Id", "Patient", "Date",
 					"StartHour", "Surgery Type", "Surgeon", "Nurse", "Room Number", "Room Floor");
 			System.out.println(
-					"-------------------------------------------------------------------------------------------------------------------------------------");
+					"-----------------------------------------------------------------------------------------------------------------------------------------------------");
 			try {
 
 				for (Surgery s : surgeries) {
@@ -1259,7 +1259,7 @@ public class Menu {
 					String nCompleteName = nurseManager.getNurseById(nurseId).getNurseName() + " "
 							+ nurseManager.getNurseById(nurseId).getNurseSurname();
 
-					System.out.format("%-5d %-18s %-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", s.getSurgeryId(),
+					System.out.format("%-5d %-18s %-15s %-15s %-20s %-15s %-15s %-15d %-15d\n", s.getSurgeryId(),
 							patientManager.getPatCompleteNametById(s.getPatientId()),
 							new SimpleDateFormat("dd-MM-yyyy").format(s.getSurgeryDate()), s.getStartHour(),
 							s.getSurgeryType(), sCompleteName, nCompleteName,
