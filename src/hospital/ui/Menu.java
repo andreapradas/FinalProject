@@ -82,9 +82,9 @@ public class Menu {
 				case 2:
 					logIn();
 					break;
-				case 3:
-					getUsers();
-					break;
+//				case 3:
+//					getUsers();
+//					break;
 				case 0:
 					jdbcManager.disconnect();
 					userManager.disconnect();
