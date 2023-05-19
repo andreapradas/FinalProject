@@ -63,7 +63,7 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Sign in");
 				System.out.println("2. Log in");
-				System.out.println("3. List of users");
+				//System.out.println("3. List of users");
 				System.out.println("0. Exit");
 				int choice;
 				do {
