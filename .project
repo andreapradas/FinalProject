@@ -20,15 +20,5 @@
 			<type>2</type>
 			<location>C:/Users/sabel/git/FinalProject/photos</location>
 		</link>
-		<link>
-			<name>documents/FinalDocument.pdf</name>
-			<type>1</type>
-			<location>C:/Users/sabel/Downloads/FinalDocument.pdf</location>
-		</link>
-		<link>
-			<name>documents/UML.pdf</name>
-			<type>1</type>
-			<location>C:/Users/sabel/Downloads/UML.pdf</location>
-		</link>
 	</linkedResources>
 </projectDescription>
