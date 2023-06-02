@@ -20,5 +20,15 @@
 			<type>2</type>
 			<location>C:/Users/sabel/git/FinalProject/photos</location>
 		</link>
+		<link>
+			<name>src/Documents/DiagramaSurgeonsDefinitivo.drawio.pdf</name>
+			<type>1</type>
+			<location>D:/Documentos/CEU/Data Bases/DiagramaSurgeonsDefinitivo.drawio.pdf</location>
+		</link>
+		<link>
+			<name>src/Documents/DocumentoFinal.pdf</name>
+			<type>1</type>
+			<location>D:/Documentos/CEU/Data Bases/DocumentoFinal.pdf</location>
+		</link>
 	</linkedResources>
 </projectDescription>
